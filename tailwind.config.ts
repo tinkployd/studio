@@ -83,15 +83,20 @@ export default {
   					height: '0'
   				}
   			},
-        'marquee': {
+        'marquee': { /* Old marquee, can be removed if not used elsewhere */
           '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' }, // 50% because we duplicate content for seamless loop
+          '100%': { transform: 'translateX(-50%)' }, 
+        },
+        'marquee-medium': { /* New marquee for breaking news */
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' }, // Content is duplicated, so -50% for seamless loop
         }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'marquee': 'marquee 40s linear infinite',
+        'marquee': 'marquee 40s linear infinite', // Old marquee animation
+        'marquee-medium': 'marquee-medium 60s linear infinite', // New marquee animation for breaking news
   		}
   	}
   },

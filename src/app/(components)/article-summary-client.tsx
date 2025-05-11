@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { Button } from '@/components/ui/button';
 import { summarizeArticle, type SummarizeArticleInput } from '@/ai/flows/summarize-article';
-import { Loader2, FileText, FileJson, AlertCircle } from 'lucide-react';
+import { Loader2, FileText, BookOpen, AlertCircle, ExternalLink } from 'lucide-react'; // Replaced FileJson with BookOpen and added ExternalLink
 import { useToast } from '@/hooks/use-toast';
 
 interface ArticleSummaryClientProps {
@@ -21,7 +21,7 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
     if (!showSummary && !summary) {
       startTransition(async () => {
         try {
-          const input: SummarizeArticleInput = { articleContent };
+          const input: SummarizeArticleInput = { articleContent }; // Use full article content for summary
           const result = await summarizeArticle(input);
           setSummary(result.summary);
           setShowSummary(true);
@@ -32,8 +32,8 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
             description: "Makale özeti alınırken bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
             variant: "destructive",
           });
-          setSummary(null); // Clear summary on error
-          setShowSummary(false); // Revert to original content view
+          setSummary(null); 
+          setShowSummary(false); 
         }
       });
     } else {
@@ -42,23 +42,23 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
   };
 
   return (
-    <div className="mt-4">
-      <div className="flex flex-wrap gap-2 items-center mb-4">
-        <Button onClick={handleToggleSummary} disabled={isPending} variant="outline" size="sm">
+    <div className="mt-3">
+      <div className="flex flex-wrap gap-2 items-center mb-2">
+        <Button onClick={handleToggleSummary} disabled={isPending} variant="outline" size="sm" className="text-xs px-2 py-1 h-auto">
           {isPending ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
           ) : showSummary ? (
-            <FileText className="mr-2 h-4 w-4" />
+            <FileText className="mr-1.5 h-3.5 w-3.5" />
           ) : (
-            <FileJson className="mr-2 h-4 w-4" />
+            <BookOpen className="mr-1.5 h-3.5 w-3.5" />
           )}
-          {isPending ? 'Özetleniyor...' : showSummary ? 'Orjinal Metni Göster' : 'Haberi Özetle'}
+          {isPending ? 'Özetleniyor...' : showSummary ? 'Metni Göster' : 'Haberi Özetle'}
         </Button>
         {sourceUrl && (
-           <Button variant="outline" size="sm" asChild>
+           <Button variant="outline" size="sm" asChild className="text-xs px-2 py-1 h-auto">
              <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
-               <ExternalLinkIcon className="mr-2 h-4 w-4" />
-               Kaynak
+               <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
+               Kaynağa Git
              </a>
            </Button>
         )}
@@ -66,47 +66,27 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
 
       {showSummary ? (
         summary ? (
-          <div className="prose prose-sm max-w-none p-4 bg-muted/50 rounded-md shadow">
-            <h3 className="text-lg font-semibold mb-2 text-primary">Haber Özeti</h3>
-            <p>{summary}</p>
+          <div className="prose prose-sm max-w-none p-3 bg-muted/30 rounded-md shadow-sm border border-border/50">
+            <h4 className="text-sm font-semibold mb-1.5 text-primary">Haber Özeti</h4>
+            <p className="text-xs text-foreground">{summary}</p>
           </div>
         ) : isPending ? (
-          <div className="flex items-center justify-center p-4 bg-muted/50 rounded-md min-h-[100px]">
-            <Loader2 className="h-6 w-6 animate-spin text-primary" />
-            <span className="ml-2">Özet yükleniyor...</span>
+          <div className="flex items-center justify-center p-3 bg-muted/30 rounded-md min-h-[70px]">
+            <Loader2 className="h-5 w-5 animate-spin text-primary" />
+            <span className="ml-2 text-xs">Özet yükleniyor...</span>
           </div>
         ) : (
-           <div className="flex items-center p-4 bg-destructive/10 text-destructive rounded-md">
-             <AlertCircle className="h-5 w-5 mr-2" />
-             <span>Özet yüklenemedi. Lütfen orijinal metni okuyun.</span>
+           <div className="flex items-center p-3 bg-destructive/10 text-destructive rounded-md text-xs">
+             <AlertCircle className="h-4 w-4 mr-1.5" />
+             <span>Özet yüklenemedi.</span>
            </div>
         )
       ) : (
         <div className="prose prose-sm max-w-none">
-          <p>{articleContent}</p>
+          {/* Displaying truncated content by default, full content passed for summarization */}
+          <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">{articleContent}</p>
         </div>
       )}
     </div>
   );
-}
-
-function ExternalLinkIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      <polyline points="15 3 21 3 21 9" />
-      <line x1="10" x2="21" y1="14" y2="3" />
-    </svg>
-  )
 }

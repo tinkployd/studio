@@ -1,12 +1,15 @@
 import type { SVGProps } from 'react';
+import { cn } from '@/lib/utils';
 
-export function TrtHaberLogo(props: SVGProps<SVGSVGElement>) {
+export function TrtHaberLogo({ className, ...props }: SVGProps<SVGSVGElement> & { className?: string }) {
   return (
-    // Using a simple text representation for the logo
-    // For an actual SVG logo, replace this with the <svg>...</svg> element
-    <div className="font-bold text-2xl md:text-3xl tracking-tight flex items-center" {...props}>
-      <span className="text-primary">TRT</span>
-      <span className="text-foreground">HABER</span>
+    <div className={cn("flex items-center", className)} {...props}>
+      <span className="bg-primary-foreground text-primary px-2 py-0.5 rounded font-bold text-lg md:text-xl leading-none">
+        TRT
+      </span>
+      <span className="text-primary-foreground font-semibold text-lg md:text-xl ml-1.5 leading-none">
+        HABER
+      </span>
     </div>
   );
 }

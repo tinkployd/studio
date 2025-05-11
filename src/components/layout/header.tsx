@@ -2,124 +2,126 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Search, PlayCircle, Menu as MenuIcon, X as XIcon, CalendarDays, Clock } from 'lucide-react';
+import { Search, Menu as MenuIcon, X as XIcon, CloudSun, ChevronDown, Briefcase, Users, Edit3, FileText, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { TrtHaberLogo } from '@/components/icons/trt-logo';
 import { NavMenu } from './nav-menu';
-import { format } from 'date-fns';
-import { tr } from 'date-fns/locale';
+import { NAV_LINKS } from '@/constants'; // Import NAV_LINKS for mobile menu
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [currentDateTime, setCurrentDateTime] = useState('');
+  const [currentTemperature, setCurrentTemperature] = useState<string | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<string>("Ankara");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const updateDateTime = () => {
-      setCurrentDateTime(format(new Date(), "d MMMM yyyy, EEEE HH:mm", { locale: tr }));
-    };
-    updateDateTime();
-    const intervalId = setInterval(updateDateTime, 60000); // Update every minute
-    return () => clearInterval(intervalId);
+    // Simulate fetching weather data
+    setCurrentTemperature("12.5°C");
   }, []);
 
+  const mainNavLinks = NAV_LINKS.filter(link => !['Diğer Kategoriler', 'Yazarlar', 'Video', 'Foto Galeri'].includes(link.label));
+  const otherLinks = NAV_LINKS.filter(link => ['Diğer Kategoriler', 'Yazarlar', 'Video', 'Foto Galeri'].includes(link.label));
+
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* Top Bar */}
-      <div className="bg-secondary/50 text-secondary-foreground py-1">
-        <div className="container mx-auto flex items-center justify-between px-4 text-xs">
-          <div className="flex items-center space-x-2">
-            <CalendarDays size={14} />
-            <span>{currentDateTime.split(',')[0]}, {currentDateTime.split(',')[1]}</span>
-            <Clock size={14} className="ml-1"/>
-            <span>{currentDateTime.split(',')[2]}</span>
-          </div>
-          <div className="hidden md:flex space-x-3">
-            <Link href="#" className="hover:text-primary transition-colors">TRT İZLE</Link>
-            <Link href="#" className="hover:text-primary transition-colors">TRT DİNLE</Link>
-            <Link href="#" className="hover:text-primary transition-colors">TRT ARŞİV</Link>
+    <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-primary text-primary-foreground shadow-md">
+      {/* Main Header */}
+      <div className="container mx-auto flex h-16 items-center justify-between px-2 sm:px-4">
+        <div className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center">
+            <TrtHaberLogo className="h-7 md:h-8" />
+          </Link>
+          <div className="hidden lg:flex">
+            <NavMenu links={mainNavLinks} />
           </div>
         </div>
-      </div>
 
-      {/* Main Header */}
-      <div className="bg-primary text-primary-foreground">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <TrtHaberLogo className="text-primary-foreground h-8 w-auto" />
+        <div className="flex items-center space-x-2 md:space-x-3">
+          <Link href="#" className="hidden md:flex items-center space-x-1 text-sm font-medium hover:opacity-90">
+            <div className="w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-primary-foreground animate-pulse"></div>
+            <span>CANLI</span>
           </Link>
-
-          <div className="hidden md:flex flex-grow items-center justify-center">
-            <NavMenu />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-primary-foreground hover:bg-primary-foreground/10 h-8 w-8 md:h-9 md:w-9"
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            aria-label="Aramayı aç/kapat"
+          >
+            <Search size={20} />
+          </Button>
+          {isSearchOpen && (
+            <Input
+              type="search"
+              placeholder="Ara..."
+              className="hidden md:block h-9 w-48 bg-primary-foreground/10 text-primary-foreground placeholder-primary-foreground/70 border-primary-foreground/20 focus:bg-primary-foreground/20"
+            />
+          )}
+           <div className="hidden md:flex items-center space-x-1 text-sm">
+            <CloudSun size={20} />
+            <span>{currentTemperature || '--.-°C'}</span>
+            <button className="flex items-center hover:opacity-90">
+              <span>{currentLocation}</span>
+              <ChevronDown size={16} />
+            </button>
           </div>
 
-          <div className="flex items-center space-x-2 md:space-x-4">
-            <div className="relative hidden md:block">
-              {isSearchOpen && (
-                <Input
-                  type="search"
-                  placeholder="Haberlerde ara..."
-                  className="h-9 pr-8 bg-background text-foreground placeholder-muted-foreground"
-                />
-              )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-primary-foreground hover:bg-primary-foreground/10 h-9 w-9"
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                aria-label="Aramayı aç/kapat"
-              >
-                <Search size={20} />
-              </Button>
-            </div>
-            <Button variant="destructive" className="bg-accent hover:bg-accent/90 h-9 hidden md:flex">
-              <PlayCircle size={20} className="mr-2" />
-              CANLI YAYIN
-            </Button>
-
-            {/* Mobile Menu */}
-            <div className="md:hidden">
-              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10 h-9 w-9">
-                    <MenuIcon size={24} />
-                    <span className="sr-only">Menüyü aç</span>
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="left" className="w-[300px] sm:w-[400px] bg-background p-6">
-                  <div className="flex justify-between items-center mb-6">
-                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                        <TrtHaberLogo className="h-8 w-auto" />
-                     </Link>
-                    <SheetClose asChild>
-                       <Button variant="ghost" size="icon"> <XIcon size={24} /> </Button>
-                    </SheetClose>
-                  </div>
-                  <div className="relative mb-4">
+          {/* Mobile Menu Trigger */}
+          <div className="lg:hidden">
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="text-primary-foreground hover:bg-primary-foreground/10 h-9 w-9">
+                  <MenuIcon size={24} />
+                  <span className="sr-only">Menüyü aç</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-[300px] sm:w-[360px] bg-background text-foreground p-0 flex flex-col">
+                <div className="flex justify-between items-center p-4 border-b">
+                  <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                    <TrtHaberLogo className="h-7 text-primary" /> {/* Logo with primary color text on light bg */}
+                  </Link>
+                  <SheetClose asChild>
+                    <Button variant="ghost" size="icon"> <XIcon size={24} /> </Button>
+                  </SheetClose>
+                </div>
+                
+                <div className="p-4 border-b">
+                    <div className="relative">
                     <Input
-                      type="search"
-                      placeholder="Haberlerde ara..."
-                      className="h-10 pr-10 bg-muted"
+                        type="search"
+                        placeholder="Haberlerde ara..."
+                        className="h-10 pr-10 bg-muted text-foreground placeholder-muted-foreground"
                     />
                     <Button
-                      variant="ghost"
-                      size="icon"
-                      className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary h-8 w-8"
-                      aria-label="Ara"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary h-8 w-8"
+                        aria-label="Ara"
                     >
-                      <Search size={20} />
+                        <Search size={20} />
                     </Button>
-                  </div>
-                  <NavMenu isMobile onLinkClick={() => setIsMobileMenuOpen(false)} />
-                  <Button variant="destructive" className="w-full mt-6 bg-accent hover:bg-accent/90">
-                    <PlayCircle size={20} className="mr-2" />
-                    CANLI YAYIN
-                  </Button>
-                </SheetContent>
-              </Sheet>
-            </div>
+                    </div>
+                </div>
+
+                <div className="flex-grow overflow-y-auto">
+                    <NavMenu links={NAV_LINKS} isMobile onLinkClick={() => setIsMobileMenuOpen(false)} />
+                </div>
+                
+                <div className="p-4 border-t">
+                    <Link href="#" className="flex items-center justify-center space-x-2 text-sm font-medium text-primary-foreground bg-primary py-2.5 rounded-md hover:bg-primary/90 w-full">
+                        <div className="w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-primary-foreground animate-pulse"></div>
+                        <span>CANLI YAYIN</span>
+                    </Link>
+                     <div className="flex items-center space-x-2 text-sm mt-4 text-muted-foreground justify-center">
+                        <CloudSun size={18} />
+                        <span>{currentTemperature || '--.-°C'}</span>
+                        <span>{currentLocation}</span>
+                    </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>

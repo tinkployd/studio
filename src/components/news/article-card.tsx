@@ -18,50 +18,55 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
   const isFeatured = layout === 'featured';
 
   return (
-    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
-      <CardHeader className={isHero ? "p-0" : "p-4 pb-0"}>
-        <div className={`relative ${isHero ? 'aspect-[16/9]' : 'aspect-video'}`}>
+    <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col rounded-lg border border-border/70">
+      <CardHeader className={isHero ? "p-0" : "p-0"}>
+        <div className={`relative ${isHero ? 'aspect-[2/1]' : 'aspect-video'}`}>
           <Image
             src={imageUrl}
             alt={title}
             layout="fill"
             objectFit="cover"
-            className="rounded-t-lg"
+            className={isHero ? "rounded-t-lg" : "rounded-t-lg"} // Keep rounded top for all
             data-ai-hint={imageHint}
           />
         </div>
       </CardHeader>
-      <CardContent className={`p-4 flex-grow ${isHero ? 'md:p-6' : 'p-4'}`}>
+      <CardContent className={`p-3 md:p-4 flex-grow flex flex-col`}>
         <div className="mb-2 flex items-center justify-between">
-          <Badge variant="secondary" className="bg-accent text-accent-foreground hover:bg-accent/90 text-xs uppercase">
+          <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-2 py-0.5">
             {category}
           </Badge>
           {publishDate && (
             <div className="text-xs text-muted-foreground flex items-center">
-              <Clock size={14} className="mr-1" />
+              <Clock size={12} className="mr-1" />
               {publishDate}
             </div>
           )}
         </div>
-        <CardTitle className={`leading-tight ${isHero ? 'text-2xl md:text-3xl' : 'text-lg md:text-xl'} font-bold`}>
-          <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"} className="hover:text-primary transition-colors">
+        <CardTitle className={`leading-tight ${isHero ? 'text-xl md:text-2xl' : 'text-base md:text-lg'} font-bold mb-1`}>
+          <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"} rel={sourceUrl ? "noopener noreferrer" : undefined} className="hover:text-primary transition-colors">
             {title}
           </Link>
         </CardTitle>
-        {/* Render ArticleSummaryClient only if not hero/featured to save space, or based on specific logic */}
-        {layout === 'default' && <ArticleSummaryClient articleContent={content} sourceUrl={sourceUrl} />}
-        {/* For hero/featured, content is usually shorter or not shown directly */}
+        
+        {layout === 'default' && <ArticleSummaryClient articleContent={content.substring(0,150) + "..."} sourceUrl={sourceUrl} />}
+        
         {(isHero || isFeatured) && (
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{content}</p>
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-2 md:line-clamp-3 flex-grow">{content}</p>
         )}
       </CardContent>
       {(isHero || isFeatured) && (
-        <CardFooter className="p-4 pt-0">
-           <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"} className="text-primary hover:underline text-sm font-medium">
-            Devamını Oku
+        <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
+           <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"}  rel={sourceUrl ? "noopener noreferrer" : undefined} className="text-primary hover:underline text-sm font-medium">
+            Devamını Oku &rarr;
           </Link>
         </CardFooter>
       )}
+       {layout === 'default' && !isHero && !isFeatured && (
+         <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
+            {/* Placeholder for any footer content in default cards if needed */}
+         </CardFooter>
+       )}
     </Card>
   );
 }

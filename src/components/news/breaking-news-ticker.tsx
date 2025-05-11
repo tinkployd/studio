@@ -1,9 +1,16 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+
+interface NewsItem {
+  text: string;
+  timestamp?: string;
+  link?: string;
+}
 
 interface BreakingNewsTickerProps {
-  newsItems: string[];
+  newsItems: NewsItem[];
 }
 
 export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProps) {
@@ -11,27 +18,49 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
     return null;
   }
 
+  // Duplicate items for seamless marquee effect if there are few items
+  const displayItems = newsItems.length < 5 ? [...newsItems, ...newsItems, ...newsItems] : newsItems;
+
+
   return (
-    <section className="mb-8 md:mb-12 bg-accent text-accent-foreground p-3 rounded-md shadow-md overflow-hidden">
-      <div className="flex items-center">
-        <span className="font-bold text-sm uppercase whitespace-nowrap mr-4 py-1 px-2 bg-primary rounded">SON DAKİKA</span>
-        <div className="animate-marquee whitespace-nowrap">
-          {newsItems.map((news, index) => (
-            <span key={index} className="mx-4 text-sm">{news}</span>
-          ))}
-          {newsItems.map((news, index) => ( // Duplicate for seamless loop
-            <span key={`dup-${index}`} className="mx-4 text-sm">{news}</span>
-          ))}
+    <section className="container mx-auto px-2 sm:px-4 my-4 md:my-6">
+      <div className="bg-secondary flex items-stretch rounded-md shadow overflow-hidden h-10">
+        <div className="bg-primary text-primary-foreground font-bold text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap">
+          SON HABERLER
         </div>
+        <div className="flex-grow relative overflow-hidden">
+          <div className="animate-marquee-medium flex items-center h-full">
+            {displayItems.map((item, index) => (
+              <Link href={item.link || '#'} key={index} className="flex items-center whitespace-nowrap px-3 sm:px-4 h-full hover:bg-muted transition-colors">
+                {item.timestamp && (
+                  <span className="text-primary font-semibold text-xs mr-1.5">{item.timestamp}</span>
+                )}
+                <span className="text-foreground text-sm">{item.text}</span>
+              </Link>
+            ))}
+            {/* Duplicate for seamless loop, ensure key is unique for React */}
+             {displayItems.map((item, index) => (
+              <Link href={item.link || '#'} key={`dup-${index}`} aria-hidden="true" className="flex items-center whitespace-nowrap px-3 sm:px-4 h-full hover:bg-muted transition-colors">
+                {item.timestamp && (
+                  <span className="text-primary font-semibold text-xs mr-1.5">{item.timestamp}</span>
+                )}
+                <span className="text-foreground text-sm">{item.text}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+        <Link href="#" className="bg-muted hover:bg-muted/80 text-primary font-semibold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap transition-colors">
+          Tümü
+        </Link>
       </div>
       <style jsx>{`
-        @keyframes marquee {
+        @keyframes marquee-medium {
           0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-50%); } /* Adjust based on content width for seamless loop */
         }
-        .animate-marquee {
-          animation: marquee 40s linear infinite;
-          display: inline-block; /* Fix for animation with flex items */
+        .animate-marquee-medium {
+          animation: marquee-medium 60s linear infinite; /* Adjust duration as needed */
+          display: flex; /* Changed from inline-block to flex for vertical centering */
         }
       `}</style>
     </section>
