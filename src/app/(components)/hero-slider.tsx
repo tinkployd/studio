@@ -49,7 +49,6 @@ export default function HeroSlider({ articles: initialArticles }: HeroSliderProp
 
   const currentArticle = articles[activeIndex];
   // Thumbnails will represent the first NUM_THUMBNAILS articles.
-  // If activeIndex is beyond NUM_THUMBNAILS-1, no specific thumbnail will be "active" visually through this mapping.
   const thumbnailDisplayArticles = articles.slice(0, NUM_THUMBNAILS);
 
   return (
@@ -87,37 +86,48 @@ export default function HeroSlider({ articles: initialArticles }: HeroSliderProp
               {currentArticle.content.substring(0, 220) + (currentArticle.content.length > 220 ? '...' : '')}
             </Link>
           </p>
-          {/* Placeholder for potential bullet points if added to ArticleType in future */}
         </div>
       </div>
 
-      {/* Thumbnails / Progress Bars */}
+      {/* Thumbnails with Progress Bars */}
       {thumbnailDisplayArticles.length > 0 && (
         <div 
-          className="mt-2 grid grid-cols-5 sm:grid-cols-9 gap-1" // 9 columns to match image
+          className="mt-4 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2"
         >
           {thumbnailDisplayArticles.map((article, index) => (
             <button
               key={`thumb-${article.id}`}
               onClick={() => handleSetActiveIndex(index)}
               onMouseEnter={() => handleSetActiveIndex(index)}
-              className={cn(
-                "h-2 md:h-2.5 rounded-sm transition-all duration-150 ease-in-out focus:outline-none focus:ring-1 focus:ring-primary focus:ring-opacity-75",
-                "bg-primary/30 hover:bg-primary/50 relative overflow-hidden" // Added relative and overflow-hidden
-              )}
+              className="relative aspect-[16/10] rounded-md overflow-hidden group focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-75"
               aria-label={`View article: ${article.title}`}
             >
+              <Image
+                src={article.imageUrl}
+                alt={article.title}
+                fill
+                sizes="(max-width: 640px) 33vw, (max-width: 768px) 20vw, 11vw" // Adjusted based on grid cols
+                objectFit="cover"
+                className={cn(
+                  "transition-all duration-300 group-hover:scale-110",
+                  activeIndex === index 
+                    ? "ring-2 ring-primary ring-offset-1 ring-offset-background scale-105" 
+                    : "opacity-70 group-hover:opacity-100"
+                )}
+                data-ai-hint={article.imageHint || 'news thumbnail'}
+              />
               <div 
                 className={cn(
-                  "absolute top-0 left-0 h-full rounded-sm bg-primary",
+                  "absolute bottom-0 left-0 h-1.5 bg-primary/80", // Progress bar at the bottom
                 )}
                 style={{
-                  width: '0%', // Start at 0%
-                  // Apply animation only if this thumbnail corresponds to the activeIndex
-                  animation: activeIndex === index ? `progress-fill ${SLIDER_INTERVAL}ms linear forwards` : 'none',
+                  width: (activeIndex === index && isHoveringSlider) ? '100%' : '0%',
+                  animation: (activeIndex === index && !isHoveringSlider) 
+                             ? `progress-fill ${SLIDER_INTERVAL}ms linear forwards` 
+                             : 'none',
                 }}
-                // Key to force re-render and restart animation when this specific thumbnail becomes active
-                key={`progress-${article.id}-${activeIndex === index ? 'active' : 'inactive'}-${Date.now()}`} 
+                // Key to re-trigger animation if this item becomes active/inactive, or if hover state changes for an active item
+                key={`progress-${article.id}-${activeIndex === index}-${isHoveringSlider}`} 
               />
             </button>
           ))}
@@ -126,3 +136,4 @@ export default function HeroSlider({ articles: initialArticles }: HeroSliderProp
     </section>
   );
 }
+
