@@ -18,18 +18,20 @@ export default function VideoCard({ video, layout = 'thumbnail' }: VideoCardProp
   const url = videoUrl || sourceUrl || '#';
 
   if (isMainFeatured) {
+    // Main Featured Layout (Text content on Red Background)
+    // No Card component needed here, just the text structure
     return (
-      <div className="p-6 md:p-8 text-primary-foreground">
+      <div className="p-6 md:p-8 text-primary-foreground"> {/* Added padding */}
         <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 text-xs uppercase px-1.5 py-0.5 leading-tight mb-2">
           {category}
         </Badge>
-        <h3 className="text-2xl md:text-3xl font-bold mb-3 leading-tight">
+        <h3 className="text-2xl md:text-3xl font-bold mb-3 leading-tight"> {/* Increased text size */}
           <Link href={url} target="_blank" rel="noopener noreferrer" className="hover:opacity-90 transition-opacity">
             {title}
           </Link>
         </h3>
         {description && (
-          <p className="text-sm text-primary-foreground/80 line-clamp-4">
+          <p className="text-base text-primary-foreground/80"> {/* Increased text size, adjusted opacity, removed line-clamp */}
             {description}
           </p>
         )}
@@ -69,3 +71,4 @@ export default function VideoCard({ video, layout = 'thumbnail' }: VideoCardProp
     </div>
   );
 }
+

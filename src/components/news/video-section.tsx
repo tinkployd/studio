@@ -20,10 +20,10 @@ export default function VideoSection({ mainVideo, thumbnailVideos }: VideoSectio
         Videolar
       </h2>
 
-      {/* Main Video Layout */}
+      {/* Main Video Layout - Updated */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-stretch mb-6 bg-primary rounded-lg overflow-hidden shadow-lg">
         {/* Left: Video Details (Red Background) */}
-        <div className="order-2 lg:order-1">
+        <div className="order-2 lg:order-1 flex flex-col justify-center"> {/* Added flex utilities */}
            <VideoCard video={mainVideo} layout="main-featured" />
         </div>
 
@@ -66,3 +66,4 @@ export default function VideoSection({ mainVideo, thumbnailVideos }: VideoSectio
     </section>
   );
 }
+
