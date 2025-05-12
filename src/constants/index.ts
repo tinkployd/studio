@@ -74,7 +74,9 @@ export interface Article {
   sourceUrl?: string;
 }
 
+// Add more articles, especially in GÜNDEM category to fill the new slots
 export const PLACEHOLDER_ARTICLES: Article[] = [
+  // --- Existing Articles (0-17) ---
   {
     id: '1',
     title: 'Türkiye\'nin Otomobili Togg İçin Yeni Gelişmeler ve Global Hedefler',
@@ -244,6 +246,122 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     content: 'Merkez Bankası ve Borsa İstanbul tarafından açıklanan son verilere göre, yabancı yatırımcıların Türk varlıklarına olan ilgisi son dönemde artış gösterdi. Özellikle hisse senedi piyasasında net alımların gözlendiği belirtilirken, uygulanan ekonomi politikalarının ve atılan normalleşme adımlarının bu ilgide etkili olduğu yorumları yapılıyor.',
     publishDate: '8 Temmuz 2024',
     sourceUrl: 'https://www.trthaber.com/haber/ekonomi/borsa-istanbul-yabanci-yatirimci-17171.html'
-  }
+  },
+
+  // --- Additional GÜNDEM Articles (18-25) ---
+  {
+    id: '18',
+    title: 'Kabine Toplantısı Sonrası Önemli Açıklamalar: Ekonomi ve Dış Politika Gündemdeydi',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=18',
+    imageHint: 'government meeting officials',
+    content: 'Cumhurbaşkanlığı Kabinesi, son toplantısında ekonomi ve dış politikadaki güncel gelişmeleri ele aldı. Toplantı sonrası yapılan açıklamada, enflasyonla mücadele, yeni yatırım teşvikleri ve bölgesel konulara ilişkin alınan kararlar kamuoyuyla paylaşıldı.',
+    publishDate: '11 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/kabine-toplantisi-aciklamalari-18181.html'
+  },
+  {
+    id: '19',
+    title: 'Orman Yangınlarıyla Mücadele Devam Ediyor: Havadan ve Karadan Müdahale Sürüyor',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=19',
+    imageHint: 'forest fire smoke',
+    content: 'Türkiye\'nin çeşitli bölgelerinde çıkan orman yangınlarına müdahale aralıksız devam ediyor. Tarım ve Orman Bakanlığı koordinasyonunda ekipler, yangın söndürme uçakları, helikopterler ve arazözlerle alevleri kontrol altına almaya çalışıyor. Vatandaşlara anız yakmamaları ve ormanlık alanlarda ateş yakmamaları konusunda uyarılar yapıldı.',
+    publishDate: '10 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/orman-yanginlari-mudahale-19191.html'
+  },
+  {
+    id: '20',
+    title: 'Adalet Bakanlığı\'ndan Yeni Yargı Reformu Paketi Hazırlığı',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=20',
+    imageHint: 'courtroom judge law',
+    content: 'Adalet Bakanlığı, yargı süreçlerini hızlandırmak ve adalete erişimi kolaylaştırmak amacıyla yeni bir yargı reformu paketi üzerinde çalıştıklarını açıkladı. Paketin detaylarının yakın zamanda kamuoyu ile paylaşılması bekleniyor.',
+    publishDate: '9 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/yeni-yargi-reformu-paketi-20202.html'
+  },
+  {
+    id: '21',
+    title: 'Kurban Bayramı Tatili İçin Trafik Yoğunluğu Başladı: Sürücülere Uyarılar',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=21',
+    imageHint: 'highway traffic cars',
+    content: 'Yaklaşan Kurban Bayramı tatili öncesinde şehirlerarası yollarda trafik yoğunluğu artmaya başladı. İçişleri Bakanlığı ve Emniyet Genel Müdürlüğü, sürücüleri trafik kurallarına uymaları, hız limitlerini aşmamaları ve yorgun araç kullanmamaları konusunda uyardı. Tatil süresince ek trafik tedbirleri alınacak.',
+    publishDate: '8 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/bayram-tatili-trafik-uyarilari-21212.html'
+  },
+  {
+    id: '22',
+    title: 'Türkiye\'nin Tahıl Koridoru Diplomasisi Devam Ediyor',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=22',
+    imageHint: 'wheat field grain',
+    content: 'Türkiye, Karadeniz Tahıl Koridoru Anlaşması\'nın devamı ve küresel gıda güvenliğinin sağlanması için diplomatik çabalarını sürdürüyor. İlgili taraflarla görüşmeler devam ederken, anlaşmanın uzatılmasının önemi vurgulanıyor.',
+    publishDate: '7 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/tahil-koridoru-diplomasisi-22222.html'
+  },
+  {
+    id: '23',
+    title: 'Enerji Verimliliği Projelerine Yeni Destekler Açıklandı',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=23',
+    imageHint: 'solar panels energy',
+    content: 'Enerji ve Tabii Kaynaklar Bakanlığı, sanayi tesisleri ve konutlarda enerji verimliliğini artırmaya yönelik yeni teşvik ve destek programlarını duyurdu. Amaç, enerji tüketimini azaltmak ve dışa bağımlılığı düşürmek.',
+    publishDate: '6 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/enerji-verimliligi-destekleri-23232.html'
+  },
+   {
+    id: '24',
+    title: 'İçişleri Bakanlığı\'ndan Siber Güvenlik Uyarısı: Dolandırıcılık Yöntemlerine Dikkat',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=24',
+    imageHint: 'hacker computer code',
+    content: 'İçişleri Bakanlığı Siber Suçlarla Mücadele Daire Başkanlığı, artan online dolandırıcılık vakalarına karşı vatandaşları uyardı. Özellikle sahte web siteleri, oltalama (phishing) saldırıları ve telefon dolandırıcılığı yöntemlerine karşı dikkatli olunması gerektiği belirtildi.',
+    publishDate: '5 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/siber-guvenlik-uyarisi-dolandiricilik-24242.html'
+  },
+  {
+    id: '25',
+    title: 'Türkiye Büyük Millet Meclisi Yeni Yasama Yılına Hazırlanıyor',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=25',
+    imageHint: 'parliament building politics',
+    content: 'TBMM, yaz tatilinin ardından yeni yasama yılı için hazırlıklarını sürdürüyor. Yeni dönemde meclis gündemine gelmesi beklenen önemli yasa teklifleri ve düzenlemeler bulunuyor.',
+    publishDate: '4 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/tbmm-yeni-yasama-yili-hazirliklari-25252.html'
+  },
+   // --- Add more articles for other categories if needed ---
+  {
+    id: '26',
+    title: 'Fenerbahçe Avrupa Ligi\'nde Güçlü Rakiplerle Eşleşti',
+    category: 'SPOR',
+    imageUrl: 'https://picsum.photos/800/500?random=26',
+    imageHint: 'soccer stadium night',
+    content: 'Fenerbahçe, UEFA Avrupa Ligi grup aşaması kura çekiminde güçlü rakiplerle aynı gruba düştü. Teknik direktör ve yönetim, zorlu bir grup olduğunu ancak hedeflerinin gruptan çıkmak olduğunu belirtti.',
+    publishDate: '11 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/spor/fenerbahce-avrupa-ligi-grup-26262.html'
+  },
+  {
+    id: '27',
+    title: 'Yerli Elektrikli Otobüsler Şehir İçi Ulaşımda Yaygınlaşıyor',
+    category: 'EKONOMİ',
+    imageUrl: 'https://picsum.photos/800/500?random=27',
+    imageHint: 'electric bus city',
+    content: 'Türkiye\'de üretilen yerli elektrikli otobüsler, birçok büyükşehir belediyesi tarafından toplu taşımada kullanılmaya başlandı. Çevre dostu ve sessiz çalışan bu otobüsler, hem yakıt tasarrufu sağlıyor hem de karbon emisyonunu azaltıyor.',
+    publishDate: '11 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/yerli-elektrikli-otobusler-27272.html'
+  },
+   {
+    id: '28',
+    title: 'Türkiye\'nin Antarktika Bilim Seferi Başarıyla Tamamlandı',
+    category: 'BİLİM TEKNOLOJİ',
+    imageUrl: 'https://picsum.photos/800/500?random=28',
+    imageHint: 'antarctica ice snow',
+    content: 'Türkiye\'nin Ulusal Antarktika Bilim Seferi, belirlenen hedeflere ulaşarak başarıyla tamamlandı. Sefer ekibi, iklim değişikliği, buzullar ve deniz ekosistemi üzerine önemli bilimsel araştırmalar gerçekleştirdi.',
+    publishDate: '10 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/antarktika-bilim-seferi-tamamlandi-28282.html'
+  },
+
+
 ];
+
 

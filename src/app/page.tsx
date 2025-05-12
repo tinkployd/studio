@@ -26,25 +26,31 @@ export default function Home() {
   const gundemArticles = articles.filter(a => a.category === 'GÜNDEM');
   const mainGundemArticle = gundemArticles[0]; // Assuming the first Gündem article is the main one
   const secondaryGundemArticle = gundemArticles[1]; // Article for the right small card
-  const bottomGundemArticles = gundemArticles.slice(2, 6); // Next 4 articles for the bottom row
+  const bottomGundemArticlesRow1 = gundemArticles.slice(2, 6); // Next 4 articles for the first bottom row
+  const bottomGundemArticlesRow2 = gundemArticles.slice(6, 10); // Next 4 articles for the second bottom row
+  const bottomGundemArticlesRow3 = gundemArticles.slice(10, 14); // Next 4 articles for the third bottom row
 
-  // General articles start after all hero, all 5 featured, and the 6 Gündem articles used above
+  // General articles start after all hero, all 5 featured, and all Gündem articles used above
   const usedArticleIds = new Set([
     ...heroSliderArticles.map(a => a.id),
     ...featuredArticlesRow1.map(a => a.id),
     ...featuredArticlesRow2.map(a => a.id),
     ...(mainGundemArticle ? [mainGundemArticle.id] : []),
     ...(secondaryGundemArticle ? [secondaryGundemArticle.id] : []),
-    ...bottomGundemArticles.map(a => a.id),
+    ...bottomGundemArticlesRow1.map(a => a.id),
+    ...bottomGundemArticlesRow2.map(a => a.id),
+    ...bottomGundemArticlesRow3.map(a => a.id),
   ]);
   const generalArticles = articles.filter(a => !usedArticleIds.has(a.id));
 
 
   const breakingNewsItems = [
-    { text: "Ankara'da motosiklet trafik levhasına çarptı: 2 kişi hayatını kaybetti", timestamp: "00:52", link: "#" },
-    { text: "Yeni haftada hava nasıl olacak?", timestamp: "00:37", link: "#" },
-    { text: "Fransa'da İslam düşmanlığına tepkiler büyüyor", link: "#" },
-    { text: "Ekonomi paketinin detayları açıklandı", timestamp: "23:15", link: "#" },
+    { text: "Kalp hastası bebek Ağrı'dan ambulans uçakla Ankara'ya getirildi", timestamp: "05:24", link: "#" },
+    { text: "İzmir'de takla atan otomobilin sürücüsü yaralandı", timestamp: "05:19", link: "#" },
+    { text: "Trump, ABD vatandaşı esirin serbest bırakılmasını iyi niyetle atılmış bir adım olarak değerlendirdi", timestamp: "04:06", link: "#" },
+    { text: "Ankara’da motosiklet trafik levhasına çarptı: 2 kişi hayatını kaybetti", timestamp: "01:42", link: "#" },
+    { text: "Yeni haftada hava nasıl olacak?", timestamp: "00:52", link: "#" },
+    { text: "Fransa'da İslam düşmanlığına karşı gösteriler düzenlendi", timestamp: "00:37", link: "#" },
   ];
 
   const currencyData = [
@@ -80,6 +86,8 @@ export default function Home() {
           {/* Right part: Currency Ticker */}
           <div>
             <div className="md:mt-0">
+              {/* Vertical Spacer to align top */}
+               <div className="h-[3.25rem] hidden md:block"></div> {/* Approx height of h2 + margin */}
               <CurrencyTicker title="DÖVİZ BİLGİLERİ" data={currencyData} />
             </div>
           </div>
@@ -144,10 +152,28 @@ export default function Home() {
              )}
            </div>
 
-           {/* Bottom Row: 4 small cards */}
-           {bottomGundemArticles.length > 0 && (
+           {/* Bottom Row 1: 4 small cards */}
+           {bottomGundemArticlesRow1.length > 0 && (
              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-               {bottomGundemArticles.map(article => (
+               {bottomGundemArticlesRow1.map(article => (
+                 <ArticleCard key={article.id} article={article} layout="default" />
+               ))}
+             </div>
+           )}
+
+            {/* Bottom Row 2: Next 4 small cards */}
+           {bottomGundemArticlesRow2.length > 0 && (
+             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               {bottomGundemArticlesRow2.map(article => (
+                 <ArticleCard key={article.id} article={article} layout="default" />
+               ))}
+             </div>
+           )}
+
+            {/* Bottom Row 3: Final 4 small cards */}
+           {bottomGundemArticlesRow3.length > 0 && (
+             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               {bottomGundemArticlesRow3.map(article => (
                  <ArticleCard key={article.id} article={article} layout="default" />
                ))}
              </div>
@@ -170,6 +196,7 @@ export default function Home() {
 
       {/* Category Sections (Example) - Filtered to exclude used articles */}
       {['EKONOMİ', 'SPOR', 'BİLİM TEKNOLOJİ'].map(category => {
+        // Now use the filtered generalArticles for category sections
         const categoryArticles = generalArticles.filter(a => a.category === category).slice(0,3);
 
         if (categoryArticles.length === 0) return null;
