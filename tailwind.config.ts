@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -83,20 +84,28 @@ export default {
   					height: '0'
   				}
   			},
-        'marquee': { /* Old marquee, can be removed if not used elsewhere */
+        'marquee': { 
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' }, 
         },
-        'marquee-medium': { /* New marquee for breaking news */
+        'marquee-medium': { 
           '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' }, // Content is duplicated, so -50% for seamless loop
-        }
+          '100%': { transform: 'translateX(-50%)' }, 
+        },
+        'progress-fill': {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
+        },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
   			'accordion-up': 'accordion-up 0.2s ease-out',
-        'marquee': 'marquee 40s linear infinite', // Old marquee animation
-        'marquee-medium': 'marquee-medium 60s linear infinite', // New marquee animation for breaking news
+        'marquee': 'marquee 40s linear infinite', 
+        'marquee-medium': 'marquee-medium 60s linear infinite',
+        // The duration for progress-fill will be applied inline via style prop,
+        // or you can define specific duration versions here if preferred.
+        // Example: 'progress-fill-5s': 'progress-fill 5s linear forwards',
+        'progress-fill': 'progress-fill var(--animation-duration, 5000ms) linear forwards', // Using CSS var for dynamic duration
   		}
   	}
   },

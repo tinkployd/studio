@@ -1,3 +1,4 @@
+
 export interface NavLink {
   label: string;
   href: string;
@@ -134,4 +135,64 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     publishDate: '5 Temmuz 2024',
     sourceUrl: 'https://www.trthaber.com/haber/saglik/saglikli-yasam-onerileri-77889.html'
   },
+  {
+    id: '7',
+    title: 'Yapay Zeka Sanat Dünyasını Nasıl Değiştiriyor? Yeni Sergiler ve Tartışmalar',
+    category: 'BİLİM TEKNOLOJİ',
+    imageUrl: 'https://picsum.photos/800/500?random=7',
+    imageHint: 'ai art abstract',
+    content: 'Yapay zeka tarafından üretilen sanat eserleri, dünya genelinde sanat galerilerinde sergilenmeye başlandı. Bu durum, sanatın tanımı, yaratıcılık ve telif hakları gibi konularda önemli tartışmaları da beraberinde getiriyor. Bazı sanatçılar yapay zekayı bir araç olarak benimserken, bazıları ise özgünlüğü tehdit ettiğini düşünüyor. Yeni teknolojilerin sanat pratiğine etkileri üzerine düzenlenen paneller ve sergiler, bu dönüşümü anlamaya çalışıyor.',
+    publishDate: '4 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/yapay-zeka-sanat-dunyasini-degistiriyor-88990.html'
+  },
+  {
+    id: '8',
+    title: 'Türkiye\'nin Turizmde Yeni Rekor Beklentisi: Yaz Sezonu Doluluk Oranları Yüksek',
+    category: 'EKONOMİ',
+    imageUrl: 'https://picsum.photos/800/500?random=8',
+    imageHint: 'beach resort summer',
+    content: 'Türkiye, 2024 yaz sezonunda turizmde yeni bir rekor kırmayı hedefliyor. Özellikle Akdeniz ve Ege sahillerindeki otellerde doluluk oranları şimdiden yüzde 90\'lara ulaştı. Kültür ve Turizm Bakanlığı, tanıtım faaliyetlerini artırarak ve yeni destinasyonları öne çıkararak turist sayısını ve gelirlerini artırmayı planlıyor. Sektör temsilcileri, artan maliyetlere rağmen talebin güçlü olduğunu belirtiyor.',
+    publishDate: '3 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/turizmde-yeni-rekor-beklentisi-12121.html'
+  },
+  {
+    id: '9',
+    title: 'Yerli Savunma Sanayii Ürünleri Uluslararası Fuarda Göz Doldurdu',
+    category: 'SAVUNMA',
+    imageUrl: 'https://picsum.photos/800/500?random=9',
+    imageHint: 'military tech defense',
+    content: 'Türk savunma sanayii firmaları, katıldıkları uluslararası bir fuarda en yeni ürün ve teknolojilerini sergiledi. İnsansız hava araçları, zırhlı araçlar, füze sistemleri ve siber güvenlik çözümleri büyük ilgi gördü. Birçok ülke ile yeni işbirliği anlaşmaları imzalanırken, Türkiye\'nin savunma alanındaki teknolojik yetkinliği bir kez daha kanıtlandı. Fuarda sergilenen ürünler, yerli ve milli imkanlarla geliştirilmiş olmalarıyla dikkat çekti.',
+    publishDate: '2 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/savunma/yerli-savunma-sanayii-fuarda-34343.html'
+  },
+  {
+    id: '10',
+    title: 'Gıda Fiyatlarındaki Artış ve Enflasyonla Mücadelede Yeni Adımlar Atılıyor',
+    category: 'EKONOMİ',
+    imageUrl: 'https://picsum.photos/800/500?random=10',
+    imageHint: 'market grocery inflation',
+    content: 'Küresel ve yerel etkenlerle artan gıda fiyatları ve genel enflasyonla mücadele kapsamında hükümet yeni bir dizi tedbir paketi açıkladı. Tarımsal üretimde verimliliği artırmaya yönelik destekler, tedarik zincirindeki sorunların giderilmesi ve bazı temel ürünlerde KDV indirimleri gibi adımlar atılması planlanıyor. Ekonomistler, bu tedbirlerin etkilerini ve uzun vadeli çözümleri tartışıyor.',
+    publishDate: '1 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/gida-fiyatlari-enflasyon-mucadele-56565.html'
+  },
+   {
+    id: '11',
+    title: 'Eğitimde Dijital Dönüşüm Hız Kesmiyor: Akıllı Sınıflar Yaygınlaşıyor',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=11',
+    imageHint: 'classroom technology education',
+    content: 'Türkiye genelindeki okullarda eğitimde dijital dönüşüm projeleri hızla devam ediyor. Akıllı tahtalar, tablet dağıtımları ve online eğitim platformları ile donatılan sınıflar sayesinde öğrencilerin öğrenme süreçleri daha interaktif ve verimli hale geliyor. Milli Eğitim Bakanlığı, öğretmenlere yönelik dijital yetkinlik eğitimlerini de artırarak bu sürece destek oluyor.',
+    publishDate: '28 Haziran 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/egitimde-dijital-donusum-78787.html'
+  },
+  {
+    id: '12',
+    title: 'Yerel Tohumların Korunması ve Yaygınlaştırılması İçin Yeni Proje Başlatıldı',
+    category: 'YAŞAM',
+    imageUrl: 'https://picsum.photos/800/500?random=12',
+    imageHint: 'seeds farming agriculture',
+    content: 'Tarım ve Orman Bakanlığı, yerel tohumların genetik çeşitliliğini korumak ve çiftçiler arasında yaygınlaşmasını sağlamak amacıyla kapsamlı bir proje başlattı. Proje kapsamında tohum bankaları kurulacak, çiftçilere yerel tohum kullanımı konusunda eğitimler verilecek ve destekler sağlanacak. Bu sayede hem biyolojik çeşitliliğin korunması hem de sürdürülebilir tarımın desteklenmesi hedefleniyor.',
+    publishDate: '27 Haziran 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/yasam/yerel-tohumlarin-korunmasi-projesi-90909.html'
+  }
 ];
