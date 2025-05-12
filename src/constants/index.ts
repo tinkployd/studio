@@ -2,25 +2,36 @@ export interface NavLink {
   label: string;
   href: string;
   children?: NavLink[]; // For dropdowns
+  isDropdown?: boolean; // Explicitly mark if it should show a dropdown arrow
 }
 
-export const NAV_LINKS: NavLink[] = [
-  { label: 'SICAK', href: '#' }, // In image this looks like a category that might have a dropdown
+export const MAIN_HEADER_NAV_LINKS: NavLink[] = [
+  { label: 'SICAK', href: '#', isDropdown: true },
   { label: 'SAVUNMA', href: '#' },
   { label: 'ÇOCUK', href: '#' },
   { label: 'ÖZEL HABER', href: '#' },
   { label: 'DOSYA HABER', href: '#' },
-  { label: 'DİĞER', href: '#' }, // In image this looks like a category that might have a dropdown
-  // Additional links from current app, can be kept or removed based on final design
-  { label: 'GÜNDEM', href: '#' },
-  { label: 'DÜNYA', href: '#' },
-  { label: 'EKONOMİ', href: '#' },
-  { label: 'SPOR', href: '#' },
-  { label: 'BİLİM TEKNOLOJİ', href: '#' },
-  { label: 'YAŞAM', href: '#' },
-  { label: 'KÜLTÜR SANAT', href: '#' },
-  { label: 'SAĞLIK', href: '#' },
-  { label: 'PROGRAMLAR', href: '#' },
+  { label: 'DİĞER', href: '#', isDropdown: true },
+];
+
+export const NAV_LINKS: NavLink[] = [
+  // Links for the main header (also used in mobile menu)
+  { label: 'SICAK', href: '#', isDropdown: true },
+  { label: 'SAVUNMA', href: '#' },
+  { label: 'ÇOCUK', href: '#' },
+  { label: 'ÖZEL HABER', href: '#' },
+  { label: 'DOSYA HABER', href: '#' },
+  { label: 'DİĞER', href: '#', isDropdown: true },
+  // Additional links primarily for mobile menu and site structure
+  { label: 'GÜNDEM', href: '#', isDropdown: true },
+  { label: 'DÜNYA', href: '#', isDropdown: true },
+  { label: 'EKONOMİ', href: '#', isDropdown: true },
+  { label: 'SPOR', href: '#', isDropdown: true },
+  { label: 'BİLİM TEKNOLOJİ', href: '#', isDropdown: true },
+  { label: 'YAŞAM', href: '#', isDropdown: true },
+  { label: 'KÜLTÜR SANAT', href: '#', isDropdown: true },
+  { label: 'SAĞLIK', href: '#', isDropdown: true },
+  { label: 'PROGRAMLAR', href: '#', isDropdown: true },
 ];
 
 export const FOOTER_LINKS_COL1 = [
@@ -124,4 +135,3 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     sourceUrl: 'https://www.trthaber.com/haber/saglik/saglikli-yasam-onerileri-77889.html'
   },
 ];
-

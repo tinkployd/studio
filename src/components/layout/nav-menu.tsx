@@ -19,7 +19,7 @@ export function NavMenu({ links, isMobile = false, onLinkClick }: NavMenuProps) 
       isMobile ? "flex-col space-y-1 items-start w-full p-4" : "space-x-1 md:space-x-2 lg:space-x-3"
     )}>
       {links.map((link) => {
-        const hasDropdown = ['SICAK', 'DİĞER', 'GÜNDEM', 'DÜNYA', 'EKONOMİ', 'SPOR', 'BİLİM TEKNOLOJİ', 'YAŞAM', 'KÜLTÜR SANAT', 'SAĞLIK', 'PROGRAMLAR'].includes(link.label.toUpperCase()); // Match specific labels from image or extend as needed
+        const hasDropdown = !!link.isDropdown;
         return (
           <Link
             key={link.label}
@@ -29,7 +29,7 @@ export function NavMenu({ links, isMobile = false, onLinkClick }: NavMenuProps) 
               "text-xs font-semibold uppercase tracking-wide transition-colors flex items-center",
               isMobile 
                 ? "py-2.5 px-3 text-base w-full rounded-md text-foreground hover:bg-muted hover:text-primary"
-                : "px-1.5 py-2 md:px-2 lg:px-2.5 text-primary-foreground hover:text-primary-foreground/80",
+                : "px-1.5 py-2 md:px-2 lg:px-2.5 text-primary-foreground hover:text-primary-foreground/80", // Kept text-xs as it seems to match image better
               pathname === link.href && !isMobile ? "text-primary-foreground opacity-100" : !isMobile ? "text-primary-foreground/90" : "",
               pathname === link.href && isMobile ? "bg-muted text-primary font-bold" : ""
             )}

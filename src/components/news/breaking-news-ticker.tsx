@@ -53,16 +53,7 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
           Tümü
         </Link>
       </div>
-      <style jsx>{`
-        @keyframes marquee-medium {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); } /* Adjust based on content width for seamless loop */
-        }
-        .animate-marquee-medium {
-          animation: marquee-medium 60s linear infinite; /* Adjust duration as needed */
-          display: flex; /* Changed from inline-block to flex for vertical centering */
-        }
-      `}</style>
+      {/* Removed styled-jsx block as Tailwind handles the animation */}
     </section>
   );
 }

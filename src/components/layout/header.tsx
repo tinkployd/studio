@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Search, Menu as MenuIcon, X as XIcon, CloudSun, ChevronDown, Briefcase, Users, Edit3, FileText, Settings } from 'lucide-react';
+import { Search, Menu as MenuIcon, X as XIcon, CloudSun, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { TrtHaberLogo } from '@/components/icons/trt-logo';
 import { NavMenu } from './nav-menu';
-import { NAV_LINKS } from '@/constants'; // Import NAV_LINKS for mobile menu
+import { NAV_LINKS, MAIN_HEADER_NAV_LINKS } from '@/constants';
 
 export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -18,12 +18,8 @@ export default function Header() {
 
   useEffect(() => {
     // Simulate fetching weather data
-    setCurrentTemperature("12.5°C");
+    setCurrentTemperature("11°C"); // Updated to match image
   }, []);
-
-  const mainNavLinks = NAV_LINKS.filter(link => !['Diğer Kategoriler', 'Yazarlar', 'Video', 'Foto Galeri'].includes(link.label));
-  const otherLinks = NAV_LINKS.filter(link => ['Diğer Kategoriler', 'Yazarlar', 'Video', 'Foto Galeri'].includes(link.label));
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-primary text-primary-foreground shadow-md">
@@ -34,7 +30,7 @@ export default function Header() {
             <TrtHaberLogo className="h-7 md:h-8" />
           </Link>
           <div className="hidden lg:flex">
-            <NavMenu links={mainNavLinks} />
+            <NavMenu links={MAIN_HEADER_NAV_LINKS} />
           </div>
         </div>
 
@@ -80,7 +76,15 @@ export default function Header() {
               <SheetContent side="left" className="w-[300px] sm:w-[360px] bg-background text-foreground p-0 flex flex-col">
                 <div className="flex justify-between items-center p-4 border-b">
                   <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                    <TrtHaberLogo className="h-7 text-primary" /> {/* Logo with primary color text on light bg */}
+                    {/* Ensure logo inside mobile menu has appropriate colors for light background */}
+                     <div className="flex items-center">
+                      <span className="bg-primary text-primary-foreground px-2 py-0.5 rounded font-bold text-lg leading-none">
+                        TRT
+                      </span>
+                      <span className="text-primary font-semibold text-lg ml-1.5 leading-none">
+                        HABER
+                      </span>
+                    </div>
                   </Link>
                   <SheetClose asChild>
                     <Button variant="ghost" size="icon"> <XIcon size={24} /> </Button>
