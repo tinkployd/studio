@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,31 +20,32 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
 
   return (
     <Card className="overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 h-full flex flex-col rounded-lg border border-border/70">
-      <CardHeader className={isHero ? "p-0" : "p-0"}>
-        <div className={`relative ${isHero ? 'aspect-[2/1]' : 'aspect-video'}`}>
+      <CardHeader className="p-0">
+        <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"} rel={sourceUrl ? "noopener noreferrer" : undefined} className="block relative group aspect-video">
           <Image
             src={imageUrl}
             alt={title}
             layout="fill"
             objectFit="cover"
-            className={isHero ? "rounded-t-lg" : "rounded-t-lg"} // Keep rounded top for all
+            className="rounded-t-lg group-hover:scale-105 transition-transform duration-300"
             data-ai-hint={imageHint}
           />
-        </div>
+           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+        </Link>
       </CardHeader>
       <CardContent className={`p-3 md:p-4 flex-grow flex flex-col`}>
-        <div className="mb-2 flex items-center justify-between">
-          <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-2 py-0.5">
+        <div className="mb-1.5 flex items-center justify-between">
+          <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-1.5 py-0.5 leading-tight">
             {category}
           </Badge>
           {publishDate && (
             <div className="text-xs text-muted-foreground flex items-center">
-              <Clock size={12} className="mr-1" />
+              <Clock size={11} className="mr-0.5" />
               {publishDate}
             </div>
           )}
         </div>
-        <CardTitle className={`leading-tight ${isHero ? 'text-xl md:text-2xl' : 'text-base md:text-lg'} font-bold mb-1`}>
+        <CardTitle className={`leading-tight ${isHero ? 'text-xl md:text-2xl' : (isFeatured ? 'text-md md:text-lg' : 'text-base md:text-lg')} font-bold mb-1`}>
           <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"} rel={sourceUrl ? "noopener noreferrer" : undefined} className="hover:text-primary transition-colors">
             {title}
           </Link>
@@ -51,9 +53,14 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
         
         {layout === 'default' && <ArticleSummaryClient articleContent={content.substring(0,150) + "..."} sourceUrl={sourceUrl} />}
         
-        {(isHero || isFeatured) && (
+        {isFeatured && (
+          // For featured, show a shorter summary, or let the title and image speak
+          <p className="mt-1 text-sm text-muted-foreground line-clamp-2 md:line-clamp-2 flex-grow">{content.substring(0, 100) + (content.length > 100 ? '...' : '')}</p>
+        )}
+         {isHero && (
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2 md:line-clamp-3 flex-grow">{content}</p>
         )}
+
       </CardContent>
       {(isHero || isFeatured) && (
         <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
