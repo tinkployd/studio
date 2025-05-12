@@ -4,7 +4,7 @@ import ArticleCard from '@/components/news/article-card';
 import { PLACEHOLDER_ARTICLES, type Article as ArticleType } from '@/constants'; // Renamed Article to ArticleType to avoid conflict
 import { Button } from '@/components/ui/button';
 import BreakingNewsTicker from '@/components/news/breaking-news-ticker';
-import SecondaryNav from '@/components/layout/secondary-nav'; // New component
+import SecondaryNav from '@/components/layout/secondary-nav'; 
 
 // Specific data for the hero section based on the image
 const heroData = {
@@ -36,12 +36,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-2 sm:px-4 py-0"> 
-      {/* Breaking News Ticker - Moved up to be below header immediately */}
-      <BreakingNewsTicker newsItems={breakingNewsItems} />
-      
-      {/* Secondary Navigation */}
+      {/* Secondary Navigation - Moved up */}
       <SecondaryNav />
 
+      {/* Breaking News Ticker - Now below SecondaryNav */}
+      <BreakingNewsTicker newsItems={breakingNewsItems} />
+      
       {/* Hero Section */}
       <section className="my-6 md:my-8">
         <div className="grid lg:grid-cols-12 gap-0 bg-card shadow-lg rounded-lg overflow-hidden">

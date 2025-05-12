@@ -24,8 +24,8 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
 
   return (
     <section className="container mx-auto px-2 sm:px-4 my-4 md:my-6">
-      <div className="bg-secondary flex items-stretch rounded-md shadow overflow-hidden h-10">
-        <div className="bg-primary text-primary-foreground font-bold text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap">
+      <div className="bg-secondary flex items-stretch rounded-md shadow-sm overflow-hidden h-10 border border-border/30">
+        <div className="bg-primary text-primary-foreground font-bold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap rounded-l-md">
           SON HABERLER
         </div>
         <div className="flex-grow relative overflow-hidden">
@@ -49,11 +49,10 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
             ))}
           </div>
         </div>
-        <Link href="#" className="bg-muted hover:bg-muted/80 text-primary font-semibold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap transition-colors">
+        <Link href="#" className="bg-muted hover:bg-muted/80 text-primary font-semibold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap transition-colors rounded-r-md">
           Tümü
         </Link>
       </div>
-      {/* Removed styled-jsx block as Tailwind handles the animation */}
     </section>
   );
 }
