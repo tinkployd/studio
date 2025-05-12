@@ -1,5 +1,4 @@
 
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -37,7 +36,7 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
     isHero ? 'text-xl md:text-2xl' :
     isFeatured ? 'text-md md:text-lg' :
     isCompactVertical ? 'text-sm md:text-base' : // Smaller title for compact
-    'text-base md:text-lg'
+    'text-base md:text-lg' // Default layout title size
   );
 
   const imageAspectClass = cn(
@@ -54,7 +53,11 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
             src={imageUrl}
             alt={title}
             fill // Use fill instead of layout="fill"
-            sizes={isCompactVertical ? "(max-width: 768px) 50vw, 33vw" : "(max-width: 768px) 100vw, 50vw"} // Adjust sizes for different layouts
+            sizes={
+                isCompactVertical ? "(max-width: 768px) 50vw, 33vw" :
+                layout === 'default' ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw" : // Adjusted for 4 columns in default
+                "(max-width: 768px) 100vw, 50vw"
+            } // Adjust sizes for different layouts
             objectFit="cover"
             className="rounded-t-lg group-hover:scale-105 transition-transform duration-300"
             data-ai-hint={imageHint}
@@ -63,11 +66,12 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
         </Link>
       </CardHeader>
       <CardContent className={contentClasses}>
-        <div className={cn("mb-1.5 flex items-center", isCompactVertical ? "justify-start" : "justify-between")}> {/* Align badge left for compact */}
+        <div className={cn("mb-1.5 flex items-center", isCompactVertical || layout === 'default' ? "justify-start" : "justify-between")}> {/* Align badge left for compact and default */}
           <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-1.5 py-0.5 leading-tight">
             {category}
           </Badge>
-          {publishDate && !isCompactVertical && ( // Hide date in compact vertical for simplicity
+          {/* Hide date in compact vertical AND default layout as per request */}
+          {publishDate && !isCompactVertical && layout !== 'default' && (
             <div className="text-xs text-muted-foreground flex items-center">
               <Clock size={11} className="mr-0.5" />
               {publishDate}
@@ -80,18 +84,18 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
           </Link>
         </CardTitle>
 
-        {/* Content/Summary based on layout */}
-        {layout === 'default' && (
-           <ArticleSummaryClient articleContent={content} sourceUrl={sourceUrl} />
-        )}
+        {/* Content/Summary based on layout - Removed for 'default' */}
+        {/* {layout === 'default' && (
+           // Removed ArticleSummaryClient for default layout
+        )} */}
         {isFeatured && (
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2 md:line-clamp-2 flex-grow">{content.substring(0, 100) + (content.length > 100 ? '...' : '')}</p>
         )}
          {isHero && (
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2 md:line-clamp-3 flex-grow">{content}</p>
         )}
-         {isCompactVertical && (
-           // No description/summary for compact vertical layout
+         {(isCompactVertical || layout === 'default') && (
+           // No description/summary for compact vertical or default layout
            <div className="flex-grow"></div> // Ensure it takes remaining space
          )}
 
