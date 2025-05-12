@@ -3,16 +3,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import ArticleCard from '@/components/news/article-card';
-import { PLACEHOLDER_ARTICLES, type Article as ArticleType } from '@/constants';
+import { PLACEHOLDER_ARTICLES, PLACEHOLDER_VIDEOS, type Article as ArticleType, type Video as VideoType } from '@/constants';
 import { Button } from '@/components/ui/button';
 import BreakingNewsTicker from '@/components/news/breaking-news-ticker';
 import SecondaryNav from '@/components/layout/secondary-nav';
 import HeroSlider from '@/app/(components)/hero-slider';
 import CurrencyTicker from '@/components/news/currency-ticker';
 import { Badge } from '@/components/ui/badge'; // Added Badge import
+import VideoSection from '@/components/news/video-section'; // Import VideoSection
+
 
 export default function Home() {
   const articles = PLACEHOLDER_ARTICLES;
+  const videos = PLACEHOLDER_VIDEOS;
 
   const heroSliderArticles = articles.slice(0, 10);
 
@@ -29,6 +32,10 @@ export default function Home() {
   const bottomGundemArticlesRow1 = gundemArticles.slice(2, 6); // Next 4 articles for the first bottom row
   const bottomGundemArticlesRow2 = gundemArticles.slice(6, 10); // Next 4 articles for the second bottom row
   const bottomGundemArticlesRow3 = gundemArticles.slice(10, 14); // Next 4 articles for the third bottom row
+
+  // Video section articles
+  const mainVideo = videos[0];
+  const thumbnailVideos = videos.slice(1, 5); // Get next 4 videos for thumbnails
 
   // General articles start after all hero, all 5 featured, and all Gündem articles used above
   const usedArticleIds = new Set([
@@ -123,9 +130,7 @@ export default function Home() {
                    {mainGundemArticle.title}
                  </Link>
                </h3>
-               <p className="text-sm text-muted-foreground line-clamp-4">
-                 {mainGundemArticle.content.substring(0, 180) + (mainGundemArticle.content.length > 180 ? '...' : '')}
-               </p>
+                {/* Content Removed as per request */}
              </div>
 
              {/* Center: Large image of main article */}
@@ -179,6 +184,11 @@ export default function Home() {
              </div>
            )}
          </section>
+      )}
+
+      {/* Video Section */}
+      {mainVideo && thumbnailVideos.length > 0 && (
+        <VideoSection mainVideo={mainVideo} thumbnailVideos={thumbnailVideos} />
       )}
 
 

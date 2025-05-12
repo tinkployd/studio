@@ -74,6 +74,18 @@ export interface Article {
   sourceUrl?: string;
 }
 
+export interface Video {
+  id: string;
+  title: string;
+  category: string;
+  thumbnailUrl: string; // Renamed from imageUrl for clarity
+  imageHint: string; // Keep for AI hints
+  description?: string; // Optional description for main video
+  videoUrl?: string; // Link to the video page or source
+  sourceUrl?: string; // Fallback if videoUrl is not specific
+}
+
+
 // Add more articles, especially in GÜNDEM category to fill the new slots
 export const PLACEHOLDER_ARTICLES: Article[] = [
   // --- Existing Articles (0-17) ---
@@ -360,8 +372,53 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     publishDate: '10 Temmuz 2024',
     sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/antarktika-bilim-seferi-tamamlandi-28282.html'
   },
-
-
 ];
 
-
+export const PLACEHOLDER_VIDEOS: Video[] = [
+  {
+    id: 'v1',
+    title: 'Bayraktar TB3 SİHA\'lardan tam isabet',
+    category: 'Savunma',
+    thumbnailUrl: 'https://picsum.photos/800/450?random=50', // Main video image
+    imageHint: 'drone military strike',
+    description: 'Milli silahlı insansız hava aracı (SİHA) Bayraktar TB3\'ün iki prototipi, DENİZKURDU-2025 Tatbikatı kapsamında TCG Anadolu gemisinden havalanarak MAM-L mühimmatıyla tam isabetle atış gerçekleştirdi.',
+    videoUrl: '#',
+    sourceUrl: '#'
+  },
+  {
+    id: 'v2',
+    title: 'Metro istasyonunda üzerine reklam panosu düşen kadın yaralandı',
+    category: 'Türkiye',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=51',
+    imageHint: 'subway station accident',
+    videoUrl: '#',
+    sourceUrl: '#'
+  },
+  {
+    id: 'v3',
+    title: 'Gazzeli kız: Biz her gün ölüyoruz',
+    category: 'Dünya',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=52',
+    imageHint: 'war conflict child',
+    videoUrl: '#',
+    sourceUrl: '#'
+  },
+  {
+    id: 'v4',
+    title: 'Bayraktar TB3 DENİZKURDU-2025 Tatbikatı\'nda',
+    category: 'Gündem',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=53',
+    imageHint: 'drone aircraft carrier',
+    videoUrl: '#',
+    sourceUrl: '#'
+  },
+  {
+    id: 'v5',
+    title: 'Metrobüs kazası araç içi kamerasında',
+    category: 'Türkiye',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=54',
+    imageHint: 'bus crash camera',
+    videoUrl: '#',
+    sourceUrl: '#'
+  }
+];
