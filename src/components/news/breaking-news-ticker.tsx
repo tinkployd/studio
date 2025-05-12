@@ -24,11 +24,14 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
 
   return (
     <section className="container mx-auto px-2 sm:px-4 my-4 md:my-6">
-      <div className="bg-secondary flex items-stretch rounded-md shadow-sm overflow-hidden h-10 border border-border/30">
-        <div className="bg-primary text-primary-foreground font-bold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap rounded-l-md">
-          SON HABERLER
-        </div>
-        <div className="flex-grow relative overflow-hidden">
+      {/* Title: "SON HABERLER" */}
+      <h1 className="text-xl font-bold text-primary mb-2 uppercase">
+        SON HABERLER
+      </h1>
+
+      {/* Marquee Bar */}
+      <div className="bg-secondary rounded-md shadow-sm overflow-hidden h-10 border border-border/30">
+        <div className="flex-grow relative overflow-hidden h-full">
           <div className="animate-marquee-medium flex items-center h-full">
             {displayItems.map((item, index) => (
               <Link href={item.link || '#'} key={index} className="flex items-center whitespace-nowrap px-3 sm:px-4 h-full hover:bg-muted transition-colors">
@@ -49,10 +52,15 @@ export default function BreakingNewsTicker({ newsItems }: BreakingNewsTickerProp
             ))}
           </div>
         </div>
-        <Link href="#" className="bg-muted hover:bg-muted/80 text-primary font-semibold text-xs sm:text-sm uppercase px-3 sm:px-4 flex items-center whitespace-nowrap transition-colors rounded-r-md">
+      </div>
+      
+      {/* "Tümü" Link */}
+      <div className="text-right mt-2">
+        <Link href="#" className="text-primary hover:underline text-sm font-bold uppercase">
           Tümü
         </Link>
       </div>
     </section>
   );
 }
+
