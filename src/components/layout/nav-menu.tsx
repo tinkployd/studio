@@ -27,17 +27,17 @@ export function NavMenu({ links, isMobile = false, onLinkClick }: NavMenuProps) 
             href={link.href}
             onClick={onLinkClick}
             className={cn(
-              "text-xs font-semibold uppercase tracking-wide transition-all duration-200 ease-in-out flex items-center", // Base styles, changed transition
+              "font-medium uppercase tracking-wide transition-all duration-200 ease-in-out flex items-center", // Base styles: font-weight set to medium. Size and specific weight for active states handled below.
               isMobile 
                 ? [ // Mobile specific styles
-                    "py-2.5 px-3 text-base w-full rounded-md text-foreground hover:bg-muted hover:text-primary",
-                    pathname === link.href && "bg-muted text-primary font-bold"
+                    "py-2.5 px-3 text-base w-full rounded-md text-foreground hover:bg-muted hover:text-primary", // Uses text-base, so effectively text-base font-medium
+                    pathname === link.href && "bg-muted text-primary font-bold" // Active mobile links are font-bold
                   ]
                 : [ // Desktop specific styles
-                    "px-1.5 py-2 md:px-2 lg:px-2.5 rounded-md", // Base padding and ensure rounded-md for hover/active
+                    "px-1.5 py-2 md:px-2 lg:px-2.5 rounded-md text-sm", // Uses text-sm, so effectively text-sm font-medium
                     pathname === link.href 
-                      ? "bg-primary-foreground text-primary shadow-lg" // Active state: white bg, red text, shadow
-                      : "text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:shadow-lg", // Inactive state with new hover
+                      ? "bg-primary-foreground text-primary shadow-lg" // Active state: white bg, red text, shadow. Font-weight remains font-medium from base.
+                      : "text-primary-foreground hover:bg-primary-foreground hover:text-primary hover:shadow-lg", // Inactive state with new hover. Font-weight remains font-medium from base.
                     pathname !== link.href && !isMobile && "text-primary-foreground/90", // Opacity for inactive non-mobile text
                   ]
             )}
