@@ -194,5 +194,56 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     content: 'Tarım ve Orman Bakanlığı, yerel tohumların genetik çeşitliliğini korumak ve çiftçiler arasında yaygınlaşmasını sağlamak amacıyla kapsamlı bir proje başlattı. Proje kapsamında tohum bankaları kurulacak, çiftçilere yerel tohum kullanımı konusunda eğitimler verilecek ve destekler sağlanacak. Bu sayede hem biyolojik çeşitliliğin korunması hem de sürdürülebilir tarımın desteklenmesi hedefleniyor.',
     publishDate: '27 Haziran 2024',
     sourceUrl: 'https://www.trthaber.com/haber/yasam/yerel-tohumlarin-korunmasi-projesi-90909.html'
+  },
+  {
+    id: '13',
+    title: 'Ankara\'da Toplu Taşıma İçin Yeni Metro Hattı Projesi Onaylandı',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=13',
+    imageHint: 'subway train station',
+    content: 'Ankara Büyükşehir Belediyesi, şehir içi ulaşımı rahatlatmak amacıyla planlanan yeni metro hattı projesinin Ulaştırma Bakanlığı tarafından onaylandığını duyurdu. Yeni hat, şehrin yoğun nüfuslu bölgelerini birbirine bağlayacak ve trafik sorununa önemli bir çözüm sunması bekleniyor. İnşaat çalışmalarının önümüzdeki yıl başlaması planlanıyor.',
+    publishDate: '11 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/ankara-yeni-metro-hatti-onaylandi-13131.html'
+  },
+  {
+    id: '14',
+    title: 'Avrupa Merkez Bankası Faiz Oranlarını Değiştirmedi, Enflasyon Vurgusu Yaptı',
+    category: 'DÜNYA',
+    imageUrl: 'https://picsum.photos/800/500?random=14',
+    imageHint: 'bank building finance',
+    content: 'Avrupa Merkez Bankası (ECB), son para politikası toplantısında beklentiler doğrultusunda faiz oranlarında bir değişikliğe gitmedi. ECB Başkanı yaptığı açıklamada, Euro Bölgesi\'nde enflasyonun hala yüksek seyrettiğini ve para politikasının sıkı duruşunu koruyacağını belirtti. Gelecek dönem verilerine göre hareket edileceği mesajı verildi.',
+    publishDate: '11 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/dunya/ecb-faiz-karari-temmuz-2024-14141.html'
+  },
+  {
+    id: '15',
+    title: 'Karadeniz\'de Geleneksel Yayla Şenlikleri Başladı, Turistler Akın Ediyor',
+    category: 'YAŞAM',
+    imageUrl: 'https://picsum.photos/800/500?random=15',
+    imageHint: 'mountain festival folk',
+    content: 'Doğu Karadeniz Bölgesi\'nin eşsiz doğal güzelliklerine sahip yaylalarında geleneksel yaz şenlikleri başladı. Rengarenk yöresel kıyafetler, kemençe ve tulum sesleri eşliğinde horonların oynandığı şenlikler, yerli ve yabancı çok sayıda turisti ağırlıyor. Bölge esnafı, şenliklerin turizme ve ekonomiye canlılık getirdiğini belirtiyor.',
+    publishDate: '10 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/yasam/karadeniz-yayla-senlikleri-basladi-15151.html'
+  },
+  {
+    id: '16',
+    title: 'Galatasaray, Şampiyonlar Ligi Ön Eleme Turu İçin Rakibini Bekliyor',
+    category: 'SPOR',
+    imageUrl: 'https://picsum.photos/800/500?random=16',
+    imageHint: 'soccer team training',
+    content: 'Trendyol Süper Lig şampiyonu Galatasaray, UEFA Şampiyonlar Ligi\'ne katılabilmek için ön eleme turlarında mücadele edecek. Sarı-kırmızılı ekip, yeni sezon hazırlıklarını sürdürürken, kura çekimini ve muhtemel rakiplerini bekliyor. Teknik heyet ve futbolcular, Devler Ligi gruplarına kalmak için iddialı olduklarını belirtti.',
+    publishDate: '9 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/spor/galatasaray-sampiyonlar-ligi-rakip-16161.html'
+  },
+  {
+    id: '17',
+    title: 'Borsa İstanbul\'da Yabancı Yatırımcı İlgisi Artıyor: Son Veriler Açıklandı',
+    category: 'EKONOMİ',
+    imageUrl: 'https://picsum.photos/800/500?random=17',
+    imageHint: 'stock market chart',
+    content: 'Merkez Bankası ve Borsa İstanbul tarafından açıklanan son verilere göre, yabancı yatırımcıların Türk varlıklarına olan ilgisi son dönemde artış gösterdi. Özellikle hisse senedi piyasasında net alımların gözlendiği belirtilirken, uygulanan ekonomi politikalarının ve atılan normalleşme adımlarının bu ilgide etkili olduğu yorumları yapılıyor.',
+    publishDate: '8 Temmuz 2024',
+    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/borsa-istanbul-yabanci-yatirimci-17171.html'
   }
 ];
+

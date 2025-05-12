@@ -62,18 +62,13 @@ export default function ArticleCard({ article, layout = 'default' }: ArticleCard
         )}
 
       </CardContent>
-      {(isHero || isFeatured) && (
-        <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
-           <Link href={sourceUrl || "#"} target={sourceUrl ? "_blank" : "_self"}  rel={sourceUrl ? "noopener noreferrer" : undefined} className="text-primary hover:underline text-sm font-medium">
-            Devamını Oku &rarr;
-          </Link>
-        </CardFooter>
-      )}
-       {layout === 'default' && !isHero && !isFeatured && (
-         <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
-            {/* Placeholder for any footer content in default cards if needed */}
-         </CardFooter>
-       )}
+      {/* CardFooter is rendered for all layouts for consistent structure, but content varies. */}
+      {/* "Devamını Oku" link removed from hero and featured layouts as per request. */}
+      <CardFooter className="p-3 md:p-4 pt-0 mt-auto">
+        {/* This space can be used for other actions or content in the future if needed. */}
+        {/* For default layout, this was previously a placeholder. */}
+      </CardFooter>
     </Card>
   );
 }
+
