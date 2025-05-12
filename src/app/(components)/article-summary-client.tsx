@@ -3,11 +3,11 @@
 import { useState, useTransition } from 'react';
 import { Button } from '@/components/ui/button';
 import { summarizeArticle, type SummarizeArticleInput } from '@/ai/flows/summarize-article';
-import { Loader2, FileText, BookOpen, AlertCircle, ExternalLink } from 'lucide-react'; // Replaced FileJson with BookOpen and added ExternalLink
+import { Loader2, FileText, BookOpen, AlertCircle, ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ArticleSummaryClientProps {
-  articleContent: string;
+  articleContent: string; // Expect full content
   sourceUrl?: string;
 }
 
@@ -21,7 +21,15 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
     if (!showSummary && !summary) {
       startTransition(async () => {
         try {
-          const input: SummarizeArticleInput = { articleContent }; // Use full article content for summary
+          // Ensure the content passed is substantial enough for summarization
+          const contentToSummarize = articleContent.length > 50 ? articleContent : "İçerik özetlenemeyecek kadar kısa.";
+          if (contentToSummarize === "İçerik özetlenemeyecek kadar kısa.") {
+             setSummary(contentToSummarize);
+             setShowSummary(true);
+             return;
+          }
+
+          const input: SummarizeArticleInput = { articleContent: contentToSummarize };
           const result = await summarizeArticle(input);
           setSummary(result.summary);
           setShowSummary(true);
@@ -32,8 +40,8 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
             description: "Makale özeti alınırken bir sorun oluştu. Lütfen daha sonra tekrar deneyin.",
             variant: "destructive",
           });
-          setSummary(null); 
-          setShowSummary(false); 
+          setSummary(null);
+          setShowSummary(false);
         }
       });
     } else {
@@ -83,8 +91,10 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
         )
       ) : (
         <div className="prose prose-sm max-w-none">
-          {/* Displaying truncated content by default, full content passed for summarization */}
-          <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">{articleContent}</p>
+          {/* Displaying truncated content by default */}
+          <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">
+             {articleContent.substring(0, 150) + (articleContent.length > 150 ? '...' : '')}
+          </p>
         </div>
       )}
     </div>

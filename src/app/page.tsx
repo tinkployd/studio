@@ -1,27 +1,44 @@
 
+
 import Image from 'next/image';
 import Link from 'next/link';
 import ArticleCard from '@/components/news/article-card';
-import { PLACEHOLDER_ARTICLES, type Article as ArticleType } from '@/constants'; 
+import { PLACEHOLDER_ARTICLES, type Article as ArticleType } from '@/constants';
 import { Button } from '@/components/ui/button';
 import BreakingNewsTicker from '@/components/news/breaking-news-ticker';
-import SecondaryNav from '@/components/layout/secondary-nav'; 
+import SecondaryNav from '@/components/layout/secondary-nav';
 import HeroSlider from '@/app/(components)/hero-slider';
 import CurrencyTicker from '@/components/news/currency-ticker';
+import { Badge } from '@/components/ui/badge'; // Added Badge import
 
 export default function Home() {
   const articles = PLACEHOLDER_ARTICLES;
-  
+
   const heroSliderArticles = articles.slice(0, 10);
-  
+
   // Featured articles for the new layout
   // Row 1 needs 2 featured articles
   const featuredArticlesRow1 = articles.slice(heroSliderArticles.length, heroSliderArticles.length + 2);
   // Row 2 needs 3 featured articles
   const featuredArticlesRow2 = articles.slice(heroSliderArticles.length + 2, heroSliderArticles.length + 5);
-  
-  // General articles start after all hero and all 5 featured articles
-  const generalArticles = articles.slice(heroSliderArticles.length + 5); 
+
+  // Gündem section articles
+  const gundemArticles = articles.filter(a => a.category === 'GÜNDEM');
+  const mainGundemArticle = gundemArticles[0]; // Assuming the first Gündem article is the main one
+  const secondaryGundemArticle = gundemArticles[1]; // Article for the right small card
+  const bottomGundemArticles = gundemArticles.slice(2, 6); // Next 4 articles for the bottom row
+
+  // General articles start after all hero, all 5 featured, and the 6 Gündem articles used above
+  const usedArticleIds = new Set([
+    ...heroSliderArticles.map(a => a.id),
+    ...featuredArticlesRow1.map(a => a.id),
+    ...featuredArticlesRow2.map(a => a.id),
+    ...(mainGundemArticle ? [mainGundemArticle.id] : []),
+    ...(secondaryGundemArticle ? [secondaryGundemArticle.id] : []),
+    ...bottomGundemArticles.map(a => a.id),
+  ]);
+  const generalArticles = articles.filter(a => !usedArticleIds.has(a.id));
+
 
   const breakingNewsItems = [
     { text: "Ankara'da motosiklet trafik levhasına çarptı: 2 kişi hayatını kaybetti", timestamp: "00:52", link: "#" },
@@ -39,7 +56,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="container mx-auto px-2 sm:px-4 py-0"> 
+    <div className="container mx-auto px-2 sm:px-4 py-0">
       <SecondaryNav />
       <BreakingNewsTicker newsItems={breakingNewsItems} />
       <HeroSlider articles={heroSliderArticles} />
@@ -62,9 +79,7 @@ export default function Home() {
 
           {/* Right part: Currency Ticker */}
           <div>
-            {/* CurrencyTicker component already includes a title "DÖVİZ BİLGİLERİ" with similar styling */}
-            {/* We add a margin-top to align its title with "ÖNE ÇIKANLAR" or adjust as needed */}
-            <div className="md:mt-0"> {/* Consider if title alignment needs specific adjustment. For now, CurrencyTicker handles its own title within its card. */}
+            <div className="md:mt-0">
               <CurrencyTicker title="DÖVİZ BİLGİLERİ" data={currencyData} />
             </div>
           </div>
@@ -72,15 +87,76 @@ export default function Home() {
 
         {/* Row 2: 3 more Featured Articles, implicitly under "ÖNE ÇIKANLAR" context */}
         {featuredArticlesRow2.length > 0 && (
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"> {/* Added mt-8 for spacing */}
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredArticlesRow2.map(article => (
               <ArticleCard key={article.id} article={article} layout="featured" />
             ))}
           </div>
         )}
       </section>
-      
-      {/* General News Grid */}
+
+      {/* Gündem Section - New Layout based on image */}
+      {mainGundemArticle && (
+         <section className="my-8 md:my-12">
+           <h2 className="text-3xl font-bold mb-6 text-foreground flex items-center">
+             <span className="w-3 h-6 bg-primary mr-3"></span> {/* Red square icon */}
+             Gündem
+           </h2>
+
+           {/* Main Gündem Layout Grid */}
+           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 items-start"> {/* Adjusted grid columns for layout */}
+             {/* Left: Text content of main article */}
+             <div className="lg:pr-6">
+               <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-1.5 py-0.5 leading-tight mb-2">
+                  {mainGundemArticle.category}
+               </Badge>
+               <h3 className="text-2xl font-bold mb-3 leading-tight">
+                 <Link href={mainGundemArticle.sourceUrl || "#"} target={mainGundemArticle.sourceUrl ? "_blank" : "_self"} rel={mainGundemArticle.sourceUrl ? "noopener noreferrer" : undefined} className="hover:text-primary transition-colors">
+                   {mainGundemArticle.title}
+                 </Link>
+               </h3>
+               <p className="text-sm text-muted-foreground line-clamp-4">
+                 {mainGundemArticle.content.substring(0, 180) + (mainGundemArticle.content.length > 180 ? '...' : '')}
+               </p>
+             </div>
+
+             {/* Center: Large image of main article */}
+             <div className="relative aspect-[16/10] rounded-lg overflow-hidden shadow-md group">
+               <Link href={mainGundemArticle.sourceUrl || "#"} target={mainGundemArticle.sourceUrl ? "_blank" : "_self"} rel={mainGundemArticle.sourceUrl ? "noopener noreferrer" : undefined} className="block w-full h-full">
+                 <Image
+                   src={mainGundemArticle.imageUrl}
+                   alt={mainGundemArticle.title}
+                   fill
+                   sizes="(max-width: 1024px) 100vw, 50vw"
+                   objectFit="cover"
+                   className="group-hover:scale-105 transition-transform duration-300"
+                   data-ai-hint={mainGundemArticle.imageHint}
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+               </Link>
+             </div>
+
+             {/* Right: Small card for secondary article */}
+             {secondaryGundemArticle && (
+               <div className="lg:pl-0"> {/* No padding needed here, card has its own */}
+                  <ArticleCard article={secondaryGundemArticle} layout="compact-vertical" />
+               </div>
+             )}
+           </div>
+
+           {/* Bottom Row: 4 small cards */}
+           {bottomGundemArticles.length > 0 && (
+             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+               {bottomGundemArticles.map(article => (
+                 <ArticleCard key={article.id} article={article} layout="default" />
+               ))}
+             </div>
+           )}
+         </section>
+      )}
+
+
+      {/* General News Grid - Filtered to exclude used articles */}
       {generalArticles.length > 0 && (
         <section className="mt-8 md:mt-12">
           <h2 className="text-2xl font-bold mb-6 text-primary border-l-4 border-primary pl-3">Tüm Haberler</h2>
@@ -92,11 +168,10 @@ export default function Home() {
         </section>
       )}
 
-      {/* Category Sections (Example) */}
+      {/* Category Sections (Example) - Filtered to exclude used articles */}
       {['EKONOMİ', 'SPOR', 'BİLİM TEKNOLOJİ'].map(category => {
-        // Category articles are now filtered from generalArticles which correctly excludes hero and all featured.
         const categoryArticles = generalArticles.filter(a => a.category === category).slice(0,3);
-        
+
         if (categoryArticles.length === 0) return null;
         return (
           <section key={category} className="mt-8 md:mt-12">
@@ -119,4 +194,3 @@ export default function Home() {
     </div>
   );
 }
-
