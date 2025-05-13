@@ -8,7 +8,7 @@ import { Loader2, FileText, BookOpen, AlertCircle, ExternalLink } from 'lucide-r
 import { useToast } from '@/hooks/use-toast';
 
 interface ArticleSummaryClientProps {
-  articleContent: string; // Expect full content
+  articleContent: string; 
   sourceUrl?: string;
 }
 
@@ -22,10 +22,9 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
     if (!showSummary && !summary) {
       startTransition(async () => {
         try {
-          // Ensure the content passed is substantial enough for summarization
-          const contentToSummarize = articleContent.length > 50 ? articleContent : "İçerik özetlenemeyecek kadar kısa.";
-          if (contentToSummarize === "İçerik özetlenemeyecek kadar kısa.") {
-             setSummary(contentToSummarize);
+          const contentToSummarize = articleContent.replace(/<[^>]*>?/gm, '').trim(); // Strip HTML for summarization
+          if (contentToSummarize.length < 100) { // Increased minimum length
+             setSummary("İçerik özetlenemeyecek kadar kısa veya uygun formatta değil.");
              setShowSummary(true);
              return;
           }
@@ -51,9 +50,9 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
   };
 
   return (
-    <div className="mt-3">
-      <div className="flex flex-wrap gap-2 items-center mb-2">
-        <Button onClick={handleToggleSummary} disabled={isPending} variant="default" size="default">
+    <div className="mt-4"> {/* Reduced top margin */}
+      <div className="flex flex-wrap gap-2 items-center mb-3">
+        <Button onClick={handleToggleSummary} disabled={isPending} variant="default" size="default" className="bg-primary hover:bg-primary/90">
           {isPending ? (
             <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
           ) : showSummary ? (
@@ -61,10 +60,10 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
           ) : (
             <BookOpen className="mr-1.5 h-4 w-4" />
           )}
-          {isPending ? 'Özetleniyor...' : showSummary ? 'Metni Göster' : 'Haberi Özetle'}
+          {isPending ? 'Özetleniyor...' : showSummary ? 'Özeti Kapat' : 'Haberi Özetle'}
         </Button>
         {sourceUrl && (
-           <Button variant="outline" size="sm" asChild className="text-xs px-2 py-1 h-auto">
+           <Button variant="outline" size="sm" asChild className="text-xs px-2 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
              <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
                <ExternalLink className="mr-1.5 h-3.5 w-3.5" />
                Kaynağa Git
@@ -73,34 +72,25 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
         )}
       </div>
 
-      {showSummary ? (
+      {showSummary && ( // Always show the container if showSummary is true
         summary ? (
-          <div className="prose prose-sm max-w-none p-3 bg-muted/30 rounded-md shadow-sm border border-border/50">
+          <div className="prose prose-sm max-w-none p-4 bg-muted/50 rounded-md shadow-sm border border-border/50">
             <h4 className="text-sm font-semibold mb-1.5 text-primary">Haber Özeti</h4>
-            <p className="text-xs text-foreground">{summary}</p>
+            <p className="text-sm text-foreground leading-relaxed">{summary}</p>
           </div>
         ) : isPending ? (
-          <div className="flex items-center justify-center p-3 bg-muted/30 rounded-md min-h-[70px]">
+          <div className="flex items-center justify-center p-4 bg-muted/50 rounded-md min-h-[80px]">
             <Loader2 className="h-5 w-5 animate-spin text-primary" />
-            <span className="ml-2 text-xs">Özet yükleniyor...</span>
+            <span className="ml-2 text-sm text-muted-foreground">Özet yükleniyor...</span>
           </div>
-        ) : (
-           <div className="flex items-center p-3 bg-destructive/10 text-destructive rounded-md text-xs">
+        ) : ( // This case handles if summary is null and not pending (e.g. initial state before button click or error state without toast)
+           <div className="flex items-center p-4 bg-destructive/10 text-destructive rounded-md text-sm">
              <AlertCircle className="h-4 w-4 mr-1.5" />
-             <span>Özet yüklenemedi.</span>
+             <span>Özet yüklenemedi veya içerik uygun değil.</span>
            </div>
         )
-      ) : (
-        !isPending && !summary && ( /* Only show original content preview if not loading and no summary attempt failed/short */
-            <div className="prose prose-sm max-w-none">
-            {/* Displaying truncated content by default */}
-            <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">
-                {articleContent.substring(0, 150) + (articleContent.length > 150 ? '...' : '')}
-            </p>
-            </div>
-        )
       )}
+      {/* Removed the original content preview from here, as it's part of the main article body */}
     </div>
   );
 }
-

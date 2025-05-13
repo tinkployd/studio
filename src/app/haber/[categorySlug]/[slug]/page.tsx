@@ -8,17 +8,13 @@ import Link from 'next/link';
 import { PLACEHOLDER_ARTICLES, type Article as ArticleType } from '@/constants';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CalendarDays, Clock, ChevronRight, Share2, Printer, MessageCircle, Minus, Plus } from 'lucide-react';
+import { CalendarDays, Clock, ChevronRight, Share2, Printer, MessageCircle, Minus, Plus, Mail, Facebook, Twitter as TwitterLucide, Linkedin } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import ArticleSummaryClient from '@/app/(components)/article-summary-client';
 import ArticleCard from '@/components/news/article-card';
 
-// Placeholder social icons, replace with actual or lucide if available and styled
-const FacebookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>;
-const TwitterIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>;
-const LinkedinIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>;
-const MailIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>;
-
+// Using Lucide icons where possible for consistency.
+// Custom SVGs can be used if specific branding is needed and Lucide doesn't have a match.
 
 export default function ArticleDetailPage() {
   const params = useParams();
@@ -49,57 +45,89 @@ export default function ArticleDetailPage() {
   const increaseFontSize = () => setFontSize(prev => Math.min(prev + 2, 24));
   const decreaseFontSize = () => setFontSize(prev => Math.max(prev - 2, 12));
 
+  // Splitting date and time for display like TRT
+  const formatDisplayDate = (dateStr?: string) => {
+    if (!dateStr) return { date: '', time: '' };
+    const parts = dateStr.split(' ');
+    return { date: parts[0] || '', time: parts[1] || '' };
+  };
+
+  const publishDisplay = formatDisplayDate(article.publishDate);
+  const updateDisplay = formatDisplayDate(article.updateDate);
+
+
   return (
     <div className="bg-background">
-      <div className="container mx-auto max-w-4xl px-4 py-8"> {/* Centered content */}
+      <div className="container mx-auto max-w-4xl px-4 py-8"> {/* Max width set to match common article layouts */}
         <article>
           {/* Breadcrumbs */}
-          <nav className="mb-4 text-sm text-muted-foreground" aria-label="breadcrumb">
-            <ol className="list-none p-0 inline-flex">
+          <nav className="mb-3 text-xs text-muted-foreground" aria-label="breadcrumb">
+            <ol className="list-none p-0 inline-flex items-center">
               <li className="flex items-center">
-                <Link href="/" className="hover:text-primary">Ana Sayfa</Link>
-                <ChevronRight size={16} className="mx-1" />
+                <Link href="/" className="hover:text-primary">ANA SAYFA</Link>
+                <ChevronRight size={14} className="mx-1 opacity-70" />
               </li>
               <li className="flex items-center">
-                <Link href={`/haber/${categorySlug}`} className="hover:text-primary">{article.category}</Link>
-                <ChevronRight size={16} className="mx-1" />
+                <Link href={`/haber/${categorySlug}`} className="hover:text-primary uppercase">{article.category}</Link>
+                <ChevronRight size={14} className="mx-1 opacity-70" />
               </li>
               <li className="flex items-center">
-                <span className="text-foreground line-clamp-1" title={article.title}>{article.title.substring(0,50)}...</span>
+                <span className="text-foreground line-clamp-1 uppercase" title={article.title}>{article.title.substring(0,35)}...</span>
               </li>
             </ol>
           </nav>
 
-          <Badge variant="default" className="bg-primary text-primary-foreground text-xs uppercase px-2 py-1 rounded-sm font-semibold mb-3 self-start tracking-wider">
+          <Badge variant="default" className="bg-primary text-primary-foreground text-[10px] uppercase px-2 py-0.5 rounded-sm font-bold mb-3 self-start tracking-wider">
             {article.category}
           </Badge>
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2 leading-tight">
             {article.title}
           </h1>
           
           {article.subtitle && (
-            <p className="text-lg md:text-xl text-muted-foreground mb-4">
+            <p className="text-lg md:text-xl text-muted-foreground mb-5">
               {article.subtitle}
             </p>
           )}
 
-          <div className="flex flex-wrap items-center justify-between text-sm text-muted-foreground gap-x-4 gap-y-2 mb-6">
-            <div className="flex items-center gap-x-4">
-                {article.publishDate && <span className="flex items-center"><CalendarDays size={15} className="mr-1.5" /> Yayın: {article.publishDate}</span>}
-                {/* Placeholder for Update Date and Source if available in ArticleType and data */}
-                {/* {article.updateDate && <span className="flex items-center ml-4"><Clock size={15} className="mr-1.5" /> Güncelleme: {article.updateDate}</span>} */}
-                {/* {article.sourceAgency && <span className="ml-4">Kaynak: {article.sourceAgency}</span>} */}
+          {/* Meta Info: Publish Date, Update Date, Source */}
+          <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center text-xs text-muted-foreground gap-x-3 gap-y-1 mb-5 border-y py-2.5">
+            {article.publishDate && (
+              <div className="flex items-center">
+                <span className="font-semibold mr-1">YAYINLANMA:</span> {publishDisplay.date} {publishDisplay.time}
+              </div>
+            )}
+            {article.updateDate && (
+              <div className="flex items-center">
+                <span className="sm:ml-2 font-semibold mr-1">GÜNCELLEME:</span> {updateDisplay.date} {updateDisplay.time}
+              </div>
+            )}
+            {article.sourceAgency && (
+              <div className="flex items-center">
+                <span className="sm:ml-2 font-semibold mr-1">KAYNAK:</span> {article.sourceAgency}
+              </div>
+            )}
+          </div>
+          
+          {/* Action Bar: Font Size, Print, Comments */}
+          <div className="flex items-center justify-between mb-6 text-muted-foreground">
+            <div className="flex items-center gap-1">
+                <span className="text-xs font-semibold mr-1">YAZI TİPİ</span>
+                <Button variant="outline" size="icon" onClick={decreaseFontSize} aria-label="Yazı tipini küçült" className="h-7 w-7 text-muted-foreground hover:text-primary border-border/70">
+                    <Minus size={16}/>
+                </Button>
+                <Button variant="outline" size="icon" onClick={increaseFontSize} aria-label="Yazı tipini büyüt" className="h-7 w-7 text-muted-foreground hover:text-primary border-border/70">
+                    <Plus size={16}/>
+                </Button>
             </div>
             <div className="flex items-center gap-2">
-                <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Yazı tipini küçült" className="text-muted-foreground hover:text-primary"><Minus size={18}/></Button>
-                <Button variant="ghost" size="icon" onClick={increaseFontSize} aria-label="Yazı tipini büyüt" className="text-muted-foreground hover:text-primary"><Plus size={18}/></Button>
-                <Button variant="ghost" size="icon" onClick={() => window.print()} aria-label="Yazdır" className="text-muted-foreground hover:text-primary"><Printer size={18}/></Button>
-                <Button variant="ghost" size="icon" aria-label="Yorumlar" className="text-muted-foreground hover:text-primary"><MessageCircle size={18}/></Button>
+                <Button variant="ghost" size="icon" onClick={() => window.print()} aria-label="Yazdır" className="h-7 w-7 text-muted-foreground hover:text-primary"><Printer size={18}/></Button>
+                <Button variant="ghost" size="icon" aria-label="Yorumlar" className="h-7 w-7 text-muted-foreground hover:text-primary"><MessageCircle size={18}/></Button>
             </div>
           </div>
           
-          <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg mb-8">
+          <div className="relative aspect-[16/9] w-full rounded-lg overflow-hidden shadow-lg mb-6 md:mb-8">
             <Image
               src={article.imageUrl}
               alt={article.title}
@@ -112,34 +140,45 @@ export default function ArticleDetailPage() {
           </div>
           
           {/* Social Share Bar */}
-          <div className="flex items-center justify-center gap-3 mb-8 py-3 border-y">
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-sm"><FacebookIcon /> Facebook</Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-sm"><TwitterIcon/> Twitter</Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-sm"><LinkedinIcon/> LinkedIn</Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-sm"><MailIcon/> E-posta</Button>
-            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-sm"><Share2 size={16}/> Diğer</Button>
+          <div className="flex items-center justify-start gap-2 mb-6 md:mb-8 py-3 border-y">
+            {/* Using Lucide icons for a more consistent look if custom SVGs are not essential */}
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs px-2.5 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
+                <Facebook size={16} /> Facebook
+            </Button>
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs px-2.5 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
+                <TwitterLucide size={16}/> Twitter
+            </Button>
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs px-2.5 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
+                <Mail size={16}/> E-posta
+            </Button>
+             {/* Placeholder for WhatsApp - requires specific handling or a library typically */}
+            {/* <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs px-2.5 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
+                <MessageSquare size={16}/> WhatsApp 
+            </Button> */}
+            <Button variant="outline" size="sm" className="flex items-center gap-1.5 text-xs px-2.5 py-1 h-auto border-border/70 text-muted-foreground hover:border-primary/50 hover:text-primary">
+                <Share2 size={16}/> Diğer
+            </Button>
           </div>
 
           <div
-            className="prose prose-lg max-w-none dark:prose-invert text-foreground article-content"
+            className="prose prose-base max-w-none dark:prose-invert text-foreground article-content selection:bg-primary/20"
             style={{ fontSize: `${fontSize}px` }}
-            dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, '<br />') }} // Basic rendering, consider markdown parser for richer content
+            dangerouslySetInnerHTML={{ __html: article.content }} 
           />
           
           {/* Article Summary Client Component Integration */}
-          <div className='my-8'>
-            {/* The ArticleSummaryClient component contains the "Haberi Özetle" button */}
+          <div className='my-8 pt-6 border-t'>
             <ArticleSummaryClient articleContent={article.content} sourceUrl={article.sourceUrl} />
           </div>
 
 
           {article.tags && article.tags.length > 0 && (
             <div className="mt-8 pt-6 border-t">
-              <h3 className="text-lg font-semibold text-foreground mb-3">Etiketler</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground mb-3 uppercase">Etiketler</h3>
               <div className="flex flex-wrap gap-2">
                 {article.tags.map(tag => (
-                  <Link key={tag} href={`/haber/etiket/${tag.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                    <Badge variant="secondary" className="hover:bg-muted transition-colors">{tag}</Badge>
+                  <Link key={tag} href={`/haber/etiket/${slugify(tag)}`}>
+                    <Badge variant="secondary" className="px-2.5 py-1 text-xs font-normal hover:bg-muted transition-colors text-foreground hover:text-primary rounded-sm"># {tag}</Badge>
                   </Link>
                 ))}
               </div>
@@ -161,15 +200,39 @@ export default function ArticleDetailPage() {
       </div>
       <style jsx global>{`
         .article-content p {
-            line-height: 1.8; /* Adjust line height for readability */
-            margin-bottom: 1.25em;
+            line-height: 1.8;
+            margin-bottom: 1.5em; /* Increased margin like TRT */
+        }
+        .article-content p:first-of-type {
+            /* font-weight: 600; TRT bolds the first paragraph or lead sentence */
+            /* color: hsl(var(--foreground)); */ /* Ensure it's not too muted */
         }
         .article-content strong {
-            color: hsl(var(--foreground)); /* Ensure strong text is readable */
+            color: hsl(var(--foreground)); 
         }
-        /* Add more specific styles for article content if needed */
+        .article-content a {
+            color: hsl(var(--primary));
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+        .article-content a:hover {
+            color: hsl(var(--primary) / 0.8);
+        }
       `}</style>
     </div>
   );
 }
 
+// Helper function to slugify tags, you might want to move this to utils or use an existing one
+const slugify = (text: string): string => {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+};

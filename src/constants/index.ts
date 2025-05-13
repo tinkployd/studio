@@ -75,11 +75,13 @@ export interface Article {
   category: string;
   imageUrl: string;
   imageHint: string;
-  content: string;
+  content: string; // Can contain HTML
   publishDate?: string;
+  updateDate?: string; // Added
   sourceUrl?: string;
-  subtitle?: string; // For article detail page
-  tags?: string[]; // For article detail page
+  sourceAgency?: string; // Added
+  subtitle?: string; 
+  tags?: string[]; 
 }
 
 export interface Video {
@@ -171,8 +173,10 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=1',
     imageHint: 'electric car future',
-    content: 'Türkiye\'nin yerli otomobili Togg, üretim ve teknoloji alanında önemli adımlar atmaya devam ediyor. Son yapılan açıklamada, Togg\'un yeni batarya teknolojisi ve otonom sürüş özellikleriyle ilgili detaylar paylaşıldı. Fabrikadaki üretim kapasitesinin artırılması ve uluslararası pazarlara açılma hedefleri de vurgulandı. Togg, Türkiye\'nin teknoloji ve mühendislik alanındaki yeteneklerini dünyaya göstermeyi amaçlıyor. Araç, kullanıcı deneyimini en üst seviyeye çıkarmak için gelişmiş bağlantı özellikleri ve kişiselleştirilebilir arayüzler sunacak. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
-    publishDate: '10 Temmuz 2024',
+    content: '<p>Türkiye\'nin yerli otomobili Togg, üretim ve teknoloji alanında önemli adımlar atmaya devam ediyor. Son yapılan açıklamada, Togg\'un yeni batarya teknolojisi ve otonom sürüş özellikleriyle ilgili detaylar paylaşıldı. Fabrikadaki üretim kapasitesinin artırılması ve uluslararası pazarlara açılma hedefleri de vurgulandı. Togg, Türkiye\'nin teknoloji ve mühendislik alanındaki yeteneklerini dünyaya göstermeyi amaçlıyor. Araç, kullanıcı deneyimini en üst seviyeye çıkarmak için gelişmiş bağlantı özellikleri ve kişiselleştirilebilir arayüzler sunacak.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>',
+    publishDate: '10 Temmuz 2024 10:00',
+    updateDate: '10 Temmuz 2024 11:30',
+    sourceAgency: 'AA',
     sourceUrl: '#',
     subtitle: 'Yerli otomobil Togg, yeni batarya teknolojisi ve otonom sürüş özellikleriyle dikkat çekiyor. Üretim kapasitesi artırılıyor ve global pazarlara açılma hedefleniyor.',
     tags: ['Togg', 'Yerli Otomobil', 'Elektrikli Araç', 'Ekonomi']
@@ -184,8 +188,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=2',
     imageHint: 'soccer celebration stadium',
-    content: 'A Milli Futbol Takımımız, Avrupa Futbol Şampiyonası\'nda gösterdiği üstün performansla çeyrek finale yükseldi. Son 16 turunda güçlü rakibini nefes kesen bir maç sonunda eleyen ay-yıldızlılar, taraftarlarına büyük sevinç yaşattı. Teknik direktör ve oyuncular, maç sonu yaptıkları açıklamalarda takım ruhuna, inanca ve taraftar desteğine vurgu yaptı. Bir sonraki zorlu rakip için hazırlıklar tüm hızıyla başladı. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    publishDate: '9 Temmuz 2024',
+    content: '<p>A Milli Futbol Takımımız, Avrupa Futbol Şampiyonası\'nda gösterdiği üstün performansla çeyrek finale yükseldi. Son 16 turunda güçlü rakibini nefes kesen bir maç sonunda eleyen ay-yıldızlılar, taraftarlarına büyük sevinç yaşattı. Teknik direktör ve oyuncular, maç sonu yaptıkları açıklamalarda takım ruhuna, inanca ve taraftar desteğine vurgu yaptı. Bir sonraki zorlu rakip için hazırlıklar tüm hızıyla başladı.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
+    publishDate: '9 Temmuz 2024 23:15',
     sourceUrl: '#',
     tags: ['Milli Takım', 'Futbol', 'Avrupa Şampiyonası', 'Spor']
   },
@@ -196,8 +200,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=3',
     imageHint: 'nebula stars galaxy',
-    content: 'NASA ve ESA ortaklığında geliştirilen yeni nesil uzay teleskobu, evrenin daha önce hiç görülmemiş uzak köşelerinden ilk renkli ve detaylı görüntüleri Dünya\'ya ulaştırdı. Bu muazzam görüntüler, galaksi oluşumları, yıldızların doğuş ve ölüm süreçleri, ve gizemli kara delikler hakkında yeni bilgiler sunuyor. Bilim insanları, bu verilerin evren anlayışımızı kökten değiştirebileceğini ve astrofizikte yeni bir çağ başlatabileceğini belirtiyor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    publishDate: '8 Temmuz 2024',
+    content: '<p>NASA ve ESA ortaklığında geliştirilen yeni nesil uzay teleskobu, evrenin daha önce hiç görülmemiş uzak köşelerinden ilk renkli ve detaylı görüntüleri Dünya\'ya ulaştırdı. Bu muazzam görüntüler, galaksi oluşumları, yıldızların doğuş ve ölüm süreçleri, ve gizemli kara delikler hakkında yeni bilgiler sunuyor. Bilim insanları, bu verilerin evren anlayışımızı kökten değiştirebileceğini ve astrofizikte yeni bir çağ başlatabileceğini belirtiyor.</p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>',
+    publishDate: '8 Temmuz 2024 14:30',
     sourceUrl: '#',
     tags: ['Uzay', 'Teleskop', 'Bilim', 'Astronomi']
   },
@@ -208,8 +212,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'KÜLTÜR SANAT',
     imageUrl: 'https://picsum.photos/800/500?random=4',
     imageHint: 'ancient ruins excavation',
-    content: 'İstanbul Tarihi Yarımada\'da devam eden altyapı ve restorasyon çalışmaları sırasında Roma, Bizans ve Osmanlı dönemlerine ait olduğu düşünülen çok sayıda önemli arkeolojik kalıntıya ulaşıldı. Eserler arasında günlük yaşamda kullanılan seramikler, değerli sikkeler, mozaik parçaları ve antik yapı kalıntıları bulunuyor. Arkeologlar, bu keşiflerin İstanbul\'un zengin tarihi katmanlarına ve kültürel mirasına ışık tutacağını ifade ediyor.',
-    publishDate: '7 Temmuz 2024',
+    content: '<p>İstanbul Tarihi Yarımada\'da devam eden altyapı ve restorasyon çalışmaları sırasında Roma, Bizans ve Osmanlı dönemlerine ait olduğu düşünülen çok sayıda önemli arkeolojik kalıntıya ulaşıldı. Eserler arasında günlük yaşamda kullanılan seramikler, değerli sikkeler, mozaik parçaları ve antik yapı kalıntıları bulunuyor. Arkeologlar, bu keşiflerin İstanbul\'un zengin tarihi katmanlarına ve kültürel mirasına ışık tutacağını ifade ediyor.</p>',
+    publishDate: '7 Temmuz 2024 09:00',
     sourceUrl: '#',
     tags: ['Arkeoloji', 'İstanbul', 'Tarihi Eser', 'Kültür Sanat']
   },
@@ -220,8 +224,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'DÜNYA',
     imageUrl: 'https://picsum.photos/800/500?random=5',
     imageHint: 'earth environment pollution',
-    content: 'Birleşmiş Milletler\'e bağlı Hükümetlerarası İklim Değişikliği Paneli (IPCC) merakla beklenen son kapsamlı raporunu yayınladı. Raporda, küresel sıcaklık artışının yıkıcı ve geri döndürülemez sonuçlara yol açabileceği, bu nedenle acil ve kararlı olarak sera gazı emisyonlarının azaltılması gerektiği bir kez daha güçlü bir şekilde vurgulandı. Rapor, yenilenebilir enerjiye geçişin hızlandırılması, enerji verimliliğinin artırılması ve sürdürülebilir politikaların tüm ülkeler tarafından benimsenmesi çağrısında bulunuyor.',
-    publishDate: '6 Temmuz 2024',
+    content: '<p>Birleşmiş Milletler\'e bağlı Hükümetlerarası İklim Değişikliği Paneli (IPCC) merakla beklenen son kapsamlı raporunu yayınladı. Raporda, küresel sıcaklık artışının yıkıcı ve geri döndürülemez sonuçlara yol açabileceği, bu nedenle acil ve kararlı olarak sera gazı emisyonlarının azaltılması gerektiği bir kez daha güçlü bir şekilde vurgulandı. Rapor, yenilenebilir enerjiye geçişin hızlandırılması, enerji verimliliğinin artırılması ve sürdürülebilir politikaların tüm ülkeler tarafından benimsenmesi çağrısında bulunuyor.</p>',
+    publishDate: '6 Temmuz 2024 17:45',
     sourceUrl: '#',
     tags: ['İklim Değişikliği', 'Çevre', 'Küresel Isınma', 'Dünya']
   },
@@ -232,8 +236,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'SAĞLIK',
     imageUrl: 'https://picsum.photos/800/500?random=6',
     imageHint: 'vegetables fruits healthy',
-    content: 'Alanında uzman diyetisyenler ve beslenme uzmanları, sağlıklı ve dengeli bir yaşam sürdürmek için mevsimine uygun, taze ve çeşitli sebze-meyve tüketiminin hayati önemine dikkat çekiyor. İşlenmiş gıdalardan, şekerli içeceklerden ve aşırı tuz tüketiminden uzak durulması, yeterli miktarda su içilmesi ve düzenli fiziksel aktivite yapılması da sağlıklı yaşamın temel taşları arasında gösteriliyor. Özellikle yaz aylarında sıvı alımına ve hafif beslenmeye özen gösterilmesi gerektiği belirtiliyor.',
-    publishDate: '5 Temmuz 2024',
+    content: '<p>Alanında uzman diyetisyenler ve beslenme uzmanları, sağlıklı ve dengeli bir yaşam sürdürmek için mevsimine uygun, taze ve çeşitli sebze-meyve tüketiminin hayati önemine dikkat çekiyor. İşlenmiş gıdalardan, şekerli içeceklerden ve aşırı tuz tüketiminden uzak durulması, yeterli miktarda su içilmesi ve düzenli fiziksel aktivite yapılması da sağlıklı yaşamın temel taşları arasında gösteriliyor. Özellikle yaz aylarında sıvı alımına ve hafif beslenmeye özen gösterilmesi gerektiği belirtiliyor.</p>',
+    publishDate: '5 Temmuz 2024 11:20',
     sourceUrl: '#',
     tags: ['Sağlık', 'Beslenme', 'Diyet', 'Yaşam']
   },
@@ -244,8 +248,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=7',
     imageHint: 'ai art abstract',
-    content: 'Yapay zeka tarafından üretilen sanat eserleri, dünya genelinde sanat galerilerinde sergilenmeye başlandı. Bu durum, sanatın tanımı, yaratıcılık ve telif hakları gibi konularda önemli tartışmaları da beraberinde getiriyor. Bazı sanatçılar yapay zekayı bir araç olarak benimserken, bazıları ise özgünlüğü tehdit ettiğini düşünüyor. Yeni teknolojilerin sanat pratiğine etkileri üzerine düzenlenen paneller ve sergiler, bu dönüşümü anlamaya çalışıyor.',
-    publishDate: '4 Temmuz 2024',
+    content: '<p>Yapay zeka tarafından üretilen sanat eserleri, dünya genelinde sanat galerilerinde sergilenmeye başlandı. Bu durum, sanatın tanımı, yaratıcılık ve telif hakları gibi konularda önemli tartışmaları da beraberinde getiriyor. Bazı sanatçılar yapay zekayı bir araç olarak benimserken, bazıları ise özgünlüğü tehdit ettiğini düşünüyor. Yeni teknolojilerin sanat pratiğine etkileri üzerine düzenlenen paneller ve sergiler, bu dönüşümü anlamaya çalışıyor.</p>',
+    publishDate: '4 Temmuz 2024 16:00',
     sourceUrl: '#',
     tags: ['Yapay Zeka', 'Sanat', 'Teknoloji', 'Bilim Teknoloji']
   },
@@ -256,8 +260,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=8',
     imageHint: 'beach resort summer',
-    content: 'Türkiye, 2024 yaz sezonunda turizmde yeni bir rekor kırmayı hedefliyor. Özellikle Akdeniz ve Ege sahillerindeki otellerde doluluk oranları şimdiden yüzde 90\'lara ulaştı. Kültür ve Turizm Bakanlığı, tanıtım faaliyetlerini artırarak ve yeni destinasyonları öne çıkararak turist sayısını ve gelirlerini artırmayı planlıyor. Sektör temsilcileri, artan maliyetlere rağmen talebin güçlü olduğunu belirtiyor.',
-    publishDate: '3 Temmuz 2024',
+    content: '<p>Türkiye, 2024 yaz sezonunda turizmde yeni bir rekor kırmayı hedefliyor. Özellikle Akdeniz ve Ege sahillerindeki otellerde doluluk oranları şimdiden yüzde 90\'lara ulaştı. Kültür ve Turizm Bakanlığı, tanıtım faaliyetlerini artırarak ve yeni destinasyonları öne çıkararak turist sayısını ve gelirlerini artırmayı planlıyor. Sektör temsilcileri, artan maliyetlere rağmen talebin güçlü olduğunu belirtiyor.</p>',
+    publishDate: '3 Temmuz 2024 10:10',
     sourceUrl: '#',
     tags: ['Turizm', 'Ekonomi', 'Yaz Sezonu', 'Tatil']
   },
@@ -268,11 +272,10 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'SAVUNMA',
     imageUrl: 'https://picsum.photos/800/500?random=9',
     imageHint: 'military tech defense',
-    content: 'Türk savunma sanayii firmaları, katıldıkları uluslararası bir fuarda en yeni ürün ve teknolojilerini sergiledi. İnsansız hava araçları, zırhlı araçlar, füze sistemleri ve siber güvenlik çözümleri büyük ilgi gördü. Birçok ülke ile yeni işbirliği anlaşmaları imzalanırken, Türkiye\'nin savunma alanındaki teknolojik yetkinliği bir kez daha kanıtlandı. Fuarda sergilenen ürünler, yerli ve milli imkanlarla geliştirilmiş olmalarıyla dikkat çekti. İletişim Başkanı Altun: Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz. Türkiye\'nin terörle mücadelesi kararlılıkla devam ediyor. Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz.',
-    publishDate: '2 Temmuz 2024',
+    content: '<p>Türk savunma sanayii firmaları, katıldıkları uluslararası bir fuarda en yeni ürün ve teknolojilerini sergiledi. İnsansız hava araçları, zırhlı araçlar, füze sistemleri ve siber güvenlik çözümleri büyük ilgi gördü. Birçok ülke ile yeni işbirliği anlaşmaları imzalanırken, Türkiye\'nin savunma alanındaki teknolojik yetkinliği bir kez daha kanıtlandı. Fuarda sergilenen ürünler, yerli ve milli imkanlarla geliştirilmiş olmalarıyla dikkat çekti.</p>',
+    publishDate: '2 Temmuz 2024 15:00',
     sourceUrl: '#',
-    subtitle: 'İletişim Başkanı Fahrettin Altun, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz" dedi. Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirtti.',
-    tags: ['Savunma Sanayii', 'Teknoloji', 'Askeri', 'Fuar', 'Terörle Mücadele', 'Fahrettin Altun']
+    tags: ['Savunma Sanayii', 'Teknoloji', 'Askeri', 'Fuar']
   },
   {
     id: '10',
@@ -281,8 +284,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=10',
     imageHint: 'market grocery inflation',
-    content: 'Küresel ve yerel etkenlerle artan gıda fiyatları ve genel enflasyonla mücadele kapsamında hükümet yeni bir dizi tedbir paketi açıkladı. Tarımsal üretimde verimliliği artırmaya yönelik destekler, tedarik zincirindeki sorunların giderilmesi ve bazı temel ürünlerde KDV indirimleri gibi adımlar atılması planlanıyor. Ekonomistler, bu tedbirlerin etkilerini ve uzun vadeli çözümleri tartışıyor.',
-    publishDate: '1 Temmuz 2024',
+    content: '<p>Küresel ve yerel etkenlerle artan gıda fiyatları ve genel enflasyonla mücadele kapsamında hükümet yeni bir dizi tedbir paketi açıkladı. Tarımsal üretimde verimliliği artırmaya yönelik destekler, tedarik zincirindeki sorunların giderilmesi ve bazı temel ürünlerde KDV indirimleri gibi adımlar atılması planlanıyor. Ekonomistler, bu tedbirlerin etkilerini ve uzun vadeli çözümleri tartışıyor.</p>',
+    publishDate: '1 Temmuz 2024 12:00',
     sourceUrl: '#',
     tags: ['Enflasyon', 'Gıda Fiyatları', 'Ekonomi', 'Tedbir Paketi']
   },
@@ -293,8 +296,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=11',
     imageHint: 'classroom technology education',
-    content: 'Türkiye genelindeki okullarda eğitimde dijital dönüşüm projeleri hızla devam ediyor. Akıllı tahtalar, tablet dağıtımları ve online eğitim platformları ile donatılan sınıflar sayesinde öğrencilerin öğrenme süreçleri daha interaktif ve verimli hale geliyor. Milli Eğitim Bakanlığı, öğretmenlere yönelik dijital yetkinlik eğitimlerini de artırarak bu sürece destek oluyor.',
-    publishDate: '28 Haziran 2024',
+    content: '<p>Türkiye genelindeki okullarda eğitimde dijital dönüşüm projeleri hızla devam ediyor. Akıllı tahtalar, tablet dağıtımları ve online eğitim platformları ile donatılan sınıflar sayesinde öğrencilerin öğrenme süreçleri daha interaktif ve verimli hale geliyor. Milli Eğitim Bakanlığı, öğretmenlere yönelik dijital yetkinlik eğitimlerini de artırarak bu sürece destek oluyor.</p>',
+    publishDate: '28 Haziran 2024 09:30',
     sourceUrl: '#',
     tags: ['Eğitim', 'Dijital Dönüşüm', 'Teknoloji', 'Gündem']
   },
@@ -305,8 +308,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'YAŞAM',
     imageUrl: 'https://picsum.photos/800/500?random=12',
     imageHint: 'seeds farming agriculture',
-    content: 'Tarım ve Orman Bakanlığı, yerel tohumların genetik çeşitliliğini korumak ve çiftçiler arasında yaygınlaşmasını sağlamak amacıyla kapsamlı bir proje başlattı. Proje kapsamında tohum bankaları kurulacak, çiftçilere yerel tohum kullanımı konusunda eğitimler verilecek ve destekler sağlanacak. Bu sayede hem biyolojik çeşitliliğin korunması hem de sürdürülebilir tarımın desteklenmesi hedefleniyor.',
-    publishDate: '27 Haziran 2024',
+    content: '<p>Tarım ve Orman Bakanlığı, yerel tohumların genetik çeşitliliğini korumak ve çiftçiler arasında yaygınlaşmasını sağlamak amacıyla kapsamlı bir proje başlattı. Proje kapsamında tohum bankaları kurulacak, çiftçilere yerel tohum kullanımı konusunda eğitimler verilecek ve destekler sağlanacak. Bu sayede hem biyolojik çeşitliliğin korunması hem de sürdürülebilir tarımın desteklenmesi hedefleniyor.</p>',
+    publishDate: '27 Haziran 2024 14:00',
     sourceUrl: '#',
     tags: ['Tarım', 'Yerel Tohum', 'Çevre', 'Yaşam']
   },
@@ -317,8 +320,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=13',
     imageHint: 'subway train station',
-    content: 'Ankara Büyükşehir Belediyesi, şehir içi ulaşımı rahatlatmak amacıyla planlanan yeni metro hattı projesinin Ulaştırma Bakanlığı tarafından onaylandığını duyurdu. Yeni hat, şehrin yoğun nüfuslu bölgelerini birbirine bağlayacak ve trafik sorununa önemli bir çözüm sunması bekleniyor. İnşaat çalışmalarının önümüzdeki yıl başlaması planlanıyor.',
-    publishDate: '11 Temmuz 2024',
+    content: '<p>Ankara Büyükşehir Belediyesi, şehir içi ulaşımı rahatlatmak amacıyla planlanan yeni metro hattı projesinin Ulaştırma Bakanlığı tarafından onaylandığını duyurdu. Yeni hat, şehrin yoğun nüfuslu bölgelerini birbirine bağlayacak ve trafik sorununa önemli bir çözüm sunması bekleniyor. İnşaat çalışmalarının önümüzdeki yıl başlaması planlanıyor.</p>',
+    publishDate: '11 Temmuz 2024 11:00',
     sourceUrl: '#',
     tags: ['Ankara', 'Metro', 'Ulaşım', 'Gündem']
   },
@@ -329,8 +332,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'DÜNYA',
     imageUrl: 'https://picsum.photos/800/500?random=14',
     imageHint: 'bank building finance',
-    content: 'Avrupa Merkez Bankası (ECB), son para politikası toplantısında beklentiler doğrultusunda faiz oranlarında bir değişikliğe gitmedi. ECB Başkanı yaptığı açıklamada, Euro Bölgesi\'nde enflasyonun hala yüksek seyrettiğini ve para politikasının sıkı duruşunu koruyacağını belirtti. Gelecek dönem verilerine göre hareket edileceği mesajı verildi.',
-    publishDate: '11 Temmuz 2024',
+    content: '<p>Avrupa Merkez Bankası (ECB), son para politikası toplantısında beklentiler doğrultusunda faiz oranlarında bir değişikliğe gitmedi. ECB Başkanı yaptığı açıklamada, Euro Bölgesi\'nde enflasyonun hala yüksek seyrettiğini ve para politikasının sıkı duruşunu koruyacağını belirtti. Gelecek dönem verilerine göre hareket edileceği mesajı verildi.</p>',
+    publishDate: '11 Temmuz 2024 16:30',
     sourceUrl: '#',
     tags: ['ECB', 'Faiz Oranları', 'Enflasyon', 'Dünya Ekonomisi']
   },
@@ -341,8 +344,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'YAŞAM',
     imageUrl: 'https://picsum.photos/800/500?random=15',
     imageHint: 'mountain festival folk',
-    content: 'Doğu Karadeniz Bölgesi\'nin eşsiz doğal güzelliklerine sahip yaylalarında geleneksel yaz şenlikleri başladı. Rengarenk yöresel kıyafetler, kemençe ve tulum sesleri eşliğinde horonların oynandığı şenlikler, yerli ve yabancı çok sayıda turisti ağırlıyor. Bölge esnafı, şenliklerin turizme ve ekonomiye canlılık getirdiğini belirtiyor.',
-    publishDate: '10 Temmuz 2024',
+    content: '<p>Doğu Karadeniz Bölgesi\'nin eşsiz doğal güzelliklerine sahip yaylalarında geleneksel yaz şenlikleri başladı. Rengarenk yöresel kıyafetler, kemençe ve tulum sesleri eşliğinde horonların oynandığı şenlikler, yerli ve yabancı çok sayıda turisti ağırlıyor. Bölge esnafı, şenliklerin turizme ve ekonomiye canlılık getirdiğini belirtiyor.</p>',
+    publishDate: '10 Temmuz 2024 13:00',
     sourceUrl: '#',
     tags: ['Karadeniz', 'Yayla Şenlikleri', 'Turizm', 'Yaşam']
   },
@@ -353,8 +356,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=16',
     imageHint: 'soccer team training',
-    content: 'Trendyol Süper Lig şampiyonu Galatasaray, UEFA Şampiyonlar Ligi\'ne katılabilmek için ön eleme turlarında mücadele edecek. Sarı-kırmızılı ekip, yeni sezon hazırlıklarını sürdürürken, kura çekimini ve muhtemel rakiplerini bekliyor. Teknik heyet ve futbolcular, Devler Ligi gruplarına kalmak için iddialı olduklarını belirtti.',
-    publishDate: '9 Temmuz 2024',
+    content: '<p>Trendyol Süper Lig şampiyonu Galatasaray, UEFA Şampiyonlar Ligi\'ne katılabilmek için ön eleme turlarında mücadele edecek. Sarı-kırmızılı ekip, yeni sezon hazırlıklarını sürdürürken, kura çekimini ve muhtemel rakiplerini bekliyor. Teknik heyet ve futbolcular, Devler Ligi gruplarına kalmak için iddialı olduklarını belirtti.</p>',
+    publishDate: '9 Temmuz 2024 18:20',
     sourceUrl: '#',
     tags: ['Galatasaray', 'Şampiyonlar Ligi', 'Futbol', 'Spor']
   },
@@ -365,8 +368,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=17',
     imageHint: 'stock market chart',
-    content: 'Merkez Bankası ve Borsa İstanbul tarafından açıklanan son verilere göre, yabancı yatırımcıların Türk varlıklarına olan ilgisi son dönemde artış gösterdi. Özellikle hisse senedi piyasasında net alımların gözlendiği belirtilirken, uygulanan ekonomi politikalarının ve atılan normalleşme adımlarının bu ilgide etkili olduğu yorumları yapılıyor.',
-    publishDate: '8 Temmuz 2024',
+    content: '<p>Merkez Bankası ve Borsa İstanbul tarafından açıklanan son verilere göre, yabancı yatırımcıların Türk varlıklarına olan ilgisi son dönemde artış gösterdi. Özellikle hisse senedi piyasasında net alımların gözlendiği belirtilirken, uygulanan ekonomi politikalarının ve atılan normalleşme adımlarının bu ilgide etkili olduğu yorumları yapılıyor.</p>',
+    publishDate: '8 Temmuz 2024 10:50',
     sourceUrl: '#',
     tags: ['Borsa İstanbul', 'Yabancı Yatırımcı', 'Ekonomi', 'Finans']
   },
@@ -377,8 +380,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=18',
     imageHint: 'government meeting officials',
-    content: 'Cumhurbaşkanlığı Kabinesi, son toplantısında ekonomi ve dış politikadaki güncel gelişmeleri ele aldı. Toplantı sonrası yapılan açıklamada, enflasyonla mücadele, yeni yatırım teşvikleri ve bölgesel konulara ilişkin alınan kararlar kamuoyuyla paylaşıldı.',
-    publishDate: '11 Temmuz 2024',
+    content: '<p>Cumhurbaşkanlığı Kabinesi, son toplantısında ekonomi ve dış politikadaki güncel gelişmeleri ele aldı. Toplantı sonrası yapılan açıklamada, enflasyonla mücadele, yeni yatırım teşvikleri ve bölgesel konulara ilişkin alınan kararlar kamuoyuyla paylaşıldı.</p>',
+    publishDate: '11 Temmuz 2024 20:00',
     sourceUrl: '#',
     tags: ['Kabine Toplantısı', 'Ekonomi', 'Dış Politika', 'Gündem']
   },
@@ -389,8 +392,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=19',
     imageHint: 'forest fire smoke',
-    content: 'Türkiye\'nin çeşitli bölgelerinde çıkan orman yangınlarına müdahale aralıksız devam ediyor. Tarım ve Orman Bakanlığı koordinasyonunda ekipler, yangın söndürme uçakları, helikopterler ve arazözlerle alevleri kontrol altına almaya çalışıyor. Vatandaşlara anız yakmamaları ve ormanlık alanlarda ateş yakmamaları konusunda uyarılar yapıldı.',
-    publishDate: '10 Temmuz 2024',
+    content: '<p>Türkiye\'nin çeşitli bölgelerinde çıkan orman yangınlarına müdahale aralıksız devam ediyor. Tarım ve Orman Bakanlığı koordinasyonunda ekipler, yangın söndürme uçakları, helikopterler ve arazözlerle alevleri kontrol altına almaya çalışıyor. Vatandaşlara anız yakmamaları ve ormanlık alanlarda ateş yakmamaları konusunda uyarılar yapıldı.</p>',
+    publishDate: '10 Temmuz 2024 17:15',
     sourceUrl: '#',
     tags: ['Orman Yangını', 'Çevre', 'Afet', 'Gündem']
   },
@@ -401,8 +404,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=20',
     imageHint: 'courtroom judge law',
-    content: 'Adalet Bakanlığı, yargı süreçlerini hızlandırmak ve adalete erişimi kolaylaştırmak amacıyla yeni bir yargı reformu paketi üzerinde çalıştıklarını açıkladı. Paketin detaylarının yakın zamanda kamuoyu ile paylaşılması bekleniyor.',
-    publishDate: '9 Temmuz 2024',
+    content: '<p>Adalet Bakanlığı, yargı süreçlerini hızlandırmak ve adalete erişimi kolaylaştırmak amacıyla yeni bir yargı reformu paketi üzerinde çalıştıklarını açıkladı. Paketin detaylarının yakın zamanda kamuoyu ile paylaşılması bekleniyor.</p>',
+    publishDate: '9 Temmuz 2024 13:45',
     sourceUrl: '#',
     tags: ['Yargı Reformu', 'Adalet Bakanlığı', 'Hukuk', 'Gündem']
   },
@@ -413,8 +416,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=21',
     imageHint: 'highway traffic cars',
-    content: 'Yaklaşan Kurban Bayramı tatili öncesinde şehirlerarası yollarda trafik yoğunluğu artmaya başladı. İçişleri Bakanlığı ve Emniyet Genel Müdürlüğü, sürücüleri trafik kurallarına uymaları, hız limitlerini aşmamaları ve yorgun araç kullanmamaları konusunda uyardı. Tatil süresince ek trafik tedbirleri alınacak.',
-    publishDate: '8 Temmuz 2024',
+    content: '<p>Yaklaşan Kurban Bayramı tatili öncesinde şehirlerarası yollarda trafik yoğunluğu artmaya başladı. İçişleri Bakanlığı ve Emniyet Genel Müdürlüğü, sürücüleri trafik kurallarına uymaları, hız limitlerini aşmamaları ve yorgun araç kullanmamaları konusunda uyardı. Tatil süresince ek trafik tedbirleri alınacak.</p>',
+    publishDate: '8 Temmuz 2024 08:00',
     sourceUrl: '#',
     tags: ['Kurban Bayramı', 'Trafik', 'Tatil', 'Gündem']
   },
@@ -425,8 +428,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=22',
     imageHint: 'wheat field grain',
-    content: 'Türkiye, Karadeniz Tahıl Koridoru Anlaşması\'nın devamı ve küresel gıda güvenliğinin sağlanması için diplomatik çabalarını sürdürüyor. İlgili taraflarla görüşmeler devam ederken, anlaşmanın uzatılmasının önemi vurgulanıyor.',
-    publishDate: '7 Temmuz 2024',
+    content: '<p>Türkiye, Karadeniz Tahıl Koridoru Anlaşması\'nın devamı ve küresel gıda güvenliğinin sağlanması için diplomatik çabalarını sürdürüyor. İlgili taraflarla görüşmeler devam ederken, anlaşmanın uzatılmasının önemi vurgulanıyor.</p>',
+    publishDate: '7 Temmuz 2024 19:00',
     sourceUrl: '#',
     tags: ['Tahıl Koridoru', 'Diplomasi', 'Gıda Güvenliği', 'Gündem']
   },
@@ -437,8 +440,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=23',
     imageHint: 'solar panels energy',
-    content: 'Enerji ve Tabii Kaynaklar Bakanlığı, sanayi tesisleri ve konutlarda enerji verimliliğini artırmaya yönelik yeni teşvik ve destek programlarını duyurdu. Amaç, enerji tüketimini azaltmak ve dışa bağımlılığı düşürmek.',
-    publishDate: '6 Temmuz 2024',
+    content: '<p>Enerji ve Tabii Kaynaklar Bakanlığı, sanayi tesisleri ve konutlarda enerji verimliliğini artırmaya yönelik yeni teşvik ve destek programlarını duyurdu. Amaç, enerji tüketimini azaltmak ve dışa bağımlılığı düşürmek.</p>',
+    publishDate: '6 Temmuz 2024 10:30',
     sourceUrl: '#',
     tags: ['Enerji Verimliliği', 'Destek Paketi', 'Çevre', 'Gündem']
   },
@@ -449,8 +452,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=24',
     imageHint: 'hacker computer code',
-    content: 'İçişleri Bakanlığı Siber Suçlarla Mücadele Daire Başkanlığı, artan online dolandırıcılık vakalarına karşı vatandaşları uyardı. Özellikle sahte web siteleri, oltalama (phishing) saldırıları ve telefon dolandırıcılığı yöntemlerine karşı dikkatli olunması gerektiği belirtildi.',
-    publishDate: '5 Temmuz 2024',
+    content: '<p>İçişleri Bakanlığı Siber Suçlarla Mücadele Daire Başkanlığı, artan online dolandırıcılık vakalarına karşı vatandaşları uyardı. Özellikle sahte web siteleri, oltalama (phishing) saldırıları ve telefon dolandırıcılığı yöntemlerine karşı dikkatli olunması gerektiği belirtildi.</p>',
+    publishDate: '5 Temmuz 2024 18:00',
     sourceUrl: '#',
     tags: ['Siber Güvenlik', 'Dolandırıcılık', 'Uyarı', 'Gündem']
   },
@@ -461,8 +464,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=25',
     imageHint: 'parliament building politics',
-    content: 'TBMM, yaz tatilinin ardından yeni yasama yılı için hazırlıklarını sürdürüyor. Yeni dönemde meclis gündemine gelmesi beklenen önemli yasa teklifleri ve düzenlemeler bulunuyor.',
-    publishDate: '4 Temmuz 2024',
+    content: '<p>TBMM, yaz tatilinin ardından yeni yasama yılı için hazırlıklarını sürdürüyor. Yeni dönemde meclis gündemine gelmesi beklenen önemli yasa teklifleri ve düzenlemeler bulunuyor.</p>',
+    publishDate: '4 Temmuz 2024 09:00',
     sourceUrl: '#',
     tags: ['TBMM', 'Yasama Yılı', 'Politika', 'Gündem']
   },
@@ -473,8 +476,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=26',
     imageHint: 'soccer stadium night',
-    content: 'Fenerbahçe, UEFA Avrupa Ligi grup aşaması kura çekiminde güçlü rakiplerle aynı gruba düştü. Teknik direktör ve yönetim, zorlu bir grup olduğunu ancak hedeflerinin gruptan çıkmak olduğunu belirtti.',
-    publishDate: '11 Temmuz 2024',
+    content: '<p>Fenerbahçe, UEFA Avrupa Ligi grup aşaması kura çekiminde güçlü rakiplerle aynı gruba düştü. Teknik direktör ve yönetim, zorlu bir grup olduğunu ancak hedeflerinin gruptan çıkmak olduğunu belirtti.</p>',
+    publishDate: '11 Temmuz 2024 19:30',
     sourceUrl: '#',
     tags: ['Fenerbahçe', 'Avrupa Ligi', 'Futbol', 'Spor']
   },
@@ -485,8 +488,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=27',
     imageHint: 'electric bus city',
-    content: 'Türkiye\'de üretilen yerli elektrikli otobüsler, birçok büyükşehir belediyesi tarafından toplu taşımada kullanılmaya başlandı. Çevre dostu ve sessiz çalışan bu otobüsler, hem yakıt tasarrufu sağlıyor hem de karbon emisyonunu azaltıyor.',
-    publishDate: '11 Temmuz 2024',
+    content: '<p>Türkiye\'de üretilen yerli elektrikli otobüsler, birçok büyükşehir belediyesi tarafından toplu taşımada kullanılmaya başlandı. Çevre dostu ve sessiz çalışan bu otobüsler, hem yakıt tasarrufu sağlıyor hem de karbon emisyonunu azaltıyor.</p>',
+    publishDate: '11 Temmuz 2024 09:15',
     sourceUrl: '#',
     tags: ['Elektrikli Otobüs', 'Ulaşım', 'Çevre', 'Ekonomi']
   },
@@ -497,8 +500,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=28',
     imageHint: 'antarctica ice snow',
-    content: 'Türkiye\'nin Ulusal Antarktika Bilim Seferi, belirlenen hedeflere ulaşarak başarıyla tamamlandı. Sefer ekibi, iklim değişikliği, buzullar ve deniz ekosistemi üzerine önemli bilimsel araştırmalar gerçekleştirdi.',
-    publishDate: '10 Temmuz 2024',
+    content: '<p>Türkiye\'nin Ulusal Antarktika Bilim Seferi, belirlenen hedeflere ulaşarak başarıyla tamamlandı. Sefer ekibi, iklim değişikliği, buzullar ve deniz ekosistemi üzerine önemli bilimsel araştırmalar gerçekleştirdi.</p>',
+    publishDate: '10 Temmuz 2024 18:50',
     sourceUrl: '#',
     tags: ['Antarktika', 'Bilim Seferi', 'Araştırma', 'Bilim Teknoloji']
   },
@@ -509,9 +512,11 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=99',
     imageHint: 'fahrettin altun speech',
-    content: 'İletişim Başkanı Fahrettin Altun, sosyal medya hesabından yaptığı paylaşımda, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz." ifadelerini kullandı.\n\nAltun, paylaşımında, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz. Devletimiz, milletimizin huzur ve güvenliği için tüm imkanlarıyla sahada." dedi.\n\nTerör örgütlerine karşı yürütülen operasyonların aralıksız devam ettiğini vurgulayan Altun, "Güvenlik güçlerimiz, yurt içinde ve sınır ötesinde terörün kökünü kazımak için büyük bir özveriyle çalışıyor. Bu mücadelede en büyük gücümüz, aziz milletimizin duaları ve desteğidir." değerlendirmesinde bulundu.\n\nFahrettin Altun, terörün her türlüsünü lanetlediklerini ifade ederek, şunları kaydetti:\n"Terör örgütleri ve destekçileri, ne yaparlarsa yapsınlar, Türkiye\'nin birliğine, beraberliğine ve kardeşliğine asla zarar veremeyeceklerdir. Ülkemizin huzurunu hedef alanlara karşı mücadelemiz, son terörist etkisiz hale getirilinceye kadar devam edecektir. Kardeşlik bağlarımızla kenetlenerek, bu topraklarda barış ve güven ortamını kalıcı kılacağız."',
+    content: '<p><strong>İletişim Başkanı Fahrettin Altun, sosyal medya hesabından yaptığı paylaşımda, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz." ifadelerini kullandı.</strong></p><p>Altun, paylaşımında, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz. Devletimiz, milletimizin huzur ve güvenliği için tüm imkanlarıyla sahada." dedi.</p><p>Terör örgütlerine karşı yürütülen operasyonların aralıksız devam ettiğini vurgulayan Altun, "Güvenlik güçlerimiz, yurt içinde ve sınır ötesinde terörün kökünü kazımak için büyük bir özveriyle çalışıyor. Bu mücadelede en büyük gücümüz, aziz milletimizin duaları ve desteğidir." değerlendirmesinde bulundu.</p><p>Fahrettin Altun, terörün her türlüsünü lanetlediklerini ifade ederek, şunları kaydetti:<br>"Terör örgütleri ve destekçileri, ne yaparlarsa yapsınlar, Türkiye\'nin birliğine, beraberliğine ve kardeşliğine asla zarar veremeyeceklerdir. Ülkemizin huzurunu hedef alanlara karşı mücadelemiz, son terörist etkisiz hale getirilinceye kadar devam edecektir. Kardeşlik bağlarımızla kenetlenerek, bu topraklarda barış ve güven ortamını kalıcı kılacağız."</p>',
     publishDate: '13 Temmuz 2024 18:05',
-    sourceUrl: '#',
+    updateDate: '13 Temmuz 2024 18:08',
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz-907111.html',
+    sourceAgency: 'TRT HABER',
     subtitle: 'İletişim Başkanı Fahrettin Altun, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz." dedi.',
     tags: ['Fahrettin Altun', 'Terörle Mücadele', 'Gündem', 'Açıklama', 'Türkiye']
   }
@@ -870,3 +875,4 @@ export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
         ]
     }
 ];
+
