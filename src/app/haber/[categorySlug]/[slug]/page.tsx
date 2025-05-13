@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { CalendarDays, Clock, ChevronRight, Share2, Printer, MessageCircle, Minus, Plus } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import ArticleSummaryClient from '@/app/(components)/article-summary-client';
+import ArticleCard from '@/components/news/article-card';
 
 // Placeholder social icons, replace with actual or lucide if available and styled
 const FacebookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>;
@@ -21,17 +22,15 @@ const MailIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height
 
 export default function ArticleDetailPage() {
   const params = useParams();
-  const categorySlug = params.category as string;
+  const categorySlug = params.categorySlug as string; // Changed from params.category
   const articleSlug = params.slug as string;
   const [article, setArticle] = useState<ArticleType | null>(null);
   const [fontSize, setFontSize] = useState(16); // Default font size in px
 
   useEffect(() => {
-    // In a real app, you'd fetch the article by slug from an API
     const foundArticle = PLACEHOLDER_ARTICLES.find(
       (a) => a.slug === articleSlug && a.category.toLowerCase() === categorySlug.toLowerCase()
     );
-     // Fallback: if category doesn't match but slug does (e.g. if category in URL is slightly different)
     const fallbackArticle = PLACEHOLDER_ARTICLES.find(a => a.slug === articleSlug);
     setArticle(foundArticle || fallbackArticle || null);
   }, [articleSlug, categorySlug]);
@@ -62,7 +61,8 @@ export default function ArticleDetailPage() {
                 <ChevronRight size={16} className="mx-1" />
               </li>
               <li className="flex items-center">
-                <Link href={`/haber/${article.category.toLowerCase()}`} className="hover:text-primary">{article.category}</Link>
+                {/* Ensure link uses categorySlug if it's different from display name */}
+                <Link href={`/haber/${categorySlug}`} className="hover:text-primary">{article.category}</Link>
                 <ChevronRight size={16} className="mx-1" />
               </li>
               <li className="flex items-center">
