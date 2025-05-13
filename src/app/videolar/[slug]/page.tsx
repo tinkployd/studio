@@ -13,6 +13,7 @@ import { PlayCircle, ChevronLeft, ChevronRight, CalendarDays, Clock, Eye, Share2
 import { Separator } from '@/components/ui/separator';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
+// Define social icons locally as they are simple SVGs and used in multiple detail pages
 const FacebookIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>;
 const TwitterIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-white"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>;
 
@@ -44,7 +45,7 @@ export default function VideoDetailPage() {
   const handleFilterChange = (category: string) => {
     setSelectedFilter(category);
     if (video) {
-      if (category === VIDEO_CATEGORIES[0]) {
+      if (category === VIDEO_CATEGORIES[0]) { // "Tümü"
         setRelatedVideos(PLACEHOLDER_VIDEOS.filter(v => v.id !== video.id));
       } else {
         setRelatedVideos(PLACEHOLDER_VIDEOS.filter(v => v.category === category && v.id !== video.id));
@@ -90,32 +91,47 @@ export default function VideoDetailPage() {
             <PlayCircle size={80} className="text-white/80 hover:text-white transition-opacity cursor-pointer drop-shadow-xl" />
           </a>
         </div>
-        <div className="absolute bottom-0 left-0 p-4 md:p-8 lg:p-12 container mx-auto">
-          <Badge variant="destructive" className="bg-red-600 text-white text-xs uppercase px-2 py-1 rounded-sm font-semibold mb-2 self-start tracking-wider">
-            Video Galeri
-          </Badge>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 md:mb-3 leading-tight max-w-3xl">
-            {video.title}
-          </h1>
-          {video.description && <p className="text-sm md:text-base text-gray-300 mb-2 md:mb-3 max-w-2xl line-clamp-2 md:line-clamp-3">{video.description}</p>}
-          <div className="flex flex-wrap items-center text-xs text-gray-400 gap-x-3 gap-y-1">
-            {video.publishDate && <span className="flex items-center"><CalendarDays size={14} className="mr-1" /> {video.publishDate}</span>}
-            {video.duration && <span className="flex items-center"><Clock size={14} className="mr-1" /> {video.duration}</span>}
-            {/* Add TRT Haber source if available */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 lg:p-12 ">
+          <div className="container mx-auto"> {/* Added container for content width control */}
+            <Badge variant="destructive" className="bg-red-600 text-white text-xs uppercase px-2 py-1 rounded-sm font-semibold mb-2 self-start tracking-wider">
+              Video Galeri
+            </Badge>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 md:mb-3 leading-tight max-w-3xl">
+              {video.title}
+            </h1>
+            {video.description && <p className="text-sm md:text-base text-gray-300 mb-2 md:mb-3 max-w-2xl line-clamp-2 md:line-clamp-3">{video.description}</p>}
+            <div className="flex flex-wrap items-center text-xs text-gray-400 gap-x-3 gap-y-1 mb-3">
+              {video.publishDate && <span className="flex items-center"><CalendarDays size={14} className="mr-1" /> {video.publishDate}</span>}
+              {video.duration && <span className="flex items-center"><Clock size={14} className="mr-1" /> {video.duration}</span>}
+              {/* Add TRT Haber source if available */}
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+                <Button variant="ghost" size="icon" aria-label="Facebook'ta paylaş" className="bg-zinc-800 hover:bg-zinc-700 rounded-full w-9 h-9">
+                  <FacebookIcon />
+                </Button>
+                <Button variant="ghost" size="icon" aria-label="Twitter'da paylaş" className="bg-zinc-800 hover:bg-zinc-700 rounded-full w-9 h-9">
+                  <TwitterIcon />
+                </Button>
+                <Button variant="ghost" size="icon" aria-label="Daha fazla paylaşım seçeneği" className="bg-zinc-800 hover:bg-zinc-700 rounded-full w-9 h-9">
+                  <Share2 size={18} className="text-white"/>
+                </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Horizontal Thumbnail Scroller */}
+      {/* Horizontal Thumbnail Scroller "SIRADAKİ VİDEOLAR" */}
       {otherVideos.length > 0 && (
         <section className="py-6 md:py-8 bg-red-700 relative">
           <div className="container mx-auto px-0 sm:px-4">
+          <h2 className="text-xl font-bold text-white mb-3 px-4 md:px-0">SIRADAKİ VİDEOLAR</h2>
             <div className="relative">
               <Button 
                 variant="ghost" 
                 size="icon" 
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-red-600 hidden md:flex"
                 onClick={() => scrollScroller('left')}
+                aria-label="Önceki videolar"
               >
                 <ChevronLeft size={28}/>
               </Button>
@@ -154,6 +170,7 @@ export default function VideoDetailPage() {
                 size="icon" 
                 className="absolute right-0 top-1/2 -translate-y-1/2 z-10 text-white hover:bg-red-600 hidden md:flex"
                 onClick={() => scrollScroller('right')}
+                aria-label="Sonraki videolar"
               >
                 <ChevronRight size={28}/>
               </Button>
@@ -185,7 +202,7 @@ export default function VideoDetailPage() {
         {relatedVideos.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6">
                 {relatedVideos.map((item) => (
-                    <VideoCard key={item.id} video={item} layout="thumbnail" />
+                    <VideoCard key={item.id} video={item} layout="thumbnail-dark" />
                 ))}
             </div>
         ) : (
@@ -204,3 +221,4 @@ export default function VideoDetailPage() {
     </div>
   );
 }
+

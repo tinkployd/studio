@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { PLACEHOLDER_VIDEOS, VIDEO_CATEGORIES, type Video as VideoType } from '@/constants';
-import VideoCard from '@/components/news/video-card'; // Assuming VideoCard can be used or adapted
+import VideoCard from '@/components/news/video-card'; 
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import {
@@ -60,7 +60,7 @@ export default function VideoGalleryPage() {
         {filteredVideos.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredVideos.map((video) => (
-              <VideoCard key={video.id} video={video} layout="thumbnail" />
+              <VideoCard key={video.id} video={video} layout="thumbnail-dark" />
             ))}
           </div>
         ) : (
@@ -77,3 +77,4 @@ export default function VideoGalleryPage() {
     </div>
   );
 }
+
