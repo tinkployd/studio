@@ -1,4 +1,5 @@
 
+
 export interface NavLink {
   label: string;
   href: string;
@@ -34,6 +35,7 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'SAĞLIK', href: '/#saglik', isDropdown: true },
   { label: 'PROGRAMLAR', href: '/#programlar', isDropdown: true },
   { label: 'PODCAST', href: '/podcast'},
+  { label: 'FOTO GALERİ', href: '/fotograf-galerileri' }, // Added Foto Galeri link
 ];
 
 export const FOOTER_LINKS_COL1 = [
@@ -101,6 +103,26 @@ export interface PodcastEpisode {
   duration: string; // "25:30"
   publishDate: string; // "10 Temmuz 2024"
   listenCount?: number;
+}
+
+export interface GalleryImage {
+    id: string;
+    imageUrl: string;
+    imageHint: string;
+    caption: string;
+}
+
+export interface PhotoGallery {
+    id: string;
+    slug: string; // e.g., "meteoroloji-25-ili-uyardi-gok-gurultulu-saganak-geliyor"
+    title: string;
+    category: string; // e.g., "TÜRKİYE", "YAŞAM"
+    coverImageUrl: string;
+    coverImageHint: string;
+    publishDate: string; // "13 Temmuz 2024"
+    updateDate?: string; // "13 Temmuz 2024 14:30" (Optional)
+    description: string; // Short description for the gallery
+    images: GalleryImage[];
 }
 
 
@@ -555,4 +577,78 @@ export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
     publishDate: '3 Temmuz 2024',
     listenCount: 1300,
   },
+];
+
+
+// Placeholder Photo Galleries
+export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
+    {
+        id: 'pg1',
+        slug: 'meteoroloji-25-ili-uyardi-gok-gurultulu-saganak-geliyor',
+        title: 'Meteoroloji 25 ili uyardı: Gök gürültülü sağanak geliyor',
+        category: 'TÜRKİYE',
+        coverImageUrl: 'https://picsum.photos/600/400?random=80',
+        coverImageHint: 'weather storm map',
+        publishDate: '13 Temmuz 2024',
+        updateDate: '13 Temmuz 2024 11:45',
+        description: 'Meteoroloji Genel Müdürlüğü, 25 il için sarı ve turuncu kodlu uyarıda bulundu. Hafta sonu planı yapanların dikkat etmesi gereken iller arasında Ankara, İstanbul ve İzmir de var.',
+        images: [
+            { id: 'pg1-img1', imageUrl: 'https://picsum.photos/800/600?random=81', imageHint: 'rain clouds city', caption: 'Meteoroloji Genel Müdürlüğü, bazı iller için sarı ve turuncu kodlu uyarı yayımladı. Buna göre, Marmara, Ege, Batı Akdeniz\'in iç kesimleri, İç Anadolu, Karadeniz ve Doğu Anadolu\'nun kuzeyinde gök gürültülü sağanak bekleniyor.' },
+            { id: 'pg1-img2', imageUrl: 'https://picsum.photos/800/600?random=82', imageHint: 'weather map turkey', caption: 'Yağışların, İç Ege, Göller Yöresi, İç Anadolu\'nun kuzeybatısı, Batı Karadeniz\'in iç kesimleri ile Kırşehir, Yozgat, Çorum, Samsun ve Amasya çevrelerinde yerel olarak kuvvetli olması bekleniyor.' },
+            { id: 'pg1-img3', imageUrl: 'https://picsum.photos/800/600?random=83', imageHint: 'lightning storm sky', caption: 'MGM tarafından yapılan açıklamada, "Ani sel, su baskını, yıldırım, yerel dolu yağışı, ani kuvvetli rüzgar ve kısa süreli fırtına ile ulaşımda aksamalar gibi olumsuzluklara karşı dikkatli ve tedbirli olunmalıdır." denildi.' },
+            { id: 'pg1-img4', imageUrl: 'https://picsum.photos/800/600?random=84', imageHint: 'city street rain', caption: 'İstanbul\'da beklenen sağanak yağış nedeniyle vatandaşların hazırlıklı olması istendi.' },
+            { id: 'pg1-img5', imageUrl: 'https://picsum.photos/800/600?random=85', imageHint: 'flood water street', caption: 'Ankara ve İzmir\'de de yer yer kuvvetli yağışlar bekleniyor.' },
+            { id: 'pg1-img6', imageUrl: 'https://picsum.photos/800/600?random=86', imageHint: 'umbrella rain weather', caption: 'Vatandaşların Meteoroloji\'nin uyarılarını dikkate alması önem taşıyor.' },
+        ]
+    },
+    {
+        id: 'pg2',
+        slug: 'turkiyenin-maldivleri-salda-golu-ziyaretci-akinina-ugradi',
+        title: 'Türkiye\'nin Maldivleri Salda Gölü ziyaretçi akınına uğradı',
+        category: 'YAŞAM',
+        coverImageUrl: 'https://picsum.photos/600/400?random=90',
+        coverImageHint: 'lake salda turquoise',
+        publishDate: '12 Temmuz 2024',
+        description: 'Burdur\'un Yeşilova ilçesinde bulunan Salda Gölü, eşsiz turkuaz rengi ve bembeyaz kumsallarıyla tatilcilerin gözdesi oldu. Bayram tatilini fırsat bilen binlerce kişi göle akın etti.',
+        images: [
+            { id: 'pg2-img1', imageUrl: 'https://picsum.photos/800/600?random=91', imageHint: 'salda lake beach', caption: 'Salda Gölü, Türkiye\'nin en derin ve en temiz göllerinden biri olarak biliniyor.' },
+            { id: 'pg2-img2', imageUrl: 'https://picsum.photos/800/600?random=92', imageHint: 'tourists salda lake', caption: 'Beyaz kumsalları ve turkuaz suyu ile Maldivler\'e benzetilen göl, özellikle yaz aylarında yoğun ilgi görüyor.' },
+            { id: 'pg2-img3', imageUrl: 'https://picsum.photos/800/600?random=93', imageHint: 'salda lake nature', caption: 'Göl çevresindeki doğal güzellikler de ziyaretçileri cezbediyor.' },
+            { id: 'pg2-img4', imageUrl: 'https://picsum.photos/800/600?random=94', imageHint: 'camping salda lake', caption: 'Salda Gölü çevresinde kamp yapmak ve doğa yürüyüşleri yapmak mümkün.' },
+        ]
+    },
+     {
+        id: 'pg3',
+        slug: 'istanbul-arkeoloji-muzesindeki-lahitler',
+        title: 'İstanbul Arkeoloji Müzeleri\'ndeki lahitler',
+        category: 'KÜLTÜR SANAT',
+        coverImageUrl: 'https://picsum.photos/600/400?random=100',
+        coverImageHint: 'sarcophagus museum istanbul',
+        publishDate: '11 Temmuz 2024',
+        description: 'Osmanlı İmparatorluğu\'nun çeşitli bölgelerinden getirilen binlerce esere ev sahipliği yapan İstanbul Arkeoloji Müzeleri\'ndeki antik döneme ait lahitler, ziyaretçilerini tarihi bir yolculuğa çıkarıyor.',
+        images: [
+            { id: 'pg3-img1', imageUrl: 'https://picsum.photos/800/600?random=101', imageHint: 'alexander sarcophagus detail', caption: 'Müzenin en önemli eserlerinden biri olan İskender Lahdi.' },
+            { id: 'pg3-img2', imageUrl: 'https://picsum.photos/800/600?random=102', imageHint: 'crying women sarcophagus', caption: 'Ağlayan Kadınlar Lahdi, Sidon Kral Nekropolü\'nde bulundu.' },
+            { id: 'pg3-img3', imageUrl: 'https://picsum.photos/800/600?random=103', imageHint: 'lycian sarcophagus museum', caption: 'Likya Lahdi, kendine özgü mimarisiyle dikkat çekiyor.' },
+            { id: 'pg3-img4', imageUrl: 'https://picsum.photos/800/600?random=104', imageHint: 'tabnit sarcophagus hieroglyph', caption: 'Tabnit Lahdi, üzerinde hem Mısır hiyeroglifleri hem de Fenike yazısı bulunan nadir eserlerden.' },
+            { id: 'pg3-img5', imageUrl: 'https://picsum.photos/800/600?random=105', imageHint: 'satrap sarcophagus relief', caption: 'Satrap Lahdi üzerindeki kabartmalar, dönemin yaşantısına dair ipuçları veriyor.' },
+        ]
+    },
+     {
+        id: 'pg4',
+        slug: 'turk-yildizlari-nefes-kesti',
+        title: 'Türk Yıldızları nefes kesti',
+        category: 'TÜRKİYE',
+        coverImageUrl: 'https://picsum.photos/600/400?random=110',
+        coverImageHint: 'jets formation sky',
+        publishDate: '10 Temmuz 2024',
+        description: 'Türk Hava Kuvvetleri\'nin akrobasi timi Türk Yıldızları, Konya\'da gerçekleştirdiği gösteriyle izleyenleri büyüledi. NF-5 uçaklarıyla yapılan tehlikeli manevralar nefes kesti.',
+        images: [
+            { id: 'pg4-img1', imageUrl: 'https://picsum.photos/800/600?random=111', imageHint: 'turkish stars jets', caption: 'Türk Yıldızları, dünyanın sayılı süpersonik akrobasi timlerinden biri.' },
+            { id: 'pg4-img2', imageUrl: 'https://picsum.photos/800/600?random=112', imageHint: 'jet smoke trail', caption: 'Gökyüzüne çizdikleri kalp figürü büyük alkış aldı.' },
+            { id: 'pg4-img3', imageUrl: 'https://picsum.photos/800/600?random=113', imageHint: 'jets flying close', caption: 'Pilotların uyumu ve cesareti izleyenlerden tam not aldı.' },
+            { id: 'pg4-img4', imageUrl: 'https://picsum.photos/800/600?random=114', imageHint: 'crowd watching airshow', caption: 'Gösteriyi binlerce vatandaş ilgiyle takip etti.' },
+        ]
+    },
+    // Add more galleries as needed
 ];
