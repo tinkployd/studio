@@ -29,7 +29,7 @@ export default function ArticleDetailPage() {
 
   useEffect(() => {
     const foundArticle = PLACEHOLDER_ARTICLES.find(
-      (a) => a.slug === articleSlug && a.category.toLowerCase() === categorySlug.toLowerCase()
+      (a) => a.slug === articleSlug && a.category.toLowerCase().replace(/[^a-z0-9]+/g, '-') === categorySlug.toLowerCase()
     );
     const fallbackArticle = PLACEHOLDER_ARTICLES.find(a => a.slug === articleSlug);
     setArticle(foundArticle || fallbackArticle || null);
@@ -87,7 +87,9 @@ export default function ArticleDetailPage() {
           <div className="flex flex-wrap items-center justify-between text-sm text-muted-foreground gap-x-4 gap-y-2 mb-6">
             <div className="flex items-center gap-x-4">
                 {article.publishDate && <span className="flex items-center"><CalendarDays size={15} className="mr-1.5" /> Yayın: {article.publishDate}</span>}
-                {/* Add update date if available */}
+                {/* Placeholder for Update Date and Source if available in ArticleType and data */}
+                {/* {article.updateDate && <span className="flex items-center ml-4"><Clock size={15} className="mr-1.5" /> Güncelleme: {article.updateDate}</span>} */}
+                {/* {article.sourceAgency && <span className="ml-4">Kaynak: {article.sourceAgency}</span>} */}
             </div>
             <div className="flex items-center gap-2">
                 <Button variant="ghost" size="icon" onClick={decreaseFontSize} aria-label="Yazı tipini küçült" className="text-muted-foreground hover:text-primary"><Minus size={18}/></Button>
@@ -125,8 +127,8 @@ export default function ArticleDetailPage() {
           />
           
           {/* Article Summary Client Component Integration */}
-          <div className='my-6'>
-            <h3 className='text-xl font-semibold mb-2 text-primary'>Haber Özeti</h3>
+          <div className='my-8'>
+            {/* The ArticleSummaryClient component contains the "Haberi Özetle" button */}
             <ArticleSummaryClient articleContent={article.content} sourceUrl={article.sourceUrl} />
           </div>
 
@@ -136,7 +138,7 @@ export default function ArticleDetailPage() {
               <h3 className="text-lg font-semibold text-foreground mb-3">Etiketler</h3>
               <div className="flex flex-wrap gap-2">
                 {article.tags.map(tag => (
-                  <Link key={tag} href={`/haber/etiket/${tag.toLowerCase()}`}>
+                  <Link key={tag} href={`/haber/etiket/${tag.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
                     <Badge variant="secondary" className="hover:bg-muted transition-colors">{tag}</Badge>
                   </Link>
                 ))}
@@ -145,7 +147,7 @@ export default function ArticleDetailPage() {
           )}
         </article>
 
-        {/* Related Articles Section (Placeholder) */}
+        {/* Related Articles Section */}
         <Separator className="my-10" />
         <section>
             <h2 className="text-2xl font-bold text-primary mb-6">İlgili Haberler</h2>

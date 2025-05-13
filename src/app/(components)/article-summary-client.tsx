@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useTransition } from 'react';
@@ -52,13 +53,13 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
   return (
     <div className="mt-3">
       <div className="flex flex-wrap gap-2 items-center mb-2">
-        <Button onClick={handleToggleSummary} disabled={isPending} variant="outline" size="sm" className="text-xs px-2 py-1 h-auto">
+        <Button onClick={handleToggleSummary} disabled={isPending} variant="default" size="default">
           {isPending ? (
-            <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+            <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
           ) : showSummary ? (
-            <FileText className="mr-1.5 h-3.5 w-3.5" />
+            <FileText className="mr-1.5 h-4 w-4" />
           ) : (
-            <BookOpen className="mr-1.5 h-3.5 w-3.5" />
+            <BookOpen className="mr-1.5 h-4 w-4" />
           )}
           {isPending ? 'Özetleniyor...' : showSummary ? 'Metni Göster' : 'Haberi Özetle'}
         </Button>
@@ -90,13 +91,16 @@ export default function ArticleSummaryClient({ articleContent, sourceUrl }: Arti
            </div>
         )
       ) : (
-        <div className="prose prose-sm max-w-none">
-          {/* Displaying truncated content by default */}
-          <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">
-             {articleContent.substring(0, 150) + (articleContent.length > 150 ? '...' : '')}
-          </p>
-        </div>
+        !isPending && !summary && ( /* Only show original content preview if not loading and no summary attempt failed/short */
+            <div className="prose prose-sm max-w-none">
+            {/* Displaying truncated content by default */}
+            <p className="text-sm text-muted-foreground line-clamp-3 md:line-clamp-4">
+                {articleContent.substring(0, 150) + (articleContent.length > 150 ? '...' : '')}
+            </p>
+            </div>
+        )
       )}
     </div>
   );
 }
+
