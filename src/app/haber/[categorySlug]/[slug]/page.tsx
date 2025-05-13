@@ -22,7 +22,7 @@ const MailIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height
 
 export default function ArticleDetailPage() {
   const params = useParams();
-  const categorySlug = params.categorySlug as string; // Changed from params.category
+  const categorySlug = params.categorySlug as string; 
   const articleSlug = params.slug as string;
   const [article, setArticle] = useState<ArticleType | null>(null);
   const [fontSize, setFontSize] = useState(16); // Default font size in px
@@ -61,7 +61,6 @@ export default function ArticleDetailPage() {
                 <ChevronRight size={16} className="mx-1" />
               </li>
               <li className="flex items-center">
-                {/* Ensure link uses categorySlug if it's different from display name */}
                 <Link href={`/haber/${categorySlug}`} className="hover:text-primary">{article.category}</Link>
                 <ChevronRight size={16} className="mx-1" />
               </li>
