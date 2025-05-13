@@ -600,7 +600,7 @@ export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
         slug: 'meteoroloji-25-ili-uyardi-gok-gurultulu-saganak-geliyor',
         title: 'Meteoroloji 25 ili uyardı: Gök gürültülü sağanak geliyor',
         category: 'TÜRKİYE',
-        coverImageUrl: 'https://picsum.photos/1200/800?random=80', // Higher res for hero
+        coverImageUrl: 'https://picsum.photos/1200/800?random=80', 
         coverImageHint: 'weather storm map',
         publishDate: '13 Temmuz 2024',
         updateDate: '13 Temmuz 2024 11:45',
