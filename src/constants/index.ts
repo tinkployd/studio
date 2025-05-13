@@ -24,15 +24,16 @@ export const NAV_LINKS: NavLink[] = [
   { label: 'DOSYA HABER', href: '#' },
   { label: 'DİĞER', href: '#', isDropdown: true },
   // Additional links primarily for mobile menu and site structure
-  { label: 'GÜNDEM', href: '#', isDropdown: true },
-  { label: 'DÜNYA', href: '#', isDropdown: true },
-  { label: 'EKONOMİ', href: '#', isDropdown: true },
-  { label: 'SPOR', href: '#', isDropdown: true },
-  { label: 'BİLİM TEKNOLOJİ', href: '#', isDropdown: true },
-  { label: 'YAŞAM', href: '#', isDropdown: true },
-  { label: 'KÜLTÜR SANAT', href: '#', isDropdown: true },
-  { label: 'SAĞLIK', href: '#', isDropdown: true },
-  { label: 'PROGRAMLAR', href: '#', isDropdown: true },
+  { label: 'GÜNDEM', href: '/#gundem', isDropdown: true }, // Assuming an ID for sections on homepage
+  { label: 'DÜNYA', href: '/#dunya', isDropdown: true },
+  { label: 'EKONOMİ', href: '/#ekonomi', isDropdown: true },
+  { label: 'SPOR', href: '/#spor', isDropdown: true },
+  { label: 'BİLİM TEKNOLOJİ', href: '/#bilim-teknoloji', isDropdown: true },
+  { label: 'YAŞAM', href: '/#yasam', isDropdown: true },
+  { label: 'KÜLTÜR SANAT', href: '/#kultur-sanat', isDropdown: true },
+  { label: 'SAĞLIK', href: '/#saglik', isDropdown: true },
+  { label: 'PROGRAMLAR', href: '/#programlar', isDropdown: true },
+  { label: 'PODCAST', href: '/podcast'},
 ];
 
 export const FOOTER_LINKS_COL1 = [
@@ -83,6 +84,23 @@ export interface Video {
   description?: string; // Optional description for main video
   videoUrl?: string; // Link to the video page or source
   sourceUrl?: string; // Fallback if videoUrl is not specific
+}
+
+export interface PodcastEpisode {
+  id: string;
+  slug: string; // e.g., "hayatin-hikayesi-bolum-9"
+  title: string; // e.g., "9. Bölüm: Umut Işığında Yolculuk"
+  seriesTitle: string; // e.g., "Hayatın Hikayesi"
+  seriesSlug: string; // e.g., "hayatin-hikayesi" (for grouping/linking)
+  category: string; // Main category for the podcast series, e.g. "Yaşam", "Söyleşi"
+  imageUrl: string;
+  imageHint: string;
+  description: string; // Full description for detail page
+  shortDescription?: string; // For cards on listing page if different
+  audioUrl: string;
+  duration: string; // "25:30"
+  publishDate: string; // "10 Temmuz 2024"
+  listenCount?: number;
 }
 
 
@@ -421,4 +439,120 @@ export const PLACEHOLDER_VIDEOS: Video[] = [
     videoUrl: '#',
     sourceUrl: '#'
   }
+];
+
+export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
+  // Hayatın Hikayesi Series
+  {
+    id: 'hh1',
+    slug: 'hayatin-hikayesi-bolum-9',
+    title: '9. Bölüm: Umut Işığında Yolculuk',
+    seriesTitle: 'Hayatın Hikayesi',
+    seriesSlug: 'hayatin-hikayesi',
+    category: 'Söyleşi',
+    imageUrl: 'https://picsum.photos/600/600?random=70',
+    imageHint: 'podcast journey inspiration',
+    description: 'Hayatın Hikayesi\'nin bu bölümünde, zorluklar karşısında umudunu kaybetmeyen ve ilham veren bir konuğumuz var. Yaşadığı deneyimleri ve hayata bakış açısını bizimle paylaşıyor. Bu bölümde, umut, direniş ve insanın içsel gücü üzerine derin bir sohbete tanık olacaksınız. Konuğumuzun hikayesi, dinleyicilere kendi hayat yolculuklarında ilham verecek ve zorlukların üstesinden gelme konusunda motivasyon sağlayacaktır.',
+    shortDescription: 'Zorluklar karşısında umudunu kaybetmeyen, ilham veren bir konukla derin bir sohbet.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder audio
+    duration: '28:45',
+    publishDate: '12 Temmuz 2024',
+    listenCount: 1400,
+  },
+  {
+    id: 'hh2',
+    slug: 'hayatin-hikayesi-bolum-8',
+    title: '8. Bölüm: Geçmişin İzleri',
+    seriesTitle: 'Hayatın Hikayesi',
+    seriesSlug: 'hayatin-hikayesi',
+    category: 'Söyleşi',
+    imageUrl: 'https://picsum.photos/600/600?random=71',
+    imageHint: 'podcast past memory',
+    description: 'Geçmişin derinliklerine yolculuk yaptığımız bu bölümde, anıların ve deneyimlerin hayatımızı nasıl şekillendirdiğini inceliyoruz. Konuğumuzla birlikte unutulmaz anıları ve bu anıların bugünkü yaşantımıza etkilerini konuşuyoruz.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+    duration: '32:10',
+    publishDate: '5 Temmuz 2024',
+    listenCount: 980,
+  },
+  {
+    id: 'hh3',
+    slug: 'hayatin-hikayesi-bolum-7',
+    title: '7. Bölüm: Sanatın Büyüsü',
+    seriesTitle: 'Hayatın Hikayesi',
+    seriesSlug: 'hayatin-hikayesi',
+    category: 'Söyleşi',
+    imageUrl: 'https://picsum.photos/600/600?random=72',
+    imageHint: 'podcast art creativity',
+    description: 'Sanatın hayatımızdaki yerine ve dönüştürücü gücüne odaklandığımız bu bölümde, bir sanatçının ilham dolu hikayesini dinliyoruz. Yaratıcılık süreçleri, sanatın toplumsal etkileri ve kişisel ifade biçimleri üzerine keyifli bir sohbet.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+    duration: '25:50',
+    publishDate: '28 Haziran 2024',
+    listenCount: 1150,
+  },
+
+  // Ekonomi Notları Series
+  {
+    id: 'en1',
+    slug: 'ekonomi-notlari-haftalik-degerlendirme-temmuz-2',
+    title: 'Haftalık Değerlendirme: Temmuz Ayının İkinci Haftası',
+    seriesTitle: 'Ekonomi Notları',
+    seriesSlug: 'ekonomi-notlari',
+    category: 'Ekonomi',
+    imageUrl: 'https://picsum.photos/600/600?random=73',
+    imageHint: 'podcast finance chart',
+    description: 'Ekonomi Notları\'nda bu hafta, Temmuz ayının ikinci haftasındaki önemli ekonomik gelişmeleri, piyasa hareketlerini ve gelecek beklentilerini uzman konuklarımızla değerlendiriyoruz. Enflasyon, faiz oranları ve küresel piyasaların Türkiye ekonomisine etkileri masaya yatırılıyor.',
+    shortDescription: 'Temmuz ikinci haftası ekonomik gelişmeler, piyasa analizleri ve gelecek beklentileri.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+    duration: '45:20',
+    publishDate: '11 Temmuz 2024',
+    listenCount: 2100,
+  },
+  {
+    id: 'en2',
+    slug: 'ekonomi-notlari-kripto-dunyasi',
+    title: 'Kripto Dünyası: Fırsatlar ve Riskler',
+    seriesTitle: 'Ekonomi Notları',
+    seriesSlug: 'ekonomi-notlari',
+    category: 'Ekonomi',
+    imageUrl: 'https://picsum.photos/600/600?random=74',
+    imageHint: 'podcast crypto bitcoin',
+    description: 'Kripto para piyasalarındaki son durumu, yatırımcılar için fırsatları ve potansiyel riskleri alanında uzman bir isimle konuşuyoruz. Blockchain teknolojisi, regülasyonlar ve geleceğin finans dünyası üzerine önemli analizler.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+    duration: '38:00',
+    publishDate: '4 Temmuz 2024',
+    listenCount: 1850,
+  },
+
+  // Bir Dünya Haber Series
+  {
+    id: 'bdh1',
+    slug: 'bir-dunya-haber-kuresel-gundem',
+    title: 'Küresel Gündem: Öne Çıkan Başlıklar',
+    seriesTitle: 'Bir Dünya Haber',
+    seriesSlug: 'bir-dunya-haber',
+    category: 'Dünya',
+    imageUrl: 'https://picsum.photos/600/600?random=75',
+    imageHint: 'podcast globe news',
+    description: 'Dünya genelindeki önemli siyasi, sosyal ve ekonomik gelişmeleri ele aldığımız Bir Dünya Haber\'de bu hafta, uluslararası ilişkiler, bölgesel çatışmalar ve küresel sorunlara dair kapsamlı bir analiz sunuyoruz.',
+    shortDescription: 'Uluslararası ilişkiler, bölgesel çatışmalar ve küresel sorunlara dair kapsamlı analiz.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+    duration: '30:15',
+    publishDate: '10 Temmuz 2024',
+    listenCount: 1600,
+  },
+  {
+    id: 'bdh2',
+    slug: 'bir-dunya-haber-teknoloji-devleri',
+    title: 'Teknoloji Devlerinin Gelecek Planları',
+    seriesTitle: 'Bir Dünya Haber',
+    seriesSlug: 'bir-dunya-haber',
+    category: 'Teknoloji',
+    imageUrl: 'https://picsum.photos/600/600?random=76',
+    imageHint: 'podcast tech future',
+    description: 'Dünyanın önde gelen teknoloji şirketlerinin yenilikçi projelerini, gelecek vizyonlarını ve bu gelişmelerin günlük hayatımıza olası etkilerini masaya yatırıyoruz. Yapay zeka, uzay teknolojileri ve daha fazlası.',
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+    duration: '27:00',
+    publishDate: '3 Temmuz 2024',
+    listenCount: 1300,
+  },
 ];
