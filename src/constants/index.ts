@@ -503,8 +503,8 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     tags: ['Antarktika', 'Bilim Seferi', 'Araştırma', 'Bilim Teknoloji']
   },
   {
-    id: 'gundem-altun-kardeslik', // Special slug for the example article
-    slug: 'iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz',
+    id: 'gundem-altun-kardeslik', 
+    slug: 'iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz-907111',
     title: 'İletişim Başkanı Altun: Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=99',
