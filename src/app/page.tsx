@@ -9,8 +9,9 @@ import BreakingNewsTicker from '@/components/news/breaking-news-ticker';
 import SecondaryNav from '@/components/layout/secondary-nav';
 import HeroSlider from '@/app/(components)/hero-slider';
 import CurrencyTicker from '@/components/news/currency-ticker';
-import { Badge } from '@/components/ui/badge'; // Added Badge import
-import VideoSection from '@/components/news/video-section'; // Import VideoSection
+import { Badge } from '@/components/ui/badge'; 
+import VideoSection from '@/components/news/video-section'; 
+import { slugify } from '@/lib/utils';
 
 
 export default function Home() {
@@ -19,25 +20,19 @@ export default function Home() {
 
   const heroSliderArticles = articles.slice(0, 10);
 
-  // Featured articles for the new layout
-  // Row 1 needs 2 featured articles
   const featuredArticlesRow1 = articles.slice(heroSliderArticles.length, heroSliderArticles.length + 2);
-  // Row 2 needs 3 featured articles
   const featuredArticlesRow2 = articles.slice(heroSliderArticles.length + 2, heroSliderArticles.length + 5);
 
-  // Gündem section articles
-  const gundemArticles = articles.filter(a => a.category === 'GÜNDEM');
-  const mainGundemArticle = gundemArticles[0]; // Assuming the first Gündem article is the main one
-  const secondaryGundemArticle = gundemArticles[1]; // Article for the right small card
-  const bottomGundemArticlesRow1 = gundemArticles.slice(2, 6); // Next 4 articles for the first bottom row
-  const bottomGundemArticlesRow2 = gundemArticles.slice(6, 10); // Next 4 articles for the second bottom row
-  const bottomGundemArticlesRow3 = gundemArticles.slice(10, 14); // Next 4 articles for the third bottom row
+  const gundemArticles = articles.filter(a => slugify(a.category) === 'gundem');
+  const mainGundemArticle = gundemArticles[0]; 
+  const secondaryGundemArticle = gundemArticles[1]; 
+  const bottomGundemArticlesRow1 = gundemArticles.slice(2, 6); 
+  const bottomGundemArticlesRow2 = gundemArticles.slice(6, 10); 
+  const bottomGundemArticlesRow3 = gundemArticles.slice(10, 14); 
 
-  // Video section articles
   const mainVideo = videos[0];
-  const thumbnailVideos = videos.slice(1, 5); // Get next 4 videos for thumbnails
+  const thumbnailVideos = videos.slice(1, 5); 
 
-  // General articles start after all hero, all 5 featured, and all Gündem articles used above
   const usedArticleIds = new Set([
     ...heroSliderArticles.map(a => a.id),
     ...featuredArticlesRow1.map(a => a.id),
@@ -74,11 +69,8 @@ export default function Home() {
       <BreakingNewsTicker newsItems={breakingNewsItems} />
       <HeroSlider articles={heroSliderArticles} />
 
-      {/* Featured Articles & Currency Ticker Section - New Layout */}
       <section className="my-8 md:my-12">
-        {/* Row 1: 2 Featured Articles (under ÖNE ÇIKANLAR title) + 1 Currency Ticker */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Left part: ÖNE ÇIKANLAR title and 2 article cards */}
           <div className="md:col-span-2">
             <h2 className="text-2xl font-bold mb-4 text-primary border-l-4 border-primary pl-3">ÖNE ÇIKANLAR</h2>
             {featuredArticlesRow1.length > 0 && (
@@ -89,18 +81,14 @@ export default function Home() {
               </div>
             )}
           </div>
-
-          {/* Right part: Currency Ticker */}
           <div>
             <div className="md:mt-0">
-              {/* Vertical Spacer to align top */}
-               <div className="h-[3.25rem] hidden md:block"></div> {/* Approx height of h2 + margin */}
+               <div className="h-[3.25rem] hidden md:block"></div> 
               <CurrencyTicker title="DÖVİZ BİLGİLERİ" data={currencyData} />
             </div>
           </div>
         </div>
 
-        {/* Row 2: 3 more Featured Articles, implicitly under "ÖNE ÇIKANLAR" context */}
         {featuredArticlesRow2.length > 0 && (
           <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
             {featuredArticlesRow2.map(article => (
@@ -110,32 +98,25 @@ export default function Home() {
         )}
       </section>
 
-      {/* Gündem Section - New Layout based on image */}
       {mainGundemArticle && (
          <section className="my-8 md:my-12">
            <h2 className="text-3xl font-bold mb-6 text-foreground flex items-center">
-             <span className="w-3 h-6 bg-primary mr-3"></span> {/* Red square icon */}
+             <span className="w-3 h-6 bg-primary mr-3"></span>
              Gündem
            </h2>
-
-           {/* Main Gündem Layout Grid */}
-           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 items-start"> {/* Adjusted grid columns for layout */}
-             {/* Left: Text content of main article */}
+           <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] gap-6 items-start">
              <div className="lg:pr-6">
                <Badge variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs uppercase px-1.5 py-0.5 leading-tight mb-2">
                   {mainGundemArticle.category}
                </Badge>
                <h3 className="text-2xl font-bold mb-3 leading-tight">
-                 <Link href={mainGundemArticle.sourceUrl || "#"} target={mainGundemArticle.sourceUrl ? "_blank" : "_self"} rel={mainGundemArticle.sourceUrl ? "noopener noreferrer" : undefined} className="hover:text-primary transition-colors">
+                 <Link href={`/haber/${slugify(mainGundemArticle.category)}/${mainGundemArticle.slug}`} className="hover:text-primary transition-colors">
                    {mainGundemArticle.title}
                  </Link>
                </h3>
-                {/* Content Removed as per request */}
              </div>
-
-             {/* Center: Large image of main article */}
              <div className="relative aspect-[16/10] rounded-lg overflow-hidden shadow-md group">
-               <Link href={mainGundemArticle.sourceUrl || "#"} target={mainGundemArticle.sourceUrl ? "_blank" : "_self"} rel={mainGundemArticle.sourceUrl ? "noopener noreferrer" : undefined} className="block w-full h-full">
+               <Link href={`/haber/${slugify(mainGundemArticle.category)}/${mainGundemArticle.slug}`} className="block w-full h-full">
                  <Image
                    src={mainGundemArticle.imageUrl}
                    alt={mainGundemArticle.title}
@@ -148,16 +129,13 @@ export default function Home() {
                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
                </Link>
              </div>
-
-             {/* Right: Small card for secondary article */}
              {secondaryGundemArticle && (
-               <div className="lg:pl-0"> {/* No padding needed here, card has its own */}
+               <div className="lg:pl-0"> 
                   <ArticleCard article={secondaryGundemArticle} layout="compact-vertical" />
                </div>
              )}
            </div>
 
-           {/* Bottom Row 1: 4 small cards */}
            {bottomGundemArticlesRow1.length > 0 && (
              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                {bottomGundemArticlesRow1.map(article => (
@@ -165,8 +143,6 @@ export default function Home() {
                ))}
              </div>
            )}
-
-            {/* Bottom Row 2: Next 4 small cards */}
            {bottomGundemArticlesRow2.length > 0 && (
              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                {bottomGundemArticlesRow2.map(article => (
@@ -174,8 +150,6 @@ export default function Home() {
                ))}
              </div>
            )}
-
-            {/* Bottom Row 3: Final 4 small cards */}
            {bottomGundemArticlesRow3.length > 0 && (
              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                {bottomGundemArticlesRow3.map(article => (
@@ -186,13 +160,10 @@ export default function Home() {
          </section>
       )}
 
-      {/* Video Section */}
       {mainVideo && thumbnailVideos.length > 0 && (
         <VideoSection mainVideo={mainVideo} thumbnailVideos={thumbnailVideos} />
       )}
 
-
-      {/* General News Grid - Filtered to exclude used articles */}
       {generalArticles.length > 0 && (
         <section className="mt-8 md:mt-12">
           <h2 className="text-2xl font-bold mb-6 text-primary border-l-4 border-primary pl-3">Tüm Haberler</h2>
@@ -204,16 +175,15 @@ export default function Home() {
         </section>
       )}
 
-      {/* Category Sections (Example) - Filtered to exclude used articles */}
       {['EKONOMİ', 'SPOR', 'BİLİM TEKNOLOJİ'].map(category => {
-        // Now use the filtered generalArticles for category sections
         const categoryArticles = generalArticles.filter(a => a.category === category).slice(0,3);
+        const categoryPageSlug = slugify(category);
 
         if (categoryArticles.length === 0) return null;
         return (
           <section key={category} className="mt-8 md:mt-12">
             <h2 className="text-2xl font-bold mb-6 text-primary border-l-4 border-primary pl-3">
-              <Link href="#" className="hover:underline">{category}</Link>
+              <Link href={`/haber/${categoryPageSlug}`} className="hover:underline">{category}</Link>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categoryArticles.map(article => (
@@ -222,7 +192,7 @@ export default function Home() {
             </div>
             <div className="text-right mt-4">
               <Button variant="outline" asChild>
-                <Link href="#">Tüm {category} Haberleri &rarr;</Link>
+                <Link href={`/haber/${categoryPageSlug}`}>Tüm {category} Haberleri &rarr;</Link>
               </Button>
             </div>
           </section>

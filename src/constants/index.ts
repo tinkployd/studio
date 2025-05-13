@@ -10,7 +10,7 @@ export interface NavLink {
 
 export const MAIN_HEADER_NAV_LINKS: NavLink[] = [
   { label: 'SICAK', href: '#', isDropdown: true },
-  { label: 'SAVUNMA', href: '/haber/savunma' },
+  { label: 'SAVUNMA', href: `/haber/${slugify('SAVUNMA')}` },
   { label: 'ÇOCUK', href: '#' },
   { label: 'ÖZEL HABER', href: '#' },
   { label: 'DOSYA HABER', href: '#' },
@@ -20,21 +20,21 @@ export const MAIN_HEADER_NAV_LINKS: NavLink[] = [
 export const NAV_LINKS: NavLink[] = [
   // Links for the main header (also used in mobile menu)
   { label: 'SICAK', href: '#', isDropdown: true },
-  { label: 'SAVUNMA', href: '/haber/savunma' },
+  { label: 'SAVUNMA', href: `/haber/${slugify('SAVUNMA')}` },
   { label: 'ÇOCUK', href: '#' },
   { label: 'ÖZEL HABER', href: '#' },
   { label: 'DOSYA HABER', href: '#' },
   { label: 'DİĞER', href: '#', isDropdown: true },
   // Additional links primarily for mobile menu and site structure
-  { label: 'GÜNDEM', href: '/haber/gundem', isDropdown: true }, 
-  { label: 'DÜNYA', href: '/haber/dunya', isDropdown: true },
-  { label: 'EKONOMİ', href: '/haber/ekonomi', isDropdown: true },
-  { label: 'SPOR', href: '/haber/spor', isDropdown: true },
-  { label: 'BİLİM TEKNOLOJİ', href: '/haber/bilim-teknOLOJİ', isDropdown: true },
-  { label: 'YAŞAM', href: '/haber/yasam', isDropdown: true },
-  { label: 'KÜLTÜR SANAT', href: '/haber/kultur-sanat', isDropdown: true },
-  { label: 'SAĞLIK', href: '/haber/saglik', isDropdown: true },
-  { label: 'PROGRAMLAR', href: '#', isDropdown: true }, // Assuming '#' for now
+  { label: 'GÜNDEM', href: `/haber/${slugify('GÜNDEM')}`, isDropdown: true }, 
+  { label: 'DÜNYA', href: `/haber/${slugify('DÜNYA')}`, isDropdown: true },
+  { label: 'EKONOMİ', href: `/haber/${slugify('EKONOMİ')}`, isDropdown: true },
+  { label: 'SPOR', href: `/haber/${slugify('SPOR')}`, isDropdown: true },
+  { label: 'BİLİM TEKNOLOJİ', href: `/haber/${slugify('BİLİM TEKNOLOJİ')}`, isDropdown: true },
+  { label: 'YAŞAM', href: `/haber/${slugify('YAŞAM')}`, isDropdown: true },
+  { label: 'KÜLTÜR SANAT', href: `/haber/${slugify('KÜLTÜR SANAT')}`, isDropdown: true },
+  { label: 'SAĞLIK', href: `/haber/${slugify('SAĞLIK')}`, isDropdown: true },
+  { label: 'PROGRAMLAR', href: '#', isDropdown: true }, 
   { label: 'PODCAST', href: '/podcast'},
   { label: 'FOTO GALERİ', href: '/fotograf-galerileri' },
   { label: 'VİDEO GALERİ', href: '/videolar' },
@@ -77,9 +77,9 @@ export interface Article {
   imageHint: string;
   content: string; // Can contain HTML
   publishDate?: string;
-  updateDate?: string; // Added
+  updateDate?: string; 
   sourceUrl?: string;
-  sourceAgency?: string; // Added
+  sourceAgency?: string; 
   subtitle?: string; 
   tags?: string[]; 
 }
@@ -94,9 +94,9 @@ export interface Video {
   description?: string; 
   videoUrl?: string; 
   sourceUrl?: string; 
-  duration?: string; // e.g., "03:28"
-  publishDate?: string; // e.g., "13.05.2024 16:16"
-  viewCount?: string; // e.g. "1.234"
+  duration?: string; 
+  publishDate?: string; 
+  viewCount?: string; 
 }
 
 export interface PodcastEpisode {
@@ -150,7 +150,7 @@ export const PHOTO_GALLERY_CATEGORIES: string[] = [
 ];
 
 export const VIDEO_CATEGORIES: string[] = [
-  'Tümü', // Added Tümü for all videos
+  'Tümü', 
   'Gündem', 
   'Türkiye', 
   'Dünya', 
@@ -506,19 +506,27 @@ export const PLACEHOLDER_ARTICLES: Article[] = [
     tags: ['Antarktika', 'Bilim Seferi', 'Araştırma', 'Bilim Teknoloji']
   },
   {
-    id: 'gundem-altun-kardeslik', 
-    slug: 'iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz-907111',
+    id: 'gundem-altun-kardeslik', // Match the ID in ArticleDetailPage for the sample article
+    slug: 'iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz',
     title: 'İletişim Başkanı Altun: Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz',
-    category: 'GÜNDEM',
-    imageUrl: 'https://picsum.photos/800/500?random=99',
-    imageHint: 'fahrettin altun speech',
-    content: '<p><strong>İletişim Başkanı Fahrettin Altun, sosyal medya hesabından yaptığı paylaşımda, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz." ifadelerini kullandı.</strong></p><p>Altun, paylaşımında, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz. Devletimiz, milletimizin huzur ve güvenliği için tüm imkanlarıyla sahada." dedi.</p><p>Terör örgütlerine karşı yürütülen operasyonların aralıksız devam ettiğini vurgulayan Altun, "Güvenlik güçlerimiz, yurt içinde ve sınır ötesinde terörün kökünü kazımak için büyük bir özveriyle çalışıyor. Bu mücadelede en büyük gücümüz, aziz milletimizin duaları ve desteğidir." değerlendirmesinde bulundu.</p><p>Fahrettin Altun, terörün her türlüsünü lanetlediklerini ifade ederek, şunları kaydetti:<br>"Terör örgütleri ve destekçileri, ne yaparlarsa yapsınlar, Türkiye\'nin birliğine, beraberliğine ve kardeşliğine asla zarar veremeyeceklerdir. Ülkemizin huzurunu hedef alanlara karşı mücadelemiz, son terörist etkisiz hale getirilinceye kadar devam edecektir. Kardeşlik bağlarımızla kenetlenerek, bu topraklarda barış ve güven ortamını kalıcı kılacağız."</p>',
-    publishDate: '13 Temmuz 2024 18:05',
-    updateDate: '13 Temmuz 2024 18:08',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz-907111.html',
+    category: 'GÜNDEM', // IMPORTANT: Ensure this matches exactly for slugify consistency
+    imageUrl: 'https://picsum.photos/1200/675?random=99',
+    imageHint: 'Fahrettin Altun konuşma yapıyor',
+    content: `
+      <p><strong>Cumhurbaşkanlığı İletişim Başkanı Fahrettin Altun, Şırnak’ta Cudi Dağı eteklerinde düzenlenen "Kardeşlik Sınırı Teröre Geçit Yok" etkinliğinde yaptığı konuşmada, Türkiye\'nin terörle mücadeledeki kararlılığını ve bölgede tesis edilen huzur ortamını vurguladı.</strong></p>
+      <p>Altun, "Bir zamanlar terörle anılan bu topraklarda bugün huzurun, kardeşliğin sesini yükseltiyoruz. Bu, devletimizin kararlı duruşu ve milletimizin birlikteliği sayesinde mümkün olmuştur." dedi.</p>
+      <p>Terör örgütlerinin bölge halkı üzerindeki baskısının son bulduğunu ifade eden Altun, "Vatandaşlarımız artık korkusuzca yaylalarına çıkıyor, topraklarını ekiyor, hasatlarını topluyor. Bu tablo, terörle mücadelemizin en somut neticesidir." diye konuştu.</p>
+      <p>Bölgedeki gelişmelerin ve yatırımların devam edeceğini belirten Altun, şunları kaydetti:</p>
+      <blockquote>"Biz kardeşlikten güç alıyoruz. Bin yıldır bu topraklarda birlikte yoğrulmuş, aynı değerleri paylaşan büyük bir aileyiz. Terör örgütleri bu kardeşliğimize kastetmeye çalışsa da başarılı olamayacaklar. Devletimiz tüm kurumlarıyla vatandaşımızın yanında olmaya devam edecektir. Terörsüz bir Türkiye hedefimize ulaşana kadar durmayacağız, yorulmayacağız. El ele vererek bu badireyi de atlatacağız."</blockquote>
+      <p>Altun, ayrıca sosyal medya hesabından yaptığı paylaşımda da "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz." ifadelerini kullandı.</p>
+      <p>Etkinlik, bölge halkının yoğun katılımıyla gerçekleşti. Vatandaşlar, terörle mücadeledeki başarılardan dolayı güvenlik güçlerine ve devlete minnettarlıklarını ifade ettiler.</p>
+    `,
+    publishDate: '13.07.2024 18:05',
+    updateDate: '13.07.2024 18:08',
     sourceAgency: 'TRT HABER',
-    subtitle: 'İletişim Başkanı Fahrettin Altun, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz." dedi.',
-    tags: ['Fahrettin Altun', 'Terörle Mücadele', 'Gündem', 'Açıklama', 'Türkiye']
+    sourceUrl: 'https://www.trthaber.com/haber/gundem/iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz-907111.html',
+    subtitle: 'Cumhurbaşkanlığı İletişim Başkanı Fahrettin Altun, Şırnak\'ta katıldığı "Kardeşlik Sınırı, Teröre Geçit Yok" etkinliğinde yaptığı konuşmada, Türkiye\'nin terörle mücadeledeki kararlılığına vurgu yaptı.',
+    tags: ['Fahrettin Altun', 'Terörle Mücadele', 'Şırnak', 'Gündem', 'İletişim Başkanlığı'],
   }
 ];
 
@@ -531,7 +539,7 @@ export const PLACEHOLDER_VIDEOS: Video[] = [
     thumbnailUrl: 'https://picsum.photos/1280/720?random=60',
     imageHint: 'family hug child',
     description: 'Türkiye, koruyucu aile sistemiyle dünyaya model oluyor. Binlerce çocuk sıcak yuvaya, aileler de çocuğa kavuşuyor. Aile ve Sosyal Hizmetler Bakanlığı\'na bağlı 60\'a yakın uzman canla başla çalışıyor.',
-    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder
+    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', 
     sourceUrl: '#',
     duration: '03:28',
     publishDate: '13.05.2024 16:16',
@@ -625,7 +633,7 @@ export const PLACEHOLDER_VIDEOS: Video[] = [
   {
     id: 'v9',
     slug: 'sanliurfada-sulama-kanalinda-2-kucuk-cocuk-boguldu',
-    title: 'Şanlıurfa\'da sulamada kullanılan 2 küçük çocuk trafik yakalandı', // Title slightly changed to match image
+    title: 'Şanlıurfa\'da sulamada kullanılan 2 küçük çocuk trafik yakalandı', 
     category: 'Türkiye',
     thumbnailUrl: 'https://picsum.photos/400/225?random=62',
     imageHint: 'sad news child',
@@ -661,7 +669,6 @@ export const PLACEHOLDER_VIDEOS: Video[] = [
 ];
 
 export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
-  // Hayatın Hikayesi Series
   {
     id: 'hh1',
     slug: 'hayatin-hikayesi-bolum-9',
@@ -673,7 +680,7 @@ export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
     imageHint: 'podcast journey inspiration',
     description: 'Hayatın Hikayesi\'nin bu bölümünde, zorluklar karşısında umudunu kaybetmeyen ve ilham veren bir konuğumuz var. Yaşadığı deneyimleri ve hayata bakış açısını bizimle paylaşıyor. Bu bölümde, umut, direniş ve insanın içsel gücü üzerine derin bir sohbete tanık olacaksınız. Konuğumuzun hikayesi, dinleyicilere kendi hayat yolculuklarında ilham verecek ve zorlukların üstesinden gelme konusunda motivasyon sağlayacaktır.',
     shortDescription: 'Zorluklar karşısında umudunu kaybetmeyen, ilham veren bir konukla derin bir sohbet.',
-    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder audio
+    audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
     duration: '28:45',
     publishDate: '12 Temmuz 2024',
     listenCount: 1400,
@@ -708,8 +715,6 @@ export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
     publishDate: '28 Haziran 2024',
     listenCount: 1150,
   },
-
-  // Ekonomi Notları Series
   {
     id: 'en1',
     slug: 'ekonomi-notlari-haftalik-degerlendirme-temmuz-2',
@@ -741,8 +746,6 @@ export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
     publishDate: '4 Temmuz 2024',
     listenCount: 1850,
   },
-
-  // Bir Dünya Haber Series
   {
     id: 'bdh1',
     slug: 'bir-dunya-haber-kuresel-gundem',
@@ -777,7 +780,6 @@ export const PLACEHOLDER_PODCASTS: PodcastEpisode[] = [
 ];
 
 
-// Placeholder Photo Galleries
 export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
     {
         id: 'pg1',
@@ -875,4 +877,3 @@ export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
         ]
     }
 ];
-
