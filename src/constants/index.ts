@@ -125,6 +125,19 @@ export interface PhotoGallery {
     images: GalleryImage[];
 }
 
+export const PHOTO_GALLERY_CATEGORIES: string[] = [
+  'Gündem', 
+  'Türkiye', 
+  'Dünya', 
+  'Ekonomi', 
+  'Sağlık', 
+  'Yaşam', 
+  'Kültür-Sanat', 
+  'Bilim Teknoloji', 
+  'Eğitim', 
+  'Spor'
+];
+
 
 // Add more articles, especially in GÜNDEM category to fill the new slots
 export const PLACEHOLDER_ARTICLES: Article[] = [
@@ -587,7 +600,7 @@ export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
         slug: 'meteoroloji-25-ili-uyardi-gok-gurultulu-saganak-geliyor',
         title: 'Meteoroloji 25 ili uyardı: Gök gürültülü sağanak geliyor',
         category: 'TÜRKİYE',
-        coverImageUrl: 'https://picsum.photos/600/400?random=80',
+        coverImageUrl: 'https://picsum.photos/1200/800?random=80', // Higher res for hero
         coverImageHint: 'weather storm map',
         publishDate: '13 Temmuz 2024',
         updateDate: '13 Temmuz 2024 11:45',
@@ -650,5 +663,31 @@ export const PLACEHOLDER_GALLERIES: PhotoGallery[] = [
             { id: 'pg4-img4', imageUrl: 'https://picsum.photos/800/600?random=114', imageHint: 'crowd watching airshow', caption: 'Gösteriyi binlerce vatandaş ilgiyle takip etti.' },
         ]
     },
-    // Add more galleries as needed
+    {
+        id: 'pg5',
+        slug: 'kapadokya-balon-turlari',
+        title: 'Kapadokya\'da Gün Doğumu Balon Turları',
+        category: 'YAŞAM',
+        coverImageUrl: 'https://picsum.photos/600/400?random=120',
+        coverImageHint: 'cappadocia balloons sunrise',
+        publishDate: '9 Temmuz 2024',
+        description: 'Kapadokya\'nın eşsiz peri bacaları manzarası eşliğinde yapılan sıcak hava balon turları, yerli ve yabancı turistlerin ilgisini çekmeye devam ediyor. Gün doğumunda gökyüzü rengarenk balonlarla doluyor.',
+        images: [
+            { id: 'pg5-img1', imageUrl: 'https://picsum.photos/800/600?random=121', imageHint: 'hot air balloons sky', caption: 'Onlarca sıcak hava balonu aynı anda gökyüzüne yükseliyor.' },
+            { id: 'pg5-img2', imageUrl: 'https://picsum.photos/800/600?random=122', imageHint: 'fairy chimneys cappadocia', caption: 'Peri bacalarının üzerinden süzülen balonlar kartpostallık manzaralar oluşturuyor.' },
+        ]
+    },
+    {
+        id: 'pg6',
+        slug: 'efes-antik-kenti',
+        title: 'Efes Antik Kenti\'nde Tarihe Yolculuk',
+        category: 'KÜLTÜR SANAT',
+        coverImageUrl: 'https://picsum.photos/600/400?random=130',
+        coverImageHint: 'ephesus ancient city ruins',
+        publishDate: '8 Temmuz 2024',
+        description: 'UNESCO Dünya Mirası Listesi\'nde yer alan Efes Antik Kenti, her yıl binlerce tarih meraklısını ağırlıyor. Celsus Kütüphanesi, Büyük Tiyatro ve Yamaç Evler gibi yapılar ziyaretçileri büyülüyor.',
+        images: [
+            { id: 'pg6-img1', imageUrl: 'https://picsum.photos/800/600?random=131', imageHint: 'celsus library ephesus', caption: 'Celsus Kütüphanesi, Efes\'in en görkemli yapılarından biri.' },
+        ]
+    }
 ];

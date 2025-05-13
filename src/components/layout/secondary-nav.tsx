@@ -17,8 +17,9 @@ const navItems = [
 export default function SecondaryNav() {
   const pathname = usePathname();
 
-  // Hide this navigation on podcast and photo gallery pages
-  const hideNav = pathname.startsWith('/podcast') || pathname.startsWith('/fotograf-galerileri') || pathname.startsWith('/foto-galeri');
+  // Hide this navigation on podcast, photo gallery listing, and photo gallery detail pages
+  const hideNav = pathname.startsWith('/podcast') || pathname === ('/fotograf-galerileri') || pathname.startsWith('/foto-galeri');
+
 
   if (hideNav) {
     return null;
