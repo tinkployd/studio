@@ -38,7 +38,7 @@ export default function FotografGalerileriPage() {
 
   if (!featuredGallery) {
     return (
-      <div className="container mx-auto px-2 sm:px-4 py-6 md:py-8 text-center bg-gray-900 text-white min-h-screen">
+      <div className="container mx-auto px-2 sm:px-4 py-6 md:py-8 text-center bg-gray-950 text-white min-h-screen">
         <p>Foto galeriler yükleniyor veya bulunamadı.</p>
       </div>
     );
@@ -46,7 +46,7 @@ export default function FotografGalerileriPage() {
 
   return (
     <>
-      <div className="bg-gray-900 text-white pt-1"> {/* Main dark background wrapper */}
+      <div className="bg-gray-950 text-white pt-1"> {/* Main dark background wrapper */}
         {/* Hero Section */}
         <section className="relative h-[60vh] md:h-[70vh] w-full overflow-hidden">
           <Image
@@ -96,7 +96,7 @@ export default function FotografGalerileriPage() {
 
         {/* Thumbnail Scroller Section */}
         {otherGalleriesForScroller.length > 0 && (
-          <section className="py-6 md:py-8 bg-gray-900 relative"> {/* Ensure dark bg */}
+          <section className="py-6 md:py-8 bg-gray-950 relative"> {/* Ensure dark bg */}
             <div className="container mx-auto px-0 sm:px-4">
               <div className="relative">
                 <Button 
