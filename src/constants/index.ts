@@ -1,4 +1,5 @@
 
+import { slugify } from '@/lib/utils';
 
 export interface NavLink {
   label: string;
@@ -9,7 +10,7 @@ export interface NavLink {
 
 export const MAIN_HEADER_NAV_LINKS: NavLink[] = [
   { label: 'SICAK', href: '#', isDropdown: true },
-  { label: 'SAVUNMA', href: '#' },
+  { label: 'SAVUNMA', href: '/haber/savunma' },
   { label: 'ÇOCUK', href: '#' },
   { label: 'ÖZEL HABER', href: '#' },
   { label: 'DOSYA HABER', href: '#' },
@@ -19,23 +20,24 @@ export const MAIN_HEADER_NAV_LINKS: NavLink[] = [
 export const NAV_LINKS: NavLink[] = [
   // Links for the main header (also used in mobile menu)
   { label: 'SICAK', href: '#', isDropdown: true },
-  { label: 'SAVUNMA', href: '#' },
+  { label: 'SAVUNMA', href: '/haber/savunma' },
   { label: 'ÇOCUK', href: '#' },
   { label: 'ÖZEL HABER', href: '#' },
   { label: 'DOSYA HABER', href: '#' },
   { label: 'DİĞER', href: '#', isDropdown: true },
   // Additional links primarily for mobile menu and site structure
-  { label: 'GÜNDEM', href: '/#gundem', isDropdown: true }, // Assuming an ID for sections on homepage
-  { label: 'DÜNYA', href: '/#dunya', isDropdown: true },
-  { label: 'EKONOMİ', href: '/#ekonomi', isDropdown: true },
-  { label: 'SPOR', href: '/#spor', isDropdown: true },
-  { label: 'BİLİM TEKNOLOJİ', href: '/#bilim-teknoloji', isDropdown: true },
-  { label: 'YAŞAM', href: '/#yasam', isDropdown: true },
-  { label: 'KÜLTÜR SANAT', href: '/#kultur-sanat', isDropdown: true },
-  { label: 'SAĞLIK', href: '/#saglik', isDropdown: true },
-  { label: 'PROGRAMLAR', href: '/#programlar', isDropdown: true },
+  { label: 'GÜNDEM', href: '/haber/gundem', isDropdown: true }, 
+  { label: 'DÜNYA', href: '/haber/dunya', isDropdown: true },
+  { label: 'EKONOMİ', href: '/haber/ekonomi', isDropdown: true },
+  { label: 'SPOR', href: '/haber/spor', isDropdown: true },
+  { label: 'BİLİM TEKNOLOJİ', href: '/haber/bilim-teknOLOJİ', isDropdown: true },
+  { label: 'YAŞAM', href: '/haber/yasam', isDropdown: true },
+  { label: 'KÜLTÜR SANAT', href: '/haber/kultur-sanat', isDropdown: true },
+  { label: 'SAĞLIK', href: '/haber/saglik', isDropdown: true },
+  { label: 'PROGRAMLAR', href: '#', isDropdown: true }, // Assuming '#' for now
   { label: 'PODCAST', href: '/podcast'},
-  { label: 'FOTO GALERİ', href: '/fotograf-galerileri' }, // Added Foto Galeri link
+  { label: 'FOTO GALERİ', href: '/fotograf-galerileri' },
+  { label: 'VİDEO GALERİ', href: '/videolar' },
 ];
 
 export const FOOTER_LINKS_COL1 = [
@@ -68,6 +70,7 @@ export const TRT_NETWORK_LINKS = [
 
 export interface Article {
   id: string;
+  slug: string;
   title: string;
   category: string;
   imageUrl: string;
@@ -75,33 +78,39 @@ export interface Article {
   content: string;
   publishDate?: string;
   sourceUrl?: string;
+  subtitle?: string; // For article detail page
+  tags?: string[]; // For article detail page
 }
 
 export interface Video {
   id: string;
+  slug: string;
   title: string;
   category: string;
-  thumbnailUrl: string; // Renamed from imageUrl for clarity
-  imageHint: string; // Keep for AI hints
-  description?: string; // Optional description for main video
-  videoUrl?: string; // Link to the video page or source
-  sourceUrl?: string; // Fallback if videoUrl is not specific
+  thumbnailUrl: string; 
+  imageHint: string; 
+  description?: string; 
+  videoUrl?: string; 
+  sourceUrl?: string; 
+  duration?: string; // e.g., "03:28"
+  publishDate?: string; // e.g., "13.05.2024 16:16"
+  viewCount?: string; // e.g. "1.234"
 }
 
 export interface PodcastEpisode {
   id: string;
-  slug: string; // e.g., "hayatin-hikayesi-bolum-9"
-  title: string; // e.g., "9. Bölüm: Umut Işığında Yolculuk"
-  seriesTitle: string; // e.g., "Hayatın Hikayesi"
-  seriesSlug: string; // e.g., "hayatin-hikayesi" (for grouping/linking)
-  category: string; // Main category for the podcast series, e.g. "Yaşam", "Söyleşi"
+  slug: string; 
+  title: string; 
+  seriesTitle: string; 
+  seriesSlug: string; 
+  category: string; 
   imageUrl: string;
   imageHint: string;
-  description: string; // Full description for detail page
-  shortDescription?: string; // For cards on listing page if different
+  description: string; 
+  shortDescription?: string; 
   audioUrl: string;
-  duration: string; // "25:30"
-  publishDate: string; // "10 Temmuz 2024"
+  duration: string; 
+  publishDate: string; 
   listenCount?: number;
 }
 
@@ -114,14 +123,14 @@ export interface GalleryImage {
 
 export interface PhotoGallery {
     id: string;
-    slug: string; // e.g., "meteoroloji-25-ili-uyardi-gok-gurultulu-saganak-geliyor"
+    slug: string; 
     title: string;
-    category: string; // e.g., "TÜRKİYE", "YAŞAM"
+    category: string; 
     coverImageUrl: string;
     coverImageHint: string;
-    publishDate: string; // "13 Temmuz 2024"
-    updateDate?: string; // "13 Temmuz 2024 14:30" (Optional)
-    description: string; // Short description for the gallery
+    publishDate: string; 
+    updateDate?: string; 
+    description: string; 
     images: GalleryImage[];
 }
 
@@ -138,341 +147,511 @@ export const PHOTO_GALLERY_CATEGORIES: string[] = [
   'Spor'
 ];
 
+export const VIDEO_CATEGORIES: string[] = [
+  'Tümü', // Added Tümü for all videos
+  'Gündem', 
+  'Türkiye', 
+  'Dünya', 
+  'Ekonomi', 
+  'Sağlık', 
+  'Yaşam', 
+  'Kültür-Sanat', 
+  'Bilim Teknoloji', 
+  'Eğitim', 
+  'Spor',
+  'Savunma'
+];
 
-// Add more articles, especially in GÜNDEM category to fill the new slots
+
 export const PLACEHOLDER_ARTICLES: Article[] = [
-  // --- Existing Articles (0-17) ---
   {
     id: '1',
+    slug: slugify('Türkiye\'nin Otomobili Togg İçin Yeni Gelişmeler ve Global Hedefler'),
     title: 'Türkiye\'nin Otomobili Togg İçin Yeni Gelişmeler ve Global Hedefler',
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=1',
     imageHint: 'electric car future',
-    content: 'Türkiye\'nin yerli otomobili Togg, üretim ve teknoloji alanında önemli adımlar atmaya devam ediyor. Son yapılan açıklamada, Togg\'un yeni batarya teknolojisi ve otonom sürüş özellikleriyle ilgili detaylar paylaşıldı. Fabrikadaki üretim kapasitesinin artırılması ve uluslararası pazarlara açılma hedefleri de vurgulandı. Togg, Türkiye\'nin teknoloji ve mühendislik alanındaki yeteneklerini dünyaya göstermeyi amaçlıyor. Araç, kullanıcı deneyimini en üst seviyeye çıkarmak için gelişmiş bağlantı özellikleri ve kişiselleştirilebilir arayüzler sunacak.',
+    content: 'Türkiye\'nin yerli otomobili Togg, üretim ve teknoloji alanında önemli adımlar atmaya devam ediyor. Son yapılan açıklamada, Togg\'un yeni batarya teknolojisi ve otonom sürüş özellikleriyle ilgili detaylar paylaşıldı. Fabrikadaki üretim kapasitesinin artırılması ve uluslararası pazarlara açılma hedefleri de vurgulandı. Togg, Türkiye\'nin teknoloji ve mühendislik alanındaki yeteneklerini dünyaya göstermeyi amaçlıyor. Araç, kullanıcı deneyimini en üst seviyeye çıkarmak için gelişmiş bağlantı özellikleri ve kişiselleştirilebilir arayüzler sunacak. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
     publishDate: '10 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/turkiyenin-otomobili-togg-icin-yeni-gelismeler-12345.html'
+    sourceUrl: '#',
+    subtitle: 'Yerli otomobil Togg, yeni batarya teknolojisi ve otonom sürüş özellikleriyle dikkat çekiyor. Üretim kapasitesi artırılıyor ve global pazarlara açılma hedefleniyor.',
+    tags: ['Togg', 'Yerli Otomobil', 'Elektrikli Araç', 'Ekonomi']
   },
   {
     id: '2',
+    slug: slugify('Milli Takım Avrupa Şampiyonası\'nda Tarihi Başarıyla Çeyrek Finalde!'),
     title: 'Milli Takım Avrupa Şampiyonası\'nda Tarihi Başarıyla Çeyrek Finalde!',
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=2',
     imageHint: 'soccer celebration stadium',
-    content: 'A Milli Futbol Takımımız, Avrupa Futbol Şampiyonası\'nda gösterdiği üstün performansla çeyrek finale yükseldi. Son 16 turunda güçlü rakibini nefes kesen bir maç sonunda eleyen ay-yıldızlılar, taraftarlarına büyük sevinç yaşattı. Teknik direktör ve oyuncular, maç sonu yaptıkları açıklamalarda takım ruhuna, inanca ve taraftar desteğine vurgu yaptı. Bir sonraki zorlu rakip için hazırlıklar tüm hızıyla başladı.',
+    content: 'A Milli Futbol Takımımız, Avrupa Futbol Şampiyonası\'nda gösterdiği üstün performansla çeyrek finale yükseldi. Son 16 turunda güçlü rakibini nefes kesen bir maç sonunda eleyen ay-yıldızlılar, taraftarlarına büyük sevinç yaşattı. Teknik direktör ve oyuncular, maç sonu yaptıkları açıklamalarda takım ruhuna, inanca ve taraftar desteğine vurgu yaptı. Bir sonraki zorlu rakip için hazırlıklar tüm hızıyla başladı. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     publishDate: '9 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/spor/milli-takim-avrupa-sampiyonasinda-ceyrek-finalde-67890.html'
+    sourceUrl: '#',
+    tags: ['Milli Takım', 'Futbol', 'Avrupa Şampiyonası', 'Spor']
   },
   {
     id: '3',
+    slug: slugify('Yeni Uzay Teleskobu Evrenin Derinliklerinden İlk Çarpıcı Görüntüleri Dünya\'ya Ulaştırdı'),
     title: 'Yeni Uzay Teleskobu Evrenin Derinliklerinden İlk Çarpıcı Görüntüleri Dünya\'ya Ulaştırdı',
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=3',
     imageHint: 'nebula stars galaxy',
-    content: 'NASA ve ESA ortaklığında geliştirilen yeni nesil uzay teleskobu, evrenin daha önce hiç görülmemiş uzak köşelerinden ilk renkli ve detaylı görüntüleri Dünya\'ya ulaştırdı. Bu muazzam görüntüler, galaksi oluşumları, yıldızların doğuş ve ölüm süreçleri, ve gizemli kara delikler hakkında yeni bilgiler sunuyor. Bilim insanları, bu verilerin evren anlayışımızı kökten değiştirebileceğini ve astrofizikte yeni bir çağ başlatabileceğini belirtiyor.',
+    content: 'NASA ve ESA ortaklığında geliştirilen yeni nesil uzay teleskobu, evrenin daha önce hiç görülmemiş uzak köşelerinden ilk renkli ve detaylı görüntüleri Dünya\'ya ulaştırdı. Bu muazzam görüntüler, galaksi oluşumları, yıldızların doğuş ve ölüm süreçleri, ve gizemli kara delikler hakkında yeni bilgiler sunuyor. Bilim insanları, bu verilerin evren anlayışımızı kökten değiştirebileceğini ve astrofizikte yeni bir çağ başlatabileceğini belirtiyor. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     publishDate: '8 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/yeni-uzay-teleskobu-goruntuleri-11223.html'
+    sourceUrl: '#',
+    tags: ['Uzay', 'Teleskop', 'Bilim', 'Astronomi']
   },
   {
     id: '4',
+    slug: slugify('İstanbul\'da Tarihi Yarımada\'da Devam Eden Çalışmalarda Yeni Arkeolojik Keşifler Heyecan Yarattı'),
     title: 'İstanbul\'da Tarihi Yarımada\'da Devam Eden Çalışmalarda Yeni Arkeolojik Keşifler Heyecan Yarattı',
     category: 'KÜLTÜR SANAT',
     imageUrl: 'https://picsum.photos/800/500?random=4',
     imageHint: 'ancient ruins excavation',
     content: 'İstanbul Tarihi Yarımada\'da devam eden altyapı ve restorasyon çalışmaları sırasında Roma, Bizans ve Osmanlı dönemlerine ait olduğu düşünülen çok sayıda önemli arkeolojik kalıntıya ulaşıldı. Eserler arasında günlük yaşamda kullanılan seramikler, değerli sikkeler, mozaik parçaları ve antik yapı kalıntıları bulunuyor. Arkeologlar, bu keşiflerin İstanbul\'un zengin tarihi katmanlarına ve kültürel mirasına ışık tutacağını ifade ediyor.',
     publishDate: '7 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/kultur-sanat/istanbul-arkeolojik-kesifler-33445.html'
+    sourceUrl: '#',
+    tags: ['Arkeoloji', 'İstanbul', 'Tarihi Eser', 'Kültür Sanat']
   },
   {
     id: '5',
+    slug: slugify('Küresel İklim Değişikliği Raporu Yayınlandı: Gelecek Nesiller İçin Acil Önlemler Alınmalı'),
     title: 'Küresel İklim Değişikliği Raporu Yayınlandı: Gelecek Nesiller İçin Acil Önlemler Alınmalı',
     category: 'DÜNYA',
     imageUrl: 'https://picsum.photos/800/500?random=5',
     imageHint: 'earth environment pollution',
     content: 'Birleşmiş Milletler\'e bağlı Hükümetlerarası İklim Değişikliği Paneli (IPCC) merakla beklenen son kapsamlı raporunu yayınladı. Raporda, küresel sıcaklık artışının yıkıcı ve geri döndürülemez sonuçlara yol açabileceği, bu nedenle acil ve kararlı olarak sera gazı emisyonlarının azaltılması gerektiği bir kez daha güçlü bir şekilde vurgulandı. Rapor, yenilenebilir enerjiye geçişin hızlandırılması, enerji verimliliğinin artırılması ve sürdürülebilir politikaların tüm ülkeler tarafından benimsenmesi çağrısında bulunuyor.',
     publishDate: '6 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/dunya/iklim-degisikligi-raporu-55667.html'
+    sourceUrl: '#',
+    tags: ['İklim Değişikliği', 'Çevre', 'Küresel Isınma', 'Dünya']
   },
   {
     id: '6',
+    slug: slugify('Sağlıklı ve Uzun Bir Yaşam İçin Beslenme Uzmanlarından Altın Değerinde Öneriler'),
     title: 'Sağlıklı ve Uzun Bir Yaşam İçin Beslenme Uzmanlarından Altın Değerinde Öneriler',
     category: 'SAĞLIK',
     imageUrl: 'https://picsum.photos/800/500?random=6',
     imageHint: 'vegetables fruits healthy',
     content: 'Alanında uzman diyetisyenler ve beslenme uzmanları, sağlıklı ve dengeli bir yaşam sürdürmek için mevsimine uygun, taze ve çeşitli sebze-meyve tüketiminin hayati önemine dikkat çekiyor. İşlenmiş gıdalardan, şekerli içeceklerden ve aşırı tuz tüketiminden uzak durulması, yeterli miktarda su içilmesi ve düzenli fiziksel aktivite yapılması da sağlıklı yaşamın temel taşları arasında gösteriliyor. Özellikle yaz aylarında sıvı alımına ve hafif beslenmeye özen gösterilmesi gerektiği belirtiliyor.',
     publishDate: '5 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/saglik/saglikli-yasam-onerileri-77889.html'
+    sourceUrl: '#',
+    tags: ['Sağlık', 'Beslenme', 'Diyet', 'Yaşam']
   },
   {
     id: '7',
+    slug: slugify('Yapay Zeka Sanat Dünyasını Nasıl Değiştiriyor? Yeni Sergiler ve Tartışmalar'),
     title: 'Yapay Zeka Sanat Dünyasını Nasıl Değiştiriyor? Yeni Sergiler ve Tartışmalar',
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=7',
     imageHint: 'ai art abstract',
     content: 'Yapay zeka tarafından üretilen sanat eserleri, dünya genelinde sanat galerilerinde sergilenmeye başlandı. Bu durum, sanatın tanımı, yaratıcılık ve telif hakları gibi konularda önemli tartışmaları da beraberinde getiriyor. Bazı sanatçılar yapay zekayı bir araç olarak benimserken, bazıları ise özgünlüğü tehdit ettiğini düşünüyor. Yeni teknolojilerin sanat pratiğine etkileri üzerine düzenlenen paneller ve sergiler, bu dönüşümü anlamaya çalışıyor.',
     publishDate: '4 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/yapay-zeka-sanat-dunyasini-degistiriyor-88990.html'
+    sourceUrl: '#',
+    tags: ['Yapay Zeka', 'Sanat', 'Teknoloji', 'Bilim Teknoloji']
   },
   {
     id: '8',
+    slug: slugify('Türkiye\'nin Turizmde Yeni Rekor Beklentisi: Yaz Sezonu Doluluk Oranları Yüksek'),
     title: 'Türkiye\'nin Turizmde Yeni Rekor Beklentisi: Yaz Sezonu Doluluk Oranları Yüksek',
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=8',
     imageHint: 'beach resort summer',
     content: 'Türkiye, 2024 yaz sezonunda turizmde yeni bir rekor kırmayı hedefliyor. Özellikle Akdeniz ve Ege sahillerindeki otellerde doluluk oranları şimdiden yüzde 90\'lara ulaştı. Kültür ve Turizm Bakanlığı, tanıtım faaliyetlerini artırarak ve yeni destinasyonları öne çıkararak turist sayısını ve gelirlerini artırmayı planlıyor. Sektör temsilcileri, artan maliyetlere rağmen talebin güçlü olduğunu belirtiyor.',
     publishDate: '3 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/turizmde-yeni-rekor-beklentisi-12121.html'
+    sourceUrl: '#',
+    tags: ['Turizm', 'Ekonomi', 'Yaz Sezonu', 'Tatil']
   },
   {
     id: '9',
+    slug: slugify('Yerli Savunma Sanayii Ürünleri Uluslararası Fuarda Göz Doldurdu'),
     title: 'Yerli Savunma Sanayii Ürünleri Uluslararası Fuarda Göz Doldurdu',
     category: 'SAVUNMA',
     imageUrl: 'https://picsum.photos/800/500?random=9',
     imageHint: 'military tech defense',
-    content: 'Türk savunma sanayii firmaları, katıldıkları uluslararası bir fuarda en yeni ürün ve teknolojilerini sergiledi. İnsansız hava araçları, zırhlı araçlar, füze sistemleri ve siber güvenlik çözümleri büyük ilgi gördü. Birçok ülke ile yeni işbirliği anlaşmaları imzalanırken, Türkiye\'nin savunma alanındaki teknolojik yetkinliği bir kez daha kanıtlandı. Fuarda sergilenen ürünler, yerli ve milli imkanlarla geliştirilmiş olmalarıyla dikkat çekti.',
+    content: 'Türk savunma sanayii firmaları, katıldıkları uluslararası bir fuarda en yeni ürün ve teknolojilerini sergiledi. İnsansız hava araçları, zırhlı araçlar, füze sistemleri ve siber güvenlik çözümleri büyük ilgi gördü. Birçok ülke ile yeni işbirliği anlaşmaları imzalanırken, Türkiye\'nin savunma alanındaki teknolojik yetkinliği bir kez daha kanıtlandı. Fuarda sergilenen ürünler, yerli ve milli imkanlarla geliştirilmiş olmalarıyla dikkat çekti. İletişim Başkanı Altun: Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz. Türkiye\'nin terörle mücadelesi kararlılıkla devam ediyor. Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz.',
     publishDate: '2 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/savunma/yerli-savunma-sanayii-fuarda-34343.html'
+    sourceUrl: '#',
+    subtitle: 'İletişim Başkanı Fahrettin Altun, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz" dedi. Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirtti.',
+    tags: ['Savunma Sanayii', 'Teknoloji', 'Askeri', 'Fuar', 'Terörle Mücadele', 'Fahrettin Altun']
   },
   {
     id: '10',
+    slug: slugify('Gıda Fiyatlarındaki Artış ve Enflasyonla Mücadelede Yeni Adımlar Atılıyor'),
     title: 'Gıda Fiyatlarındaki Artış ve Enflasyonla Mücadelede Yeni Adımlar Atılıyor',
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=10',
     imageHint: 'market grocery inflation',
     content: 'Küresel ve yerel etkenlerle artan gıda fiyatları ve genel enflasyonla mücadele kapsamında hükümet yeni bir dizi tedbir paketi açıkladı. Tarımsal üretimde verimliliği artırmaya yönelik destekler, tedarik zincirindeki sorunların giderilmesi ve bazı temel ürünlerde KDV indirimleri gibi adımlar atılması planlanıyor. Ekonomistler, bu tedbirlerin etkilerini ve uzun vadeli çözümleri tartışıyor.',
     publishDate: '1 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/gida-fiyatlari-enflasyon-mucadele-56565.html'
+    sourceUrl: '#',
+    tags: ['Enflasyon', 'Gıda Fiyatları', 'Ekonomi', 'Tedbir Paketi']
   },
    {
     id: '11',
+    slug: slugify('Eğitimde Dijital Dönüşüm Hız Kesmiyor: Akıllı Sınıflar Yaygınlaşıyor'),
     title: 'Eğitimde Dijital Dönüşüm Hız Kesmiyor: Akıllı Sınıflar Yaygınlaşıyor',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=11',
     imageHint: 'classroom technology education',
     content: 'Türkiye genelindeki okullarda eğitimde dijital dönüşüm projeleri hızla devam ediyor. Akıllı tahtalar, tablet dağıtımları ve online eğitim platformları ile donatılan sınıflar sayesinde öğrencilerin öğrenme süreçleri daha interaktif ve verimli hale geliyor. Milli Eğitim Bakanlığı, öğretmenlere yönelik dijital yetkinlik eğitimlerini de artırarak bu sürece destek oluyor.',
     publishDate: '28 Haziran 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/egitimde-dijital-donusum-78787.html'
+    sourceUrl: '#',
+    tags: ['Eğitim', 'Dijital Dönüşüm', 'Teknoloji', 'Gündem']
   },
   {
     id: '12',
+    slug: slugify('Yerel Tohumların Korunması ve Yaygınlaştırılması İçin Yeni Proje Başlatıldı'),
     title: 'Yerel Tohumların Korunması ve Yaygınlaştırılması İçin Yeni Proje Başlatıldı',
     category: 'YAŞAM',
     imageUrl: 'https://picsum.photos/800/500?random=12',
     imageHint: 'seeds farming agriculture',
     content: 'Tarım ve Orman Bakanlığı, yerel tohumların genetik çeşitliliğini korumak ve çiftçiler arasında yaygınlaşmasını sağlamak amacıyla kapsamlı bir proje başlattı. Proje kapsamında tohum bankaları kurulacak, çiftçilere yerel tohum kullanımı konusunda eğitimler verilecek ve destekler sağlanacak. Bu sayede hem biyolojik çeşitliliğin korunması hem de sürdürülebilir tarımın desteklenmesi hedefleniyor.',
     publishDate: '27 Haziran 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/yasam/yerel-tohumlarin-korunmasi-projesi-90909.html'
+    sourceUrl: '#',
+    tags: ['Tarım', 'Yerel Tohum', 'Çevre', 'Yaşam']
   },
   {
     id: '13',
+    slug: slugify('Ankara\'da Toplu Taşıma İçin Yeni Metro Hattı Projesi Onaylandı'),
     title: 'Ankara\'da Toplu Taşıma İçin Yeni Metro Hattı Projesi Onaylandı',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=13',
     imageHint: 'subway train station',
     content: 'Ankara Büyükşehir Belediyesi, şehir içi ulaşımı rahatlatmak amacıyla planlanan yeni metro hattı projesinin Ulaştırma Bakanlığı tarafından onaylandığını duyurdu. Yeni hat, şehrin yoğun nüfuslu bölgelerini birbirine bağlayacak ve trafik sorununa önemli bir çözüm sunması bekleniyor. İnşaat çalışmalarının önümüzdeki yıl başlaması planlanıyor.',
     publishDate: '11 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/ankara-yeni-metro-hatti-onaylandi-13131.html'
+    sourceUrl: '#',
+    tags: ['Ankara', 'Metro', 'Ulaşım', 'Gündem']
   },
   {
     id: '14',
+    slug: slugify('Avrupa Merkez Bankası Faiz Oranlarını Değiştirmedi, Enflasyon Vurgusu Yaptı'),
     title: 'Avrupa Merkez Bankası Faiz Oranlarını Değiştirmedi, Enflasyon Vurgusu Yaptı',
     category: 'DÜNYA',
     imageUrl: 'https://picsum.photos/800/500?random=14',
     imageHint: 'bank building finance',
     content: 'Avrupa Merkez Bankası (ECB), son para politikası toplantısında beklentiler doğrultusunda faiz oranlarında bir değişikliğe gitmedi. ECB Başkanı yaptığı açıklamada, Euro Bölgesi\'nde enflasyonun hala yüksek seyrettiğini ve para politikasının sıkı duruşunu koruyacağını belirtti. Gelecek dönem verilerine göre hareket edileceği mesajı verildi.',
     publishDate: '11 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/dunya/ecb-faiz-karari-temmuz-2024-14141.html'
+    sourceUrl: '#',
+    tags: ['ECB', 'Faiz Oranları', 'Enflasyon', 'Dünya Ekonomisi']
   },
   {
     id: '15',
+    slug: slugify('Karadeniz\'de Geleneksel Yayla Şenlikleri Başladı, Turistler Akın Ediyor'),
     title: 'Karadeniz\'de Geleneksel Yayla Şenlikleri Başladı, Turistler Akın Ediyor',
     category: 'YAŞAM',
     imageUrl: 'https://picsum.photos/800/500?random=15',
     imageHint: 'mountain festival folk',
     content: 'Doğu Karadeniz Bölgesi\'nin eşsiz doğal güzelliklerine sahip yaylalarında geleneksel yaz şenlikleri başladı. Rengarenk yöresel kıyafetler, kemençe ve tulum sesleri eşliğinde horonların oynandığı şenlikler, yerli ve yabancı çok sayıda turisti ağırlıyor. Bölge esnafı, şenliklerin turizme ve ekonomiye canlılık getirdiğini belirtiyor.',
     publishDate: '10 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/yasam/karadeniz-yayla-senlikleri-basladi-15151.html'
+    sourceUrl: '#',
+    tags: ['Karadeniz', 'Yayla Şenlikleri', 'Turizm', 'Yaşam']
   },
   {
     id: '16',
+    slug: slugify('Galatasaray, Şampiyonlar Ligi Ön Eleme Turu İçin Rakibini Bekliyor'),
     title: 'Galatasaray, Şampiyonlar Ligi Ön Eleme Turu İçin Rakibini Bekliyor',
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=16',
     imageHint: 'soccer team training',
     content: 'Trendyol Süper Lig şampiyonu Galatasaray, UEFA Şampiyonlar Ligi\'ne katılabilmek için ön eleme turlarında mücadele edecek. Sarı-kırmızılı ekip, yeni sezon hazırlıklarını sürdürürken, kura çekimini ve muhtemel rakiplerini bekliyor. Teknik heyet ve futbolcular, Devler Ligi gruplarına kalmak için iddialı olduklarını belirtti.',
     publishDate: '9 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/spor/galatasaray-sampiyonlar-ligi-rakip-16161.html'
+    sourceUrl: '#',
+    tags: ['Galatasaray', 'Şampiyonlar Ligi', 'Futbol', 'Spor']
   },
   {
     id: '17',
+    slug: slugify('Borsa İstanbul\'da Yabancı Yatırımcı İlgisi Artıyor: Son Veriler Açıklandı'),
     title: 'Borsa İstanbul\'da Yabancı Yatırımcı İlgisi Artıyor: Son Veriler Açıklandı',
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=17',
     imageHint: 'stock market chart',
     content: 'Merkez Bankası ve Borsa İstanbul tarafından açıklanan son verilere göre, yabancı yatırımcıların Türk varlıklarına olan ilgisi son dönemde artış gösterdi. Özellikle hisse senedi piyasasında net alımların gözlendiği belirtilirken, uygulanan ekonomi politikalarının ve atılan normalleşme adımlarının bu ilgide etkili olduğu yorumları yapılıyor.',
     publishDate: '8 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/borsa-istanbul-yabanci-yatirimci-17171.html'
+    sourceUrl: '#',
+    tags: ['Borsa İstanbul', 'Yabancı Yatırımcı', 'Ekonomi', 'Finans']
   },
-
-  // --- Additional GÜNDEM Articles (18-25) ---
   {
     id: '18',
+    slug: slugify('Kabine Toplantısı Sonrası Önemli Açıklamalar: Ekonomi ve Dış Politika Gündemdeydi'),
     title: 'Kabine Toplantısı Sonrası Önemli Açıklamalar: Ekonomi ve Dış Politika Gündemdeydi',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=18',
     imageHint: 'government meeting officials',
     content: 'Cumhurbaşkanlığı Kabinesi, son toplantısında ekonomi ve dış politikadaki güncel gelişmeleri ele aldı. Toplantı sonrası yapılan açıklamada, enflasyonla mücadele, yeni yatırım teşvikleri ve bölgesel konulara ilişkin alınan kararlar kamuoyuyla paylaşıldı.',
     publishDate: '11 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/kabine-toplantisi-aciklamalari-18181.html'
+    sourceUrl: '#',
+    tags: ['Kabine Toplantısı', 'Ekonomi', 'Dış Politika', 'Gündem']
   },
   {
     id: '19',
+    slug: slugify('Orman Yangınlarıyla Mücadele Devam Ediyor: Havadan ve Karadan Müdahale Sürüyor'),
     title: 'Orman Yangınlarıyla Mücadele Devam Ediyor: Havadan ve Karadan Müdahale Sürüyor',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=19',
     imageHint: 'forest fire smoke',
     content: 'Türkiye\'nin çeşitli bölgelerinde çıkan orman yangınlarına müdahale aralıksız devam ediyor. Tarım ve Orman Bakanlığı koordinasyonunda ekipler, yangın söndürme uçakları, helikopterler ve arazözlerle alevleri kontrol altına almaya çalışıyor. Vatandaşlara anız yakmamaları ve ormanlık alanlarda ateş yakmamaları konusunda uyarılar yapıldı.',
     publishDate: '10 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/orman-yanginlari-mudahale-19191.html'
+    sourceUrl: '#',
+    tags: ['Orman Yangını', 'Çevre', 'Afet', 'Gündem']
   },
   {
     id: '20',
+    slug: slugify('Adalet Bakanlığı\'ndan Yeni Yargı Reformu Paketi Hazırlığı'),
     title: 'Adalet Bakanlığı\'ndan Yeni Yargı Reformu Paketi Hazırlığı',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=20',
     imageHint: 'courtroom judge law',
     content: 'Adalet Bakanlığı, yargı süreçlerini hızlandırmak ve adalete erişimi kolaylaştırmak amacıyla yeni bir yargı reformu paketi üzerinde çalıştıklarını açıkladı. Paketin detaylarının yakın zamanda kamuoyu ile paylaşılması bekleniyor.',
     publishDate: '9 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/yeni-yargi-reformu-paketi-20202.html'
+    sourceUrl: '#',
+    tags: ['Yargı Reformu', 'Adalet Bakanlığı', 'Hukuk', 'Gündem']
   },
   {
     id: '21',
+    slug: slugify('Kurban Bayramı Tatili İçin Trafik Yoğunluğu Başladı: Sürücülere Uyarılar'),
     title: 'Kurban Bayramı Tatili İçin Trafik Yoğunluğu Başladı: Sürücülere Uyarılar',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=21',
     imageHint: 'highway traffic cars',
     content: 'Yaklaşan Kurban Bayramı tatili öncesinde şehirlerarası yollarda trafik yoğunluğu artmaya başladı. İçişleri Bakanlığı ve Emniyet Genel Müdürlüğü, sürücüleri trafik kurallarına uymaları, hız limitlerini aşmamaları ve yorgun araç kullanmamaları konusunda uyardı. Tatil süresince ek trafik tedbirleri alınacak.',
     publishDate: '8 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/bayram-tatili-trafik-uyarilari-21212.html'
+    sourceUrl: '#',
+    tags: ['Kurban Bayramı', 'Trafik', 'Tatil', 'Gündem']
   },
   {
     id: '22',
+    slug: slugify('Türkiye\'nin Tahıl Koridoru Diplomasisi Devam Ediyor'),
     title: 'Türkiye\'nin Tahıl Koridoru Diplomasisi Devam Ediyor',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=22',
     imageHint: 'wheat field grain',
     content: 'Türkiye, Karadeniz Tahıl Koridoru Anlaşması\'nın devamı ve küresel gıda güvenliğinin sağlanması için diplomatik çabalarını sürdürüyor. İlgili taraflarla görüşmeler devam ederken, anlaşmanın uzatılmasının önemi vurgulanıyor.',
     publishDate: '7 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/tahil-koridoru-diplomasisi-22222.html'
+    sourceUrl: '#',
+    tags: ['Tahıl Koridoru', 'Diplomasi', 'Gıda Güvenliği', 'Gündem']
   },
   {
     id: '23',
+    slug: slugify('Enerji Verimliliği Projelerine Yeni Destekler Açıklandı'),
     title: 'Enerji Verimliliği Projelerine Yeni Destekler Açıklandı',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=23',
     imageHint: 'solar panels energy',
     content: 'Enerji ve Tabii Kaynaklar Bakanlığı, sanayi tesisleri ve konutlarda enerji verimliliğini artırmaya yönelik yeni teşvik ve destek programlarını duyurdu. Amaç, enerji tüketimini azaltmak ve dışa bağımlılığı düşürmek.',
     publishDate: '6 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/enerji-verimliligi-destekleri-23232.html'
+    sourceUrl: '#',
+    tags: ['Enerji Verimliliği', 'Destek Paketi', 'Çevre', 'Gündem']
   },
    {
     id: '24',
+    slug: slugify('İçişleri Bakanlığı\'ndan Siber Güvenlik Uyarısı: Dolandırıcılık Yöntemlerine Dikkat'),
     title: 'İçişleri Bakanlığı\'ndan Siber Güvenlik Uyarısı: Dolandırıcılık Yöntemlerine Dikkat',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=24',
     imageHint: 'hacker computer code',
     content: 'İçişleri Bakanlığı Siber Suçlarla Mücadele Daire Başkanlığı, artan online dolandırıcılık vakalarına karşı vatandaşları uyardı. Özellikle sahte web siteleri, oltalama (phishing) saldırıları ve telefon dolandırıcılığı yöntemlerine karşı dikkatli olunması gerektiği belirtildi.',
     publishDate: '5 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/siber-guvenlik-uyarisi-dolandiricilik-24242.html'
+    sourceUrl: '#',
+    tags: ['Siber Güvenlik', 'Dolandırıcılık', 'Uyarı', 'Gündem']
   },
   {
     id: '25',
+    slug: slugify('Türkiye Büyük Millet Meclisi Yeni Yasama Yılına Hazırlanıyor'),
     title: 'Türkiye Büyük Millet Meclisi Yeni Yasama Yılına Hazırlanıyor',
     category: 'GÜNDEM',
     imageUrl: 'https://picsum.photos/800/500?random=25',
     imageHint: 'parliament building politics',
     content: 'TBMM, yaz tatilinin ardından yeni yasama yılı için hazırlıklarını sürdürüyor. Yeni dönemde meclis gündemine gelmesi beklenen önemli yasa teklifleri ve düzenlemeler bulunuyor.',
     publishDate: '4 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/gundem/tbmm-yeni-yasama-yili-hazirliklari-25252.html'
+    sourceUrl: '#',
+    tags: ['TBMM', 'Yasama Yılı', 'Politika', 'Gündem']
   },
-   // --- Add more articles for other categories if needed ---
   {
     id: '26',
+    slug: slugify('Fenerbahçe Avrupa Ligi\'nde Güçlü Rakiplerle Eşleşti'),
     title: 'Fenerbahçe Avrupa Ligi\'nde Güçlü Rakiplerle Eşleşti',
     category: 'SPOR',
     imageUrl: 'https://picsum.photos/800/500?random=26',
     imageHint: 'soccer stadium night',
     content: 'Fenerbahçe, UEFA Avrupa Ligi grup aşaması kura çekiminde güçlü rakiplerle aynı gruba düştü. Teknik direktör ve yönetim, zorlu bir grup olduğunu ancak hedeflerinin gruptan çıkmak olduğunu belirtti.',
     publishDate: '11 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/spor/fenerbahce-avrupa-ligi-grup-26262.html'
+    sourceUrl: '#',
+    tags: ['Fenerbahçe', 'Avrupa Ligi', 'Futbol', 'Spor']
   },
   {
     id: '27',
+    slug: slugify('Yerli Elektrikli Otobüsler Şehir İçi Ulaşımda Yaygınlaşıyor'),
     title: 'Yerli Elektrikli Otobüsler Şehir İçi Ulaşımda Yaygınlaşıyor',
     category: 'EKONOMİ',
     imageUrl: 'https://picsum.photos/800/500?random=27',
     imageHint: 'electric bus city',
     content: 'Türkiye\'de üretilen yerli elektrikli otobüsler, birçok büyükşehir belediyesi tarafından toplu taşımada kullanılmaya başlandı. Çevre dostu ve sessiz çalışan bu otobüsler, hem yakıt tasarrufu sağlıyor hem de karbon emisyonunu azaltıyor.',
     publishDate: '11 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/ekonomi/yerli-elektrikli-otobusler-27272.html'
+    sourceUrl: '#',
+    tags: ['Elektrikli Otobüs', 'Ulaşım', 'Çevre', 'Ekonomi']
   },
    {
     id: '28',
+    slug: slugify('Türkiye\'nin Antarktika Bilim Seferi Başarıyla Tamamlandı'),
     title: 'Türkiye\'nin Antarktika Bilim Seferi Başarıyla Tamamlandı',
     category: 'BİLİM TEKNOLOJİ',
     imageUrl: 'https://picsum.photos/800/500?random=28',
     imageHint: 'antarctica ice snow',
     content: 'Türkiye\'nin Ulusal Antarktika Bilim Seferi, belirlenen hedeflere ulaşarak başarıyla tamamlandı. Sefer ekibi, iklim değişikliği, buzullar ve deniz ekosistemi üzerine önemli bilimsel araştırmalar gerçekleştirdi.',
     publishDate: '10 Temmuz 2024',
-    sourceUrl: 'https://www.trthaber.com/haber/bilim-teknoloji/antarktika-bilim-seferi-tamamlandi-28282.html'
+    sourceUrl: '#',
+    tags: ['Antarktika', 'Bilim Seferi', 'Araştırma', 'Bilim Teknoloji']
   },
+  {
+    id: 'gundem-altun-kardeslik', // Special slug for the example article
+    slug: 'iletisim-baskani-altun-kardeslikten-guc-aliyoruz-terorsuz-bir-turkiye-icin-el-ele-veriyoruz',
+    title: 'İletişim Başkanı Altun: Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz',
+    category: 'GÜNDEM',
+    imageUrl: 'https://picsum.photos/800/500?random=99',
+    imageHint: 'fahrettin altun speech',
+    content: 'İletişim Başkanı Fahrettin Altun, sosyal medya hesabından yaptığı paylaşımda, "Kardeşlikten güç alıyoruz, terörsüz bir Türkiye için el ele veriyoruz." ifadelerini kullandı.\n\nAltun, paylaşımında, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz. Devletimiz, milletimizin huzur ve güvenliği için tüm imkanlarıyla sahada." dedi.\n\nTerör örgütlerine karşı yürütülen operasyonların aralıksız devam ettiğini vurgulayan Altun, "Güvenlik güçlerimiz, yurt içinde ve sınır ötesinde terörün kökünü kazımak için büyük bir özveriyle çalışıyor. Bu mücadelede en büyük gücümüz, aziz milletimizin duaları ve desteğidir." değerlendirmesinde bulundu.\n\nFahrettin Altun, terörün her türlüsünü lanetlediklerini ifade ederek, şunları kaydetti:\n"Terör örgütleri ve destekçileri, ne yaparlarsa yapsınlar, Türkiye\'nin birliğine, beraberliğine ve kardeşliğine asla zarar veremeyeceklerdir. Ülkemizin huzurunu hedef alanlara karşı mücadelemiz, son terörist etkisiz hale getirilinceye kadar devam edecektir. Kardeşlik bağlarımızla kenetlenerek, bu topraklarda barış ve güven ortamını kalıcı kılacağız."',
+    publishDate: '13 Temmuz 2024 18:05',
+    sourceUrl: '#',
+    subtitle: 'İletişim Başkanı Fahrettin Altun, Türkiye\'nin terörle mücadelesinin kararlılıkla sürdüğünü belirterek, "Birlik ve beraberlik içinde bu zorlu sürecin üstesinden geleceğiz." dedi.',
+    tags: ['Fahrettin Altun', 'Terörle Mücadele', 'Gündem', 'Açıklama', 'Türkiye']
+  }
 ];
 
 export const PLACEHOLDER_VIDEOS: Video[] = [
   {
     id: 'v1',
-    title: 'Bayraktar TB3 SİHA\'lardan tam isabet',
-    category: 'Savunma',
-    thumbnailUrl: 'https://picsum.photos/800/450?random=50', // Main video image
-    imageHint: 'drone military strike',
-    description: 'Milli silahlı insansız hava aracı (SİHA) Bayraktar TB3\'ün iki prototipi, DENİZKURDU-2025 Tatbikatı kapsamında TCG Anadolu gemisinden havalanarak MAM-L mühimmatıyla tam isabetle atış gerçekleştirdi.',
-    videoUrl: '#',
-    sourceUrl: '#'
+    slug: 'koruyucu-aile-sisteminin-kahramanlari',
+    title: 'Koruyucu aile sisteminin kahramanları',
+    category: 'YAŞAM',
+    thumbnailUrl: 'https://picsum.photos/1280/720?random=60',
+    imageHint: 'family hug child',
+    description: 'Türkiye, koruyucu aile sistemiyle dünyaya model oluyor. Binlerce çocuk sıcak yuvaya, aileler de çocuğa kavuşuyor. Aile ve Sosyal Hizmetler Bakanlığı\'na bağlı 60\'a yakın uzman canla başla çalışıyor.',
+    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Placeholder
+    sourceUrl: '#',
+    duration: '03:28',
+    publishDate: '13.05.2024 16:16',
+    viewCount: '1.234'
   },
   {
     id: 'v2',
-    title: 'Metro istasyonunda üzerine reklam panosu düşen kadın yaralandı',
+    slug: 'adanada-kontrolden-cikan-otomobilin-bisikletliye-carpma-ani-kamerada',
+    title: 'Adana\'da kontrolden çıkan otomobilin bisikletliye çarpma anı kamerada',
     category: 'Türkiye',
     thumbnailUrl: 'https://picsum.photos/400/225?random=51',
-    imageHint: 'subway station accident',
+    imageHint: 'car accident cctv',
     videoUrl: '#',
-    sourceUrl: '#'
+    sourceUrl: '#',
+    duration: '01:15',
+    publishDate: '13.05.2024 15:30',
   },
   {
     id: 'v3',
-    title: 'Gazzeli kız: Biz her gün ölüyoruz',
+    slug: 'italyada-etna-yanardagi-yogun-sekilde-kul-ve-lav-puskurttu',
+    title: 'İtalya\'da Etna Yanardağı yoğun şekilde kül ve lav püskürttü',
     category: 'Dünya',
     thumbnailUrl: 'https://picsum.photos/400/225?random=52',
-    imageHint: 'war conflict child',
+    imageHint: 'volcano eruption etna',
     videoUrl: '#',
-    sourceUrl: '#'
+    sourceUrl: '#',
+    duration: '02:05',
+    publishDate: '13.05.2024 14:00',
   },
   {
     id: 'v4',
-    title: 'Bayraktar TB3 DENİZKURDU-2025 Tatbikatı\'nda',
-    category: 'Gündem',
+    slug: 'maymun-kacti-mahalleli-kovaladi',
+    title: 'Maymun kaçtı, mahalleli kovaladı',
+    category: 'Yaşam',
     thumbnailUrl: 'https://picsum.photos/400/225?random=53',
-    imageHint: 'drone aircraft carrier',
+    imageHint: 'monkey running street',
     videoUrl: '#',
-    sourceUrl: '#'
+    sourceUrl: '#',
+    duration: '01:40',
+    publishDate: '13.05.2024 12:15',
   },
   {
     id: 'v5',
-    title: 'Metrobüs kazası araç içi kamerasında',
-    category: 'Türkiye',
-    thumbnailUrl: 'https://picsum.photos/400/225?random=54',
-    imageHint: 'bus crash camera',
+    slug: 'israilin-saldirilari-nedeniyle-10-yasinda-sacina-ak-dustu',
+    title: 'İsrail\'in saldırıları nedeniyle 10 yaşında saçına ak düştü',
+    category: 'Dünya',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=59',
+    imageHint: 'child war conflict',
     videoUrl: '#',
-    sourceUrl: '#'
+    sourceUrl: '#',
+    duration: '02:30',
+    publishDate: '12.05.2024 18:00',
+  },
+  {
+    id: 'v6',
+    slug: 'bayraktar-tb3-sihalardan-tam-isabet',
+    title: 'Bayraktar TB3 SİHA\'lardan tam isabet',
+    category: 'Savunma',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=50', 
+    imageHint: 'drone military strike',
+    description: 'Milli SİHA Bayraktar TB3, DENİZKURDU-2025 Tatbikatı\'nda TCG Anadolu\'dan havalanarak hedefi tam isabetle vurdu.',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '01:55',
+    publishDate: '12.05.2024 17:00',
+  },
+  {
+    id: 'v7',
+    slug: 'metro-istasyonunda-uzerine-reklam-panosu-dusen-kadin-yaralandi',
+    title: 'Metro istasyonunda üzerine reklam panosu düşen kadın yaralandı',
+    category: 'Türkiye',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=55',
+    imageHint: 'subway station accident',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '00:50',
+    publishDate: '11.05.2024 19:30',
+  },
+   {
+    id: 'v8',
+    slug: 'stresle-araniz-nasil',
+    title: 'Stresle aranız nasıl?',
+    category: 'Sağlık',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=61',
+    imageHint: 'stress health person',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '04:12',
+    publishDate: '11.05.2024 17:30',
+  },
+  {
+    id: 'v9',
+    slug: 'sanliurfada-sulama-kanalinda-2-kucuk-cocuk-boguldu',
+    title: 'Şanlıurfa\'da sulamada kullanılan 2 küçük çocuk trafik yakalandı', // Title slightly changed to match image
+    category: 'Türkiye',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=62',
+    imageHint: 'sad news child',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '01:18',
+    publishDate: '11.05.2024 16:56',
+  },
+  {
+    id: 'v10',
+    slug: 'trumpin-ticaret-savasi-neler-getirecek',
+    title: 'Trump\'ın ticaret savaşı neler getirecek?',
+    category: 'Ekonomi',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=63',
+    imageHint: 'trump politics economy',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '03:40',
+    publishDate: '11.05.2024 14:36',
+  },
+  {
+    id: 'v11',
+    slug: 'abdde-israil-karsiti-ogrencilere-baskilar-artiyor',
+    title: 'ABD\'de İsrail karşıtı öğrencilere baskılar artıyor',
+    category: 'Dünya',
+    thumbnailUrl: 'https://picsum.photos/400/225?random=64',
+    imageHint: 'protest student usa',
+    videoUrl: '#',
+    sourceUrl: '#',
+    duration: '02:55',
+    publishDate: '11.05.2024 13:41',
   }
 ];
 
