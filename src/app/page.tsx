@@ -1,18 +1,21 @@
-
-
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import ArticleCard from '@/components/news/article-card';
 import { PLACEHOLDER_ARTICLES, PLACEHOLDER_VIDEOS, type Article as ArticleType, type Video as VideoType } from '@/constants';
 import { Button } from '@/components/ui/button';
 import BreakingNewsTicker from '@/components/news/breaking-news-ticker';
 import SecondaryNav from '@/components/layout/secondary-nav';
-import HeroSlider from '@/app/(components)/hero-slider';
 import CurrencyTicker from '@/components/news/currency-ticker';
 import { Badge } from '@/components/ui/badge'; 
 import VideoSection from '@/components/news/video-section'; 
 import { slugify } from '@/lib/utils';
 
+// Dynamically import HeroSlider with SSR disabled to prevent hydration mismatch
+const HeroSlider = dynamic(
+  () => import('@/app/(components)/hero-slider'),
+  { ssr: false }
+);
 
 export default function Home() {
   const articles = PLACEHOLDER_ARTICLES;
@@ -50,7 +53,7 @@ export default function Home() {
     { text: "Kalp hastası bebek Ağrı'dan ambulans uçakla Ankara'ya getirildi", timestamp: "05:24", link: "#" },
     { text: "İzmir'de takla atan otomobilin sürücüsü yaralandı", timestamp: "05:19", link: "#" },
     { text: "Trump, ABD vatandaşı esirin serbest bırakılmasını iyi niyetle atılmış bir adım olarak değerlendirdi", timestamp: "04:06", link: "#" },
-    { text: "Ankara’da motosiklet trafik levhasına çarptı: 2 kişi hayatını kaybetti", timestamp: "01:42", link: "#" },
+    { text: "Ankara'da motosiklet trafik levhasına çarptı: 2 kişi hayatını kaybetti", timestamp: "01:42", link: "#" },
     { text: "Yeni haftada hava nasıl olacak?", timestamp: "00:52", link: "#" },
     { text: "Fransa'da İslam düşmanlığına karşı gösteriler düzenlendi", timestamp: "00:37", link: "#" },
   ];
