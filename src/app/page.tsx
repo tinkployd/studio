@@ -70,7 +70,7 @@ export default function Home() {
     <div className="container mx-auto px-2 sm:px-4 py-0">
       <SecondaryNav />
       <BreakingNewsTicker newsItems={breakingNewsItems} />
-      <HeroSlider articles={heroSliderArticles} />
+      <HeroSlider articles={heroSliderArticles} key="hero-slider" />
 
       <section className="my-8 md:my-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
